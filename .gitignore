@@ -1,3 +1,6 @@
 CardBased/Temp/
 CardBased/Library/
 CardBased/Logs/
+CardBased/.vs/
+CardBased/obj/
+CardBased/Assembly-CSharp.csproj
