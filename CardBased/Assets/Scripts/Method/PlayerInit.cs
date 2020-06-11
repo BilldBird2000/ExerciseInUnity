@@ -1,18 +1,21 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Experimental.UIElements;
 
-public class PlayerInit : MonoBehaviour
+namespace CardBased_V1
 {
-    // Start is called before the first frame update
-    void Start()
+    public class PlayerInit : RoleBase
     {
-        
-    }
+        //private Button player;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+        public void Init( GameObject node )
+        {
+            int hp = playerInfo [ node.name ];
+            Debug.LogFormat ("初始化角色{0},Hp:{1}" , node.name , hp);
+        }
+
+
     }
 }
+

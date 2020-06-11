@@ -993,8 +993,13 @@ PrefabInstance:
       objectReference: {fileID: 534669904}
     - target: {fileID: 2572338877644037392, guid: 84723cf93ab226b4b9f578953fdf022f,
         type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
-      value: 0
+      propertyPath: m_Navigation.m_Mode
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2572338877644037394, guid: 84723cf93ab226b4b9f578953fdf022f,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 84723cf93ab226b4b9f578953fdf022f, type: 3}

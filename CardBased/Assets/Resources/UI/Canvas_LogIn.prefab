@@ -289,7 +289,7 @@ GameObject:
   - component: {fileID: 2572338877644037393}
   - component: {fileID: 2572338877644037392}
   m_Layer: 5
-  m_Name: Button
+  m_Name: Next
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -391,18 +391,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2572338877644037393}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 2572338879093094762}
-        m_MethodName: OnBtnClick
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!1 &2572338878182258478
@@ -871,6 +860,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 35be50ce1ded6e348ba598cce89b2873, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  btnList: []
+  target: []
 --- !u!1 &2572338879431053342
 GameObject:
   m_ObjectHideFlags: 0
