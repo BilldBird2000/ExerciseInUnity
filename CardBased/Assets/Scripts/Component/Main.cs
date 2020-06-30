@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using CardBased_V1;
 
 /// <CardBased_V1.0>
 /// 1.UnityUI基础
@@ -12,35 +13,31 @@ using UnityEngine;
 /// 
 /// </summary>
 
-namespace CardBased_V1
+
+/// <summary>
+/// 1.运行-加载表
+/// 2.角色选择界面-选择并初始化角色
+/// 2.跳转到战斗界面
+/// </summary>
+
+public class Main : MonoBehaviour
 {
-    /// <summary>
-    /// 1.运行-加载表
-    /// 2.角色选择界面-选择并初始化角色
-    /// 2.跳转到战斗界面
-    /// </summary>
-
-    public class Main : MonoBehaviour
+    void Start ( )
     {
+        TemplateDataReader.Inst.LoadTable ( );
+        Game.Inst.Start ( );
 
+        //Debug.Log ("Only for test...");
 
-
-        void Start ( )
-        {
-            TemplateDataReader.Ins.LoadTable ( );
-            Game.Ins.Start ( );
-
-            //Debug.Log ("Only for test...");
-
-        }
-
-
-
-        void Update ( )
-        {
-
-        }
     }
 
+
+
+    void Update ( )
+    {
+
+    }
 }
+
+
 

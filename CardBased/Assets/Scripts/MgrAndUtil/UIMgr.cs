@@ -8,15 +8,15 @@ using UnityEngine;
 
 namespace CardBased_V1
 {
-    public class InterfaceMgr
+    public class UIMgr
     {
-        private static InterfaceMgr _interfaceMgr = null;
-        public static InterfaceMgr Ins
+        private static UIMgr _interfaceMgr = null;
+        public static UIMgr Inst
         {
             get
             {
                 if ( _interfaceMgr == null )
-                    _interfaceMgr = new InterfaceMgr ( );
+                    _interfaceMgr = new UIMgr ( );
                 return _interfaceMgr;
             }
         }

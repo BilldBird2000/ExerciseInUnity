@@ -1,16 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using UnityEngine.Experimental.UIElements;
+using UnityEngine;
+using UnityEngine.UI;
+using CardBased_V1;
 
-namespace CardBased_V1
+
+class ButtonProperty : Button
 {
-    class ButtonProperty : Button
-    {
-        public int id = 0;
+    public int id = 0;
 
 
-    }
 }
+

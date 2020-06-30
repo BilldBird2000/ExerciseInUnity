@@ -7,14 +7,14 @@ namespace CardBased_V1
 {
     public class TemplateDataReader
     {
-        private static TemplateDataReader _tpRearer = null;
-        public static TemplateDataReader Ins
+        private static TemplateDataReader _tpReader = null;
+        public static TemplateDataReader Inst
         {
             get
             {
-                if ( _tpRearer == null )
-                    _tpRearer = new TemplateDataReader ( );
-                return _tpRearer;
+                if ( _tpReader == null )
+                    _tpReader = new TemplateDataReader ( );
+                return _tpReader;
             }
         }
 

@@ -8,7 +8,7 @@ namespace CardBased_V1
     public class Game
     {
         private static Game _game = null;
-        public static Game Ins
+        public static Game Inst
         {
             get
             {
@@ -20,7 +20,7 @@ namespace CardBased_V1
 
         public void Start()
         {
-            InterfaceMgr.Ins.CanvasJump ( );
+            UIMgr.Inst.CanvasJump ( );
 
 
 
