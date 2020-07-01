@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace CardBased_V1
 {
-    enum RoleType
+    public enum RoleType
     {
         Player,
         Enemy,

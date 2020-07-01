@@ -1,0 +1,4 @@
+Id,Name,MaxHp,Hp,Mana,Gold,RoleType,RoleStatus
+10001,Sally,30,30,3,0,Player,Alive
+10002,Brown,30,30,3,0,Player,Alive
+10003,Coney,30,30,3,0,Player,Alive

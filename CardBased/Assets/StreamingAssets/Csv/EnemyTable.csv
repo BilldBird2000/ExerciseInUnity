@@ -1,0 +1,8 @@
+﻿Id,Name,MaxHp,Hp,Mana,Gold,RoleType,RoleStatus
+40101,Slime,10,10,0,0,Enemy,Alive
+40201,Goblin,10,10,0,0,Enemy,Alive
+40301,Bat,10,10,0,0,Enemy,Alive
+40401,Rabbit,10,10,0,0,Enemy,Alive
+40501,Wolf,10,10,0,0,Enemy,Alive
+40601,Rockman,10,10,0,0,Enemy,Alive
+40701,Snowman,10,10,0,0,Enemy,Alive

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using CardBased_V1;
 
 //新语法
 //1.btnList.AddRange (transform.GetComponentsInChildren<Button> ( ));
@@ -14,121 +15,119 @@ using UnityEngine.UI;
 
 //3.非按钮UI资源,比如Image,可以被点击响应的实现方法:(以下3步缺一不可)
 //  using UnityEngine.EventSysten;      //1-引用接口命名空间
-//  public class ImageOnTouch:MonoBehaviour,IPointerClickHandlerq   //2-继承接口IPointerClickHeadler
+//  public class ImageOnTouch:MonoBehaviour,IPointerClickHandler        //2-继承接口IPointerClickHeadler
 //  {
 //      public void OnPointerClick ( PointerEventData eventdata ) { }   //3-实现接口
 //  }
 //  
 
+//UI_Login类的功能
+//sally,brown,coney三个按钮可点击状态,next不可点击状态
+//当sally,brown,coney其中任意一个被点击后,返回其id值作为实例化参数;next变成可点击状态
+//点击next后,初始化上一步中选中的对象;跳转到battle界面
 
-namespace CardBased_V1
+public class UI_Login : MonoBehaviour
 {
-    //UI_Login类的功能
-    //sally,brown,coney三个按钮可点击状态,next不可点击状态
-    //当sally,brown,coney其中任意一个被点击后,返回其id值作为实例化参数;next变成可点击状态
-    //点击next后,初始化上一步中选中的对象;跳转到battle界面
+    private List<Button> btnList = new List<Button> ( );
+    //public Transform [ ] target;
+    //private GameObject player = null;
 
-    public class UI_Login : MonoBehaviour
+    void Start ( )
     {
-        private List<Button> btnList = new List<Button> ( );
-        //public Transform [ ] target;
-        private Button nextBtn;
-        private GameObject player = null;
-
-        void Start ( )
-        {
-            AddButton ( );
-
-        }
-
-        void Update ( )
-        {
-
-        }
-
-        public void AddButton ( )
-        {
-            btnList.AddRange (transform.GetComponentsInChildren<Button> ( ));
-            for ( int i = 0; i < btnList.Count; i++ )
-            {
-                Button sender = btnList [ i ];
-                if ( sender.gameObject.name == "Next" )
-                {
-                    nextBtn = btnList [ i ];
-                    nextBtn.interactable = false;
-                    nextBtn.onClick.AddListener (OnNext);
-
-                }
-                else if ( sender.gameObject.name == "Null" )
-                {
-                    sender.interactable = true;
-                    btnList [ i ].onClick.AddListener (OnNull);
-                }
-                else
-                {
-                    sender.interactable = true;
-                    btnList [ i ].onClick.AddListener (delegate ( ) { OnPlayer (sender.gameObject); });
-                }
-            }
-
-        }
-
-        private void OnPlayer ( GameObject node )
-        {
-            Debug.LogFormat ("按钮{0}被点击" , node.name);
-            player = node;
-            nextBtn.interactable = true;
-
-        }
-
-        private void OnNull ( )
-        {
-            if ( player != null )
-            {
-                Debug.LogFormat ("撤销选择对象--------");
-                player = null;
-                nextBtn.interactable = false;
-            }
-        }
-
-        private void OnNext ( )
-        {
-            Debug.LogFormat ("按钮{0}被点击~" , nextBtn.gameObject.name);
-
-            PlayerInit init = player.AddComponent<PlayerInit> ( );
-            init.Init (player);
-
-            Debug.LogFormat ("即将跳转到战斗界面>>>>>>>>");
-
-        }
-
-
-
-        //添加点击事件的一种方法,被AddButton()代替
-        //用onClick.AddListener()添加的方法不能传参,不方便处理多个按钮事件,局限性比较大
-        //private Text btnName;
-        //private Button btn;
-        //private Text sallyName;
-        //private Button sally;
-        //private Text brownName;
-        //private Button brown;
-        //private Text coneyName;
-        //private Button coney;
-
-        //public void AddBtn ( )
-        //{
-        //    btnName = transform.Find ("Button/name").GetComponent<Text> ( );
-        //    btn = transform.Find ("Button").GetComponent<Button> ( );
-        //    btn.onClick.AddListener (BtnOnClick);
-        //}
-        //public void BtnOnClick ( )
-        //{
-        //    Debug.LogFormat ("{0}按钮被点击..." , btnName.text);
-        //}
-
-
-
+        AddButton ( );
 
     }
+
+    void Update ( )
+    {
+
+    }
+
+    public void AddButton ( )
+    {
+        btnList.AddRange (transform.GetComponentsInChildren<Button> ( ));
+        for ( int i = 0; i < btnList.Count; i++ )
+        {
+            Button sender = btnList [ i ];
+            if ( sender.gameObject.name == "Next" )
+            {
+                UIMgr._Inst.btnJump = btnList [ i ];
+                UIMgr._Inst.btnJump.interactable = false;
+                UIMgr._Inst.btnJump.onClick.AddListener (OnNext);
+
+            }
+            else if ( sender.gameObject.name == "None" )
+            {
+                sender.interactable = true;
+                btnList [ i ].onClick.AddListener (OnNone);
+            }
+            else
+            {
+                sender.interactable = true;
+                btnList [ i ].onClick.AddListener (delegate ( ) { OnPlayer (sender.gameObject); });
+            }
+        }
+
+    }
+
+    private void OnPlayer ( GameObject plr )
+    {
+        Debug.LogFormat ("按钮{0}被点击" , plr.name);
+        GameAsst._Inst.player = plr;
+        UIMgr._Inst.btnJump.interactable = true;
+
+    }
+
+    private void OnNone ( )
+    {
+        if ( GameAsst._Inst.player != null )
+        {
+            Debug.LogFormat ("撤销选择对象--------");
+            GameAsst._Inst.player = null;
+            UIMgr._Inst.btnJump.interactable = false;
+        }
+    }
+
+    private void OnNext ( )
+    {
+        Debug.LogFormat ("按钮{0}被点击~" , UIMgr._Inst.btnJump.gameObject.name);
+        GameObject.Find ("Launch").transform.Find ("UI_Login").gameObject.SetActive (false);
+        GameAsst._Inst.checkId = GameAsst._Inst.playerDict [ GameAsst._Inst.player.name ];
+        GameAsst._Inst.game.BuildPlayer ( );    //GameAsst._Inst.playerDict [ GameAsst._Inst.player.name ]
+
+        btnList = null;
+        UIMgr._Inst.btnJump = null;
+        Debug.LogFormat ("即将跳转到战斗界面>>>>>>>>");
+
+    }
+
+
+
+    //添加点击事件的一种方法,被AddButton()代替
+    //用onClick.AddListener()添加的方法不能传参,不方便处理多个按钮事件,局限性比较大
+    //private Text btnName;
+    //private Button btn;
+    //private Text sallyName;
+    //private Button sally;
+    //private Text brownName;
+    //private Button brown;
+    //private Text coneyName;
+    //private Button coney;
+
+    //public void AddBtn ( )
+    //{
+    //    btnName = transform.Find ("Button/name").GetComponent<Text> ( );
+    //    btn = transform.Find ("Button").GetComponent<Button> ( );
+    //    btn.onClick.AddListener (BtnOnClick);
+    //}
+    //public void BtnOnClick ( )
+    //{
+    //    Debug.LogFormat ("{0}按钮被点击..." , btnName.text);
+    //}
+
+
+
+
 }
+
 
