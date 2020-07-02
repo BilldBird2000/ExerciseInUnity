@@ -18,10 +18,10 @@ namespace CardBased_V1
             {"Coney",10003 }
         };
 
-        public string playerDataPath = Application.streamingAssetsPath + "/Csv/PlayerTable.csv";
-        //public string enemyDataPath = "";
-
         //集中管理表路径
+        public string playerDataPath = Application.streamingAssetsPath + "/Csv/PlayerTable.csv";
+        public string enemyDataPath = Application.streamingAssetsPath + "/Csv/EnemyTable.csv";
+
 
 
 

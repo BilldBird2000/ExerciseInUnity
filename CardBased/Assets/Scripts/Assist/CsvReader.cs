@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 
+//tableDict,rowDict,headerList实例化比控制台要早,注意区别
 
 namespace CardBased_V1
 {
@@ -28,6 +29,7 @@ namespace CardBased_V1
             Debug.Log ("LoadTable...");
             superDict = new Dictionary<string , Dictionary<int , Dictionary<string , string>>> ( );
             ReadTable (GameAsst._Inst.playerDataPath);
+            ReadTable (GameAsst._Inst.enemyDataPath);
         }
 
         public void ReadTable ( string path )
@@ -77,9 +79,7 @@ namespace CardBased_V1
                 Debug.Log ("读表失败...");
             }
 
-            
             superDict.Add (path , tableDict);
-
         }
 
         public Dictionary<string , string> GetRowDict ( string path , int index )

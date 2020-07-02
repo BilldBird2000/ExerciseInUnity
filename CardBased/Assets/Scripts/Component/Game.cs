@@ -12,7 +12,6 @@ public class Game : MonoBehaviour
     
     public void Start ( )
     {
-        CsvReader.Inst.LoadTable ( );
         UIMgr._Inst.PlayerChoose ( );
 
     }
@@ -21,7 +20,7 @@ public class Game : MonoBehaviour
     public void BuildPlayer (  )
     {
         Transform parent = GameObject.Find ("Launch").transform.Find ("Role").transform;
-        GameAsst._Inst.player = Instantiate (player , new Vector3 (0 , 0 , 0) , Quaternion.Euler (0 , 0 , 0) , parent);
+        GameAsst._Inst.player = Instantiate (player , new Vector3 (-3 , 2 , 0) , Quaternion.Euler (0 , 0 , 0) , parent);
         //GameObject.Find ("Player(Clone)").transform.SetParent (parent);
     }
 
@@ -29,6 +28,9 @@ public class Game : MonoBehaviour
     {
 
     }
+
+
+
 }
 
 

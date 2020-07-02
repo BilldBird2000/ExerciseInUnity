@@ -13,18 +13,16 @@ public class Main : MonoBehaviour
 {
     void Start ( )
     {
-        GameAsst._Inst.game.Start ( );
-
-        //Debug.Log ("Only for test...");
-
-    }
+        CsvReader.Inst.LoadTable ( );
 
 
-
-    void Update ( )
-    {
+        //大大大写的错误!! game.Start ( )被调用了2次
+        //GameAsst._Inst.game.Start ( );    
 
     }
+
+
+
 }
 
 

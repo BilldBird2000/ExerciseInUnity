@@ -38,11 +38,6 @@ public class UI_Login : MonoBehaviour
 
     }
 
-    void Update ( )
-    {
-
-    }
-
     public void AddButton ( )
     {
         btnList.AddRange (transform.GetComponentsInChildren<Button> ( ));

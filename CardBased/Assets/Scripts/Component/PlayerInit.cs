@@ -10,7 +10,7 @@ public class PlayerInit : MonoBehaviour, IRoleBase
     public int Id { get; set; } = 0;
     public string Name { get; set; } = "";
     public int MaxHp { get; set; } = 0;
-    public int hp = 9999;
+    private int hp = 9999;
     public int Hp
     {
         set
@@ -27,7 +27,6 @@ public class PlayerInit : MonoBehaviour, IRoleBase
             }
         }
         get { return hp; }
-
     }
     public int Mana { get; set; } = 0;
     public int Gold { get; set; } = 0;
@@ -44,6 +43,12 @@ public class PlayerInit : MonoBehaviour, IRoleBase
         Debug.Log ("UseSkill...");
     }
 
+
+    public void Start ( )
+    {
+        Init ( );
+    }
+
     public void Init (  )
     {
         //查表赋值
@@ -58,13 +63,11 @@ public class PlayerInit : MonoBehaviour, IRoleBase
         Roletype = ( RoleType ) ( Enum.Parse (typeof (RoleType) , rowData [ header [ 6 ] ]) );
         Rolestatus = ( RoleStatus ) ( Enum.Parse (typeof (RoleStatus) , rowData [ header [ 7 ] ]) );
 
-        Debug.LogFormat ("++++++++初始化角色{0},Hp:{1}" , Name , Hp);
+        Debug.LogFormat ("++++++++初始化角色{0}" , Name);
+        Debug.LogFormat ("{0},{1},{2},{3},{4},{5},{6},{7}" , Id , Name , MaxHp , Hp , Mana , Gold , Roletype , Rolestatus);
     }
 
-    public void Start ( )
-    {
-        Init ( );
-    }
+    
 }
 
 
