@@ -3,12 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using CardBased_V1;
 
-/// <summary>
-/// 
-/// 
-/// 
-/// </summary>
-
 public class Main : MonoBehaviour
 {
     void Start ( )

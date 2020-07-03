@@ -21,6 +21,7 @@ namespace CardBased_V1
         //集中管理表路径
         public string playerDataPath = Application.streamingAssetsPath + "/Csv/PlayerTable.csv";
         public string enemyDataPath = Application.streamingAssetsPath + "/Csv/EnemyTable.csv";
+        public string gamelvDataPath = Application.streamingAssetsPath + "/Csv/GamelevelTable.csv";
 
 
 

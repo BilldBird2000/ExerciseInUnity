@@ -5,7 +5,7 @@ using UnityEngine.UI;
 using CardBased_V1;
 using System;
 
-public class PlayerInit : MonoBehaviour, IRoleBase
+public class PlayerInitial : MonoBehaviour, IRoleBase
 {
     public int Id { get; set; } = 0;
     public string Name { get; set; } = "";
@@ -46,10 +46,10 @@ public class PlayerInit : MonoBehaviour, IRoleBase
 
     public void Start ( )
     {
-        Init ( );
+        Initial ( );
     }
 
-    public void Init (  )
+    public void Initial ( )
     {
         //查表赋值
         Dictionary<string , string> rowData = CsvReader.Inst.GetRowDict (GameAsst._Inst.playerDataPath , GameAsst._Inst.checkId);

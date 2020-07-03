@@ -12,8 +12,7 @@ public class Game : MonoBehaviour
     
     public void Start ( )
     {
-        UIMgr._Inst.PlayerChoose ( );
-
+        UIMgr._Inst.StartUILogin ( );
     }
 
     //3.5;5;6.5
@@ -24,10 +23,7 @@ public class Game : MonoBehaviour
         //GameObject.Find ("Player(Clone)").transform.SetParent (parent);
     }
 
-    public void BuildEnemy ( )
-    {
-
-    }
+    
 
 
 

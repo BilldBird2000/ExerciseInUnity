@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-//界面管理器,负责界面之间跳转
-//先实现简单逻辑,从选择角色跳转到战斗界面
-//必须&启动早>>直接单例实例化
+//界面管理器,实现界面之间跳转
+//btnJump按钮在每个界面是唯一的,so只声明一个,try反复赋值
+//必要且启动早,so直接单例实例化
 
 
 namespace CardBased_V1
@@ -14,14 +14,27 @@ namespace CardBased_V1
     {
         public static UIMgr _Inst = new UIMgr ( );
         public Button btnJump = null;
+        public List<Button> btnList = new List<Button> ( );
 
-        public void PlayerChoose ( )
+        public void StartUILogin ( )
         {
             GameObject.Find ("Launch").transform.Find ("UI_Login").gameObject.SetActive (true);
-            Debug.Log ("成功加载角色选择界面...");
+            Debug.Log ("成功加载角色选择界面>>>>>>>>>>");
         }
 
-        
+        public void JumpToUIBattle ( )
+        {
+            GameObject.Find ("Launch").transform.Find ("UI_Battle").gameObject.SetActive (true);
+            Debug.Log ("成功加载战斗界面>>>>>>>>>>");
+
+            GameAsst._Inst.checkId = GameAsst._Inst.playerDict [ GameAsst._Inst.player.name ];
+            GameAsst._Inst.game.BuildPlayer ( );
+
+            btnList = null;
+            btnJump = null;
+        }
+
+
 
 
     }

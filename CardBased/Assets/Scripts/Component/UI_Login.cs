@@ -28,10 +28,6 @@ using CardBased_V1;
 
 public class UI_Login : MonoBehaviour
 {
-    private List<Button> btnList = new List<Button> ( );
-    //public Transform [ ] target;
-    //private GameObject player = null;
-
     void Start ( )
     {
         AddButton ( );
@@ -40,13 +36,13 @@ public class UI_Login : MonoBehaviour
 
     public void AddButton ( )
     {
-        btnList.AddRange (transform.GetComponentsInChildren<Button> ( ));
-        for ( int i = 0; i < btnList.Count; i++ )
+        UIMgr._Inst.btnList.AddRange (transform.GetComponentsInChildren<Button> ( ));
+        for ( int i = 0; i < UIMgr._Inst.btnList.Count; i++ )
         {
-            Button sender = btnList [ i ];
+            Button sender = UIMgr._Inst.btnList [ i ];
             if ( sender.gameObject.name == "Next" )
             {
-                UIMgr._Inst.btnJump = btnList [ i ];
+                UIMgr._Inst.btnJump = UIMgr._Inst.btnList [ i ];
                 UIMgr._Inst.btnJump.interactable = false;
                 UIMgr._Inst.btnJump.onClick.AddListener (OnNext);
 
@@ -54,12 +50,12 @@ public class UI_Login : MonoBehaviour
             else if ( sender.gameObject.name == "None" )
             {
                 sender.interactable = true;
-                btnList [ i ].onClick.AddListener (OnNone);
+                UIMgr._Inst.btnList [ i ].onClick.AddListener (OnNone);
             }
             else
             {
                 sender.interactable = true;
-                btnList [ i ].onClick.AddListener (delegate ( ) { OnPlayer (sender.gameObject); });
+                UIMgr._Inst.btnList [ i ].onClick.AddListener (delegate ( ) { OnPlayer (sender.gameObject); });
             }
         }
 
@@ -87,12 +83,7 @@ public class UI_Login : MonoBehaviour
     {
         Debug.LogFormat ("按钮{0}被点击~" , UIMgr._Inst.btnJump.gameObject.name);
         GameObject.Find ("Launch").transform.Find ("UI_Login").gameObject.SetActive (false);
-        GameAsst._Inst.checkId = GameAsst._Inst.playerDict [ GameAsst._Inst.player.name ];
-        GameAsst._Inst.game.BuildPlayer ( );    //GameAsst._Inst.playerDict [ GameAsst._Inst.player.name ]
-
-        btnList = null;
-        UIMgr._Inst.btnJump = null;
-        Debug.LogFormat ("即将跳转到战斗界面>>>>>>>>");
+        UIMgr._Inst.JumpToUIBattle ( );
 
     }
 

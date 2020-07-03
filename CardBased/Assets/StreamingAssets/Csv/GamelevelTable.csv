@@ -1,0 +1,7 @@
+Id,Name,NotPass,Glvtype,Glvstatus,NPCId,Enemy1ID,Enemy1Num,Enemy2ID,Enemy2Num,Enemy3ID,Enemy3Num,Enemy4ID,Enemy4Num,Enemy5ID,Enemy5Num
+1001,Glv01,TRUE,Battle,Undone,,40101,2,40201,1,,,,,,
+1002,Glv02,TRUE,Battle,Undone,,40101,1,40201,2,,,,,,
+1003,Glv03,TRUE,Battle,Undone,,40101,1,40201,1,40301,1,,,,
+2001,Glv04,TRUE,Room,Undone,,,,,,,,,,,
+3001,Glv05,TRUE,Shop,Undone,60101,,,,,,,,,,
+4001,Glv06,TRUE,Boss,Undone,,40601,1,40501,1,40401,2,,,,

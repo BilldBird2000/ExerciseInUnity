@@ -21,6 +21,15 @@ namespace CardBased_V1
         None,
     }
 
+    //关卡类型
+    public enum GamelevelType
+    {
+        Battle,
+        Room,
+        Shop,
+        Boos,
+    }
+
     //关卡状态
     public enum GamelevelStatus
     {
