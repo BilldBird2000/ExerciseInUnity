@@ -2,14 +2,21 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+//Game管理器
+//代理关卡管理器,简化关卡逻辑,能读出表即可
+
 namespace CardBased_V1
 {
     public class GameAsst
     {
         public static GameAsst _Inst = new GameAsst ( );
+        public static System.Random _Rd = new System.Random ( );
         public Game game = GameObject.Find ("Launch").GetComponent<Game> ( );
         public GameObject player;
         public int checkId = -1;
+
+        public int glvIndex = 1001;
+        public bool lvPass = false;
 
         public Dictionary<string , int> playerDict = new Dictionary<string , int>
         {
@@ -23,7 +30,15 @@ namespace CardBased_V1
         public string enemyDataPath = Application.streamingAssetsPath + "/Csv/EnemyTable.csv";
         public string gamelvDataPath = Application.streamingAssetsPath + "/Csv/GamelevelTable.csv";
 
+        public void BuildGamelevle ( )
+        {
+            game.gameObject.AddComponent<GamelvlInitial> ( );
+        }
 
+        public void CompleteGamelevel ( )
+        {
+            //Destroy (game.gameObject.GetComponent<GamelvlInitial> ( ));
+        }
 
 
     }

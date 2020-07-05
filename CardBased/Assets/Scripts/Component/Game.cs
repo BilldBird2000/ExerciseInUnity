@@ -16,7 +16,7 @@ public class Game : MonoBehaviour
     }
 
     //3.5;5;6.5
-    public void BuildPlayer (  )
+    public void BuildPlayer ( )
     {
         Transform parent = GameObject.Find ("Launch").transform.Find ("Role").transform;
         GameAsst._Inst.player = Instantiate (player , new Vector3 (-3 , 2 , 0) , Quaternion.Euler (0 , 0 , 0) , parent);
