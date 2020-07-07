@@ -1,0 +1,3 @@
+Id,Name,Cardtype,Cardrare,Cardlevel,Cardstatus,ManaCast,Attack,AtkAdd,AtkAddRnd,AtkRdc,AtkRdcRnd,Block,BlcAdd,BlcAddRnd,BlcRdc,BlcRdcRnd,Wounded,WndRnd,Poison,PsnRnd
+90001,´ò»÷,Attack,C,B,Unused,1,5,0,0,0,0,0,0,0,0,0,0,0,0,0
+90011,·ÀÓù,Skill,C,B,Unused,1,0,0,0,0,0,6,0,0,0,0,0,0,0,0

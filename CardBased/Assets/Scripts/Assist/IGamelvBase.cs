@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace CardBased_V1
+namespace CardBased
 {
     interface IGamelvBase
     {

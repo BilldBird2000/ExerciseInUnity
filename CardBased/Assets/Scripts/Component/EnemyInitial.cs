@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using CardBased_V1;
+using CardBased;
 using System;
 
 public class EnemyInitial : MonoBehaviour, IRoleBase

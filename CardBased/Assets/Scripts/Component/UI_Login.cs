@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using CardBased_V1;
+using CardBased;
 
 //新语法
 //1.btnList.AddRange (transform.GetComponentsInChildren<Button> ( ));

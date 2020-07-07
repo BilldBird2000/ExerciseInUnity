@@ -5,7 +5,7 @@ using UnityEngine;
 
 //用接口方法实现角色基类RoleBase
 
-namespace CardBased_V1
+namespace CardBased
 {
     interface IRoleBase
     {

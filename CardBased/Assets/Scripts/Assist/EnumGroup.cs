@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace CardBased_V1
+namespace CardBased
 {
     public enum RoleType
     {
@@ -46,6 +46,13 @@ namespace CardBased_V1
         Colorless,  //无色牌
         Curse,      //诅咒牌=状态牌:不能被打出,战斗结束时被移除
         //Negative,
+    }
+
+    public enum CardStatus
+    {
+        Unused,
+        Inhand,
+        Used,
     }
 
     //卡牌稀有度

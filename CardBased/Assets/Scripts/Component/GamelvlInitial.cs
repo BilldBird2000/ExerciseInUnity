@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using CardBased_V1;
+using CardBased;
 using System;
 
 
@@ -89,6 +89,7 @@ public class GamelvlInitial : MonoBehaviour, IGamelvBase
             Enemy1Id += i;
             enemy.GetComponent<EnemyInitial> ( ).Id = Enemy1Id;
             enemy.GetComponent<EnemyInitial> ( ).Gold = GameAsst._Rd.Next (1 , 5);
+            enemy.AddComponent<OnClickObj> ( );
             Debug.LogFormat ("++++初始化敌人{0},ID:{1},Tpye:{2},Gold:{3}." , enemy.GetComponent<EnemyInitial> ( ).Name ,
                 enemy.GetComponent<EnemyInitial> ( ).Id , enemy.GetComponent<EnemyInitial> ( ).Roletype , enemy.GetComponent<EnemyInitial> ( ).Gold);
         }
@@ -102,6 +103,7 @@ public class GamelvlInitial : MonoBehaviour, IGamelvBase
             Enemy2Id += i;
             enemy.GetComponent<EnemyInitial> ( ).Id = Enemy2Id;
             enemy.GetComponent<EnemyInitial> ( ).Gold = GameAsst._Rd.Next (5 , 8);
+            enemy.AddComponent<OnClickObj> ( );
             Debug.LogFormat ("++++初始化敌人{0},ID:{1},Tpye:{2},Gold:{3}." , enemy.GetComponent<EnemyInitial> ( ).Name ,
                 enemy.GetComponent<EnemyInitial> ( ).Id , enemy.GetComponent<EnemyInitial> ( ).Roletype , enemy.GetComponent<EnemyInitial> ( ).Gold);
         }

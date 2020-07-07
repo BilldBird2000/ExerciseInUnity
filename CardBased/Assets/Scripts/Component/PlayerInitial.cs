@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using CardBased_V1;
+using CardBased;
 using System;
 
 public class PlayerInitial : MonoBehaviour, IRoleBase

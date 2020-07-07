@@ -8,7 +8,7 @@ using UnityEngine.UI;
 //必要且启动早,so直接单例实例化
 
 
-namespace CardBased_V1
+namespace CardBased
 {
     public class UIMgr
     {

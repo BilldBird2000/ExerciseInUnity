@@ -6,7 +6,7 @@ using UnityEngine;
 
 //tableDict,rowDict,headerList实例化比控制台要早,注意区别
 
-namespace CardBased_V1
+namespace CardBased
 {
     public class CsvReader
     {

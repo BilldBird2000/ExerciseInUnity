@@ -1,11 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
+using UnityEngine.EventSystems;
+using System;
 
 //Game管理器
 //代理关卡管理器,简化关卡逻辑,能读出表即可
 
-namespace CardBased_V1
+namespace CardBased
 {
     public class GameAsst
     {
@@ -29,6 +32,7 @@ namespace CardBased_V1
         public string playerDataPath = Application.streamingAssetsPath + "/Csv/PlayerTable.csv";
         public string enemyDataPath = Application.streamingAssetsPath + "/Csv/EnemyTable.csv";
         public string gamelvDataPath = Application.streamingAssetsPath + "/Csv/GamelevelTable.csv";
+        public string cardWarriorDataPath = Application.streamingAssetsPath + "Csv/CardWarrior.csv";
 
         public void BuildGamelevle ( )
         {
