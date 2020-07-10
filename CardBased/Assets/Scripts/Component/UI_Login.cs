@@ -31,9 +31,9 @@ public class UI_Login : MonoBehaviour
     void Start ( )
     {
         AddButton ( );
-
     }
 
+    //给当前界面的按钮统一增加点击事件
     public void AddButton ( )
     {
         UIMgr._Inst.btnList.AddRange (transform.GetComponentsInChildren<Button> ( ));
@@ -47,10 +47,10 @@ public class UI_Login : MonoBehaviour
                 UIMgr._Inst.btnJump.onClick.AddListener (OnNext);
 
             }
-            else if ( sender.gameObject.name == "None" )
+            else if ( sender.gameObject.name == "Blank" )
             {
                 sender.interactable = true;
-                UIMgr._Inst.btnList [ i ].onClick.AddListener (OnNone);
+                UIMgr._Inst.btnList [ i ].onClick.AddListener (OnBlank);
             }
             else
             {
@@ -61,6 +61,7 @@ public class UI_Login : MonoBehaviour
 
     }
 
+    //点击角色
     private void OnPlayer ( GameObject plr )
     {
         Debug.LogFormat ("按钮{0}被点击" , plr.name);
@@ -69,7 +70,8 @@ public class UI_Login : MonoBehaviour
 
     }
 
-    private void OnNone ( )
+    //点击空白区域,用于撤销
+    private void OnBlank ( )
     {
         if ( GameAsst._Inst.player != null )
         {
@@ -79,6 +81,7 @@ public class UI_Login : MonoBehaviour
         }
     }
 
+    //点击跳转按钮
     private void OnNext ( )
     {
         Debug.LogFormat ("按钮{0}被点击~" , UIMgr._Inst.btnJump.gameObject.name);

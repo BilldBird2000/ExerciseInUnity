@@ -30,6 +30,7 @@ namespace CardBased
             ReadTable (GameAsst._Inst.playerDataPath);
             ReadTable (GameAsst._Inst.enemyDataPath);
             ReadTable (GameAsst._Inst.gamelvDataPath);
+            ReadTable (GameAsst._Inst.cardWrrDataPath);
             Debug.Log ("LoadTable...");
         }
 

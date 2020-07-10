@@ -15,7 +15,7 @@ public class Game : MonoBehaviour
         UIMgr._Inst.StartUILogin ( );
     }
 
-    //3.5;5;6.5
+    //实例化player
     public void BuildPlayer ( )
     {
         Transform parent = GameObject.Find ("Launch").transform.Find ("Role").transform;

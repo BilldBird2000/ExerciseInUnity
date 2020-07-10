@@ -6,6 +6,7 @@ namespace CardBased
 {
     interface ICardBase
     {
+        int MaxCounter { set; get; }
         int Id { set; get; }
         string Name { set; get; }
         CardTpye Cardtype { set; get; }

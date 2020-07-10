@@ -9,6 +9,7 @@ namespace CardBased
 {
     interface IRoleBase
     {
+        int Counter { set; get; }
         int Id { get; set; }
         string Name { get; set; }
         int MaxHp { get; set; }

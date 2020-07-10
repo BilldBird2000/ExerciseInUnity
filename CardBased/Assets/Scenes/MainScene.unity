@@ -830,11 +830,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: UI_Login
       objectReference: {fileID: 0}
-    - target: {fileID: 2572338878679819873, guid: 84723cf93ab226b4b9f578953fdf022f,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 2572338878679819877, guid: 84723cf93ab226b4b9f578953fdf022f,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -945,25 +940,5 @@ PrefabInstance:
       propertyPath: m_Camera
       value: 
       objectReference: {fileID: 534669904}
-    - target: {fileID: 7285459263477268781, guid: 84723cf93ab226b4b9f578953fdf022f,
-        type: 3}
-      propertyPath: m_Name
-      value: None
-      objectReference: {fileID: 0}
-    - target: {fileID: 2572338877520505701, guid: 84723cf93ab226b4b9f578953fdf022f,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2572338878182258478, guid: 84723cf93ab226b4b9f578953fdf022f,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2572338878979833893, guid: 84723cf93ab226b4b9f578953fdf022f,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 84723cf93ab226b4b9f578953fdf022f, type: 3}

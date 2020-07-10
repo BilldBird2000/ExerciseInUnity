@@ -75,6 +75,7 @@
     <Compile Include="Assets\Scripts\Assist\IRoleBase.cs" />
     <Compile Include="Assets\Scripts\Assist\RoleMgr.cs" />
     <Compile Include="Assets\Scripts\Assist\UIMgr.cs" />
+    <Compile Include="Assets\Scripts\Assist\Version1.0.cs" />
     <Compile Include="Assets\Scripts\Component\CardInitial.cs" />
     <Compile Include="Assets\Scripts\Component\EnemyInitial.cs" />
     <Compile Include="Assets\Scripts\Component\Game.cs" />
@@ -84,7 +85,6 @@
     <Compile Include="Assets\Scripts\Component\PlayerInitial.cs" />
     <Compile Include="Assets\Scripts\Component\UI_Battle.cs" />
     <Compile Include="Assets\Scripts\Component\UI_Login.cs" />
-    <Compile Include="Assets\Scripts\Version1.0.cs" />
     <Reference Include="Unity.TextMeshPro.Editor">
       <HintPath>H:/GitHub/CardBased/CardBased/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
     </Reference>

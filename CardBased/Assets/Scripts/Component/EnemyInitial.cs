@@ -6,6 +6,7 @@ using System;
 
 public class EnemyInitial : MonoBehaviour, IRoleBase
 {
+    public int Counter { set; get; } = 1;
     public int Id { get; set; } = 0;
     public string Name { get; set; } = "";
     public int MaxHp { get; set; } = 0;

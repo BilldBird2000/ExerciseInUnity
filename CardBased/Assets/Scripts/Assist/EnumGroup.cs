@@ -48,26 +48,35 @@ namespace CardBased
         //Negative,
     }
 
+    //卡牌状态
     public enum CardStatus
     {
-        Unused,
-        Inhand,
-        Used,
+        Unused,     //抽牌堆中的牌
+        Inhand,     //手牌
+        Used,       //弃牌堆中的牌
     }
+
+    //当单张牌达到最大数量时,不能继续获得
+    //可以用bool值字段,代替当前枚举
+    //public enum CardObtain
+    //{
+    //    CanGet,
+    //    CannotGet,
+    //}
 
     //卡牌稀有度
     public enum CardRare
     {
-        A,  //金卡
-        B,  //蓝卡
-        C,  //白卡
+        LvA,  //金卡
+        LvB,  //蓝卡
+        LvC,  //白卡
     }
 
     //卡牌等级
     public enum CardLevel
     {
-        A,  //高级
-        B,  //初级
+        LvA,  //高级
+        LvB,  //初级
     }
 
     public enum SkillType

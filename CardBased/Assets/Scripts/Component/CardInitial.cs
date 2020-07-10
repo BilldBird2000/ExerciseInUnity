@@ -6,12 +6,31 @@ using CardBased;
 
 public class CardInitial : MonoBehaviour, ICardBase
 {
+    public bool CanGet { set; get; } = true;
+    public int MaxCounter { set; get; } = 0;
+    private int counter = 1;
+    public int Counter
+    {
+        set
+        {
+            if ( counter >= MaxCounter )
+            {
+                counter = MaxCounter;
+                CanGet = false;
+            }
+            else if ( counter >= 1 && counter < MaxCounter )
+                counter = value;
+            else
+                counter = 0;
+        }
+        get { return counter; }
+    }
     public int Id { set; get; } = 0;
     public string Name { set; get; } = "";
     public CardTpye Cardtype { set; get; } = CardTpye.Attack;
     public CardStatus Cardstatus { set; get; } = CardStatus.Unused;
-    public CardRare Cardrare { set; get; } = CardRare.C;
-    public CardLevel Cardlevel { set; get; } = CardLevel.B;
+    public CardRare Cardrare { set; get; } = CardRare.LvC;
+    public CardLevel Cardlevel { set; get; } = CardLevel.LvB;
     public int ManaCast { set; get; } = 0;
     public int Attack { set; get; } = 0;
     public float AtkAdd { set; get; } = 0;
@@ -30,7 +49,7 @@ public class CardInitial : MonoBehaviour, ICardBase
 
     public void Initial ( int index )
     {
-        Dictionary<string , string> rowDict = CsvReader.Inst.GetRowDict (GameAsst._Inst.cardWarriorDataPath , index);
+        Dictionary<string , string> rowDict = CsvReader.Inst.GetRowDict (GameAsst._Inst.cardWrrDataPath , index);
         List<string> header = CsvReader.Inst.GetHeaderList (rowDict);
 
         Id = index;
@@ -54,6 +73,7 @@ public class CardInitial : MonoBehaviour, ICardBase
         WndRnd = Convert.ToInt32 (rowDict [ header [ 18 ] ]);
         Poison = Convert.ToInt32 (rowDict [ header [ 19 ] ]);
         PsnRnd = Convert.ToInt32 (rowDict [ header [ 20 ] ]);
+        MaxCounter = Convert.ToInt32 (rowDict [ header [ 21 ] ]);
 
     }
 
