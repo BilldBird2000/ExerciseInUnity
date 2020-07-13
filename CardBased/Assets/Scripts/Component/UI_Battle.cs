@@ -62,6 +62,8 @@ public class UI_Battle : MonoBehaviour
 
         BattleMgr.Inst.DisOrder ( );
         Debug.Log ("洗牌完成~~~~~~~~");
+
+        StartCoroutine (BattleMgr.Inst.Distribution ( ));
     }
 
     public void BuildCard ( int index )
