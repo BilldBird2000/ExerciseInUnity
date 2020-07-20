@@ -22,11 +22,16 @@ public class UI_Battle : MonoBehaviour
     {
         //BattleMgr.Inst.extractList = new List<GameObject> ( );
         Transform parent = GameObject.Find ("Launch/UI_Battle/Used").transform;
+        Vector3 pos;
         int index;
 
         for ( int i = 0; i < 5; i++ )
         {
-            GameObject card = Instantiate (cardArray [ 0 ] , new Vector3 (10 , 0 , 0) , Quaternion.Euler (0 , 0 , 0) , parent);
+            //GameObject card = Instantiate (cardArray [ 0 ] , new Vector3 (1000 , 0 , 0) , Quaternion.Euler (0 , 0 , 0) , parent);
+            GameObject card = Instantiate (cardArray [ 0 ] , parent);
+            pos = card.transform.position;
+            pos.x = 1000;
+            card.transform.position = pos;
             card.AddComponent<CardInitial> ( );
             index = Convert.ToInt32 (cardArray [ 0 ].name);
             card.GetComponent<CardInitial> ( ).Initial (index);
@@ -43,7 +48,11 @@ public class UI_Battle : MonoBehaviour
         }
         for ( int i = 0; i < 5; i++ )
         {
-            GameObject card = Instantiate (cardArray [ 1 ] , new Vector3 (10 , 0 , 0) , Quaternion.Euler (0 , 0 , 0) , parent);
+            //GameObject card = Instantiate (cardArray [ 1 ] , new Vector3 (1000 , 0 , 0) , Quaternion.Euler (0 , 0 , 0) , parent);
+            GameObject card = Instantiate (cardArray [ 1 ] , parent);
+            pos = card.transform.position;
+            pos.x = 1000;
+            card.transform.position = pos;
             card.AddComponent<CardInitial> ( );
             index = Convert.ToInt32 (cardArray [ 1 ].name);
             card.GetComponent<CardInitial> ( ).Initial (index);

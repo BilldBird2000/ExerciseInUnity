@@ -25,7 +25,10 @@ namespace CardBased
         public Transform inhand = GameObject.Find ("Launch/UI_Battle/Inhand").transform;
 
         public int FixCounter { set; get; } = 5;  //每回合默认发牌张数
-
+        //public List<GameObject> skillCard = new List<GameObject> ( );
+        public GameObject [ ] skillCard = new GameObject [ 2 ];
+        private Vector3 pos;
+        private int offset = 30;
 
 
         //洗牌
@@ -78,17 +81,80 @@ namespace CardBased
             {
                 for ( int i = 0; i < FixCounter; i++ )
                 {
-                    unused.GetChild (i).SetParent (inhand);
                     yield return new WaitForSeconds (0.5f);
+                    unused.GetChild (i).SetParent (inhand);
                 }
             }
 
         }
 
-        //IEnumerator DistributionWait()
-        //{
+        //选择技能
+        public void ChooseSkill ( )
+        {
+            if ( skillCard [ 0 ] != null && skillCard [ 1 ] == null )
+            {
+                if ( skillCard [ 0 ].CompareTag ("Card") && skillCard [ 0 ].transform.parent == inhand )
+                {
+                    pos = skillCard [ 0 ].transform.position;
+                    pos.y += offset;
+                    skillCard [ 0 ].transform.position = pos;
+                    Debug.LogFormat ("{0}被点击!" , skillCard [ 0 ].name);
+                }
+            }
+            else if( skillCard [ 0 ] != null && skillCard [ 1 ] != null )
+            {
+                if ( skillCard [ 0 ] != skillCard [ 1 ] )
+                {
+                    if ( skillCard [ 1 ].CompareTag ("Card") && skillCard [ 1 ].transform.parent == inhand )
+                    {
+                        pos = skillCard [ 0 ].transform.position;
+                        pos.y -= offset;
+                        skillCard [ 0 ].transform.position = pos;
+                        pos = skillCard [ 1 ].transform.position;
+                        pos.y += offset;
+                        skillCard [ 1 ].transform.position = pos;
+                        skillCard [ 0 ] = skillCard [ 1 ];
+                        skillCard [ 1 ] = null;
+                    }
+                }
+                else
+                {
+                    Debug.Log ("出牌!");
+                    skillCard [ 1 ].transform.parent = used;
+                    skillCard [ 0 ] = null;
+                    skillCard [ 1 ] = null;
+                }
+            }
 
-        //}
+
+
+            //if ( skillCard.Length == 1 )
+            //{
+            //    if ( skillCard [ 0 ].CompareTag ("Card") && skillCard [ 0 ].transform.parent == inhand )
+            //    {
+            //        pos = skillCard [ 0 ].transform.position;
+            //        pos.y += offset;
+            //        skillCard [ 0 ].transform.position = pos;
+            //        Debug.LogFormat ("{0}被点击!" , skillCard [ 0 ].name);
+            //    }
+            //}
+            //else if( skillCard.Length == 2 )
+            //{
+            //    if ( skillCard [ 0 ] != skillCard [ 1 ] )
+            //    {
+            //        pos = skillCard [ 0 ].transform.position;
+            //        pos.y -= offset;
+            //        skillCard [ 0 ].transform.position = pos;
+            //        if ( skillCard [ 1 ].CompareTag ("Card") && skillCard [ 1 ].transform.parent == inhand )
+            //        {
+            //            pos = skillCard [ 1 ].transform.position;
+            //            pos.y += offset;
+            //            skillCard [ 1 ].transform.position = pos;
+            //            skillCard.RemoveAt (0);
+            //        }
+            //    }
+            //}
+        }
 
 
 

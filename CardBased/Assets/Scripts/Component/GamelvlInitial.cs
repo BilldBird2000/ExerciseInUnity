@@ -72,12 +72,15 @@ public class GamelvlInitial : MonoBehaviour, IGamelvBase
     public void BuildEnemy ( )
     {
         float pos = 0.5f;
-        Transform parent = GameAsst._Inst.game.gameObject.transform.Find ("Role").transform;
+        int childNum = 1;
+        Transform parent;
 
         for ( int i = 0; i < Enemy1Num; i++ )
         {
             pos += i * 1.2f;
+            parent = GameAsst._Inst.game.gameObject.transform.Find ("UI_RoleInform").transform.GetChild (childNum);
             GameObject enemy = Instantiate (GameAsst._Inst.game.enemyArray [ 0 ] , new Vector3 (pos , 1.5f , 0) , Quaternion.Euler (0 , 0 , 0) , parent);
+            childNum++;
             enemy.AddComponent<EnemyInitial> ( );
             enemy.GetComponent<EnemyInitial> ( ).Initial (Enemy1Id);
             //Enemy1Id += i;
@@ -89,10 +92,12 @@ public class GamelvlInitial : MonoBehaviour, IGamelvBase
                 enemy.GetComponent<EnemyInitial> ( ).Roletype , enemy.GetComponent<EnemyInitial> ( ).Gold , enemy.GetComponent<EnemyInitial> ( ).Counter);
         }
 
-        for(int i=0;i< Enemy2Num;i++ )
+        for ( int i = 0; i < Enemy2Num; i++ )
         {
             pos += i * 1.2f + 1.2f;
+            parent = GameAsst._Inst.game.gameObject.transform.Find ("UI_RoleInform").transform.GetChild (childNum);
             GameObject enemy = Instantiate (GameAsst._Inst.game.enemyArray [ 1 ] , new Vector3 (pos , 2f , 0) , Quaternion.Euler (0 , 0 , 0) , parent);
+            childNum++;
             enemy.AddComponent<EnemyInitial> ( );
             enemy.GetComponent<EnemyInitial> ( ).Initial (Enemy2Id);
             enemy.GetComponent<EnemyInitial> ( ).Counter += i;

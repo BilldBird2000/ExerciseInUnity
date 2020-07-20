@@ -29,6 +29,7 @@ namespace CardBased
         public void JumpToUIBattle ( )
         {
             GameObject.Find ("Launch").transform.Find ("UI_Battle").gameObject.SetActive (true);
+            GameObject.Find ("Launch").transform.Find ("UI_RoleInform").gameObject.SetActive (true);
             Debug.Log ("成功加载战斗界面>>>>>>>>>>");
 
             GameAsst._Inst.checkId = GameAsst._Inst.playerDict [ GameAsst._Inst.player.name ];

@@ -45,11 +45,6 @@ public class PlayerInitial : MonoBehaviour, IRoleBase
     }
 
 
-    public void Start ( )
-    {
-        Initial ( );
-    }
-
     public void Initial ( )
     {
         //查表赋值
