@@ -24,12 +24,13 @@ namespace CardBased
         public Transform unused = GameObject.Find ("Launch/UI_Battle/Unused").transform;
         public Transform inhand = GameObject.Find ("Launch/UI_Battle/Inhand").transform;
 
-        public int FixCounter { set; get; } = 5;  //每回合默认发牌张数
         //public List<GameObject> skillCard = new List<GameObject> ( );
-        public GameObject [ ] skillCardArr = new GameObject [ 2 ];
+        //public GameObject [ ] skillCardArr = new GameObject [ 2 ];
+        public int FixCounter { set; get; } = 5;  //每回合默认发牌张数
         public GameObject skillCard;
         private Vector3 pos;
         private readonly int offset = 30;
+        public List<GameObject> tarsList = new List<GameObject> ( );
 
 
         //洗牌
@@ -89,83 +90,123 @@ namespace CardBased
 
         }
 
-        //选择技能
-        public void ChooseSkill ( )
+        //选择技能卡.
+        public void ChooseCard ( )
         {
-            if ( skillCardArr [ 0 ] != null && skillCardArr [ 1 ] == null )
-            {
-                if ( skillCardArr [ 0 ].transform.parent == inhand )
-                {
-                    pos = skillCardArr [ 0 ].transform.position;
-                    pos.y += offset;
-                    skillCardArr [ 0 ].transform.position = pos;
-                    Debug.LogFormat ("{0}被选择!" , skillCardArr [ 0 ].name);
-                }
-            }
-            if ( skillCardArr [ 0 ] != null && skillCardArr [ 1 ] != null )
-            {
-                if ( skillCardArr [ 0 ] != skillCardArr [ 1 ] )
-                {
-                    if ( skillCardArr [ 1 ].transform.parent == inhand )
-                    {
-                        pos = skillCardArr [ 0 ].transform.position;
-                        pos.y -= offset;
-                        skillCardArr [ 0 ].transform.position = pos;
-                        pos = skillCardArr [ 1 ].transform.position;
-                        pos.y += offset;
-                        skillCardArr [ 1 ].transform.position = pos;
-                        skillCardArr [ 0 ] = skillCardArr [ 1 ];
-                        skillCardArr [ 1 ] = null;
-                    }
-                }
-                else
-                {
-                    Debug.LogFormat ("出牌:{0}!" , skillCardArr [ 1 ].name);
-                    skillCardArr [ 1 ].transform.SetParent (used);
-                    pos = skillCardArr [ 1 ].transform.position;
-                    pos.x = -1000;
-                    skillCardArr [ 0 ].transform.position = pos;
-                    skillCardArr [ 0 ] = null;
-                    skillCardArr [ 1 ] = null;
-                }
-            }
-
-            //选择技能.废弃的方法,用数组代替列表
-            //if ( skillCard.Count == 1 )
-            //{
-            //    if ( skillCard [ 0 ].CompareTag ("Card") && skillCard [ 0 ].transform.parent == inhand )
-            //    {
-            //        pos = skillCard [ 0 ].transform.position;
-            //        pos.y += offset;
-            //        skillCard [ 0 ].transform.position = pos;
-            //        Debug.LogFormat ("{0}被点击!" , skillCard [ 0 ].name);
-            //    }
-            //}
-            //else if( skillCard.Count == 2 )
-            //{
-            //    if ( skillCard [ 0 ] != skillCard [ 1 ] )
-            //    {
-            //        pos = skillCard [ 0 ].transform.position;
-            //        pos.y -= offset;
-            //        skillCard [ 0 ].transform.position = pos;
-            //        if ( skillCard [ 1 ].CompareTag ("Card") && skillCard [ 1 ].transform.parent == inhand )
-            //        {
-            //            pos = skillCard [ 1 ].transform.position;
-            //            pos.y += offset;
-            //            skillCard [ 1 ].transform.position = pos;
-            //            skillCard.RemoveAt (0);
-            //        }
-            //    }
-            //}
+            pos = skillCard.transform.position;
+            pos.y += offset;
+            skillCard.transform.position = pos;
+            Debug.LogFormat ("当前选择的技能卡:{0}!" , skillCard.name);
         }
 
-
+        //撤销技能卡.
+        public void RevokeCard ( )
+        {
+            pos = skillCard.transform.position;
+            pos.y -= offset;
+            skillCard.transform.position = pos;
+        }
 
         //出牌
         public void UseCard ( )
         {
-
+            if ( GameAsst._Inst.player.GetComponent<PlayerInitial> ( ).Mana >= skillCard.GetComponent<CardInitial> ( ).ManaCast )
+            {
+                for ( int i = 0; i < tarsList.Count; i++ )
+                {
+                    skillCard.GetComponent<CardInitial> ( ).SkillFormula (tarsList [ i ]);
+                    RemoveToUsed ( );
+                }
+            }
         }
+
+        //将卡牌移动到弃牌堆
+        public void RemoveToUsed ( )
+        {
+            skillCard.transform.SetParent (used);
+            pos = skillCard.transform.position;
+            pos.x = -1000;
+            skillCard.transform.position = pos;
+            skillCard = null;
+            tarsList.Clear ( );
+        }
+
+
+
+        //选择技能.废弃的方法2,更改操作逻辑
+        //当前方法实现的效果:同一张牌点击第一次,向上偏移;第二次点击,完成出牌;不能实现选择目标
+        //public void ChooseSkill ( )
+        //{
+        //    if ( skillCardArr [ 0 ] != null && skillCardArr [ 1 ] == null )
+        //    {
+        //        if ( skillCardArr [ 0 ].transform.parent == inhand )
+        //        {
+        //            pos = skillCardArr [ 0 ].transform.position;
+        //            pos.y += offset;
+        //            skillCardArr [ 0 ].transform.position = pos;
+        //            Debug.LogFormat ("{0}被选择!" , skillCardArr [ 0 ].name);
+        //        }
+        //    }
+        //    if ( skillCardArr [ 0 ] != null && skillCardArr [ 1 ] != null )
+        //    {
+        //        if ( skillCardArr [ 0 ] != skillCardArr [ 1 ] )
+        //        {
+        //            if ( skillCardArr [ 1 ].transform.parent == inhand )
+        //            {
+        //                pos = skillCardArr [ 0 ].transform.position;
+        //                pos.y -= offset;
+        //                skillCardArr [ 0 ].transform.position = pos;
+        //                pos = skillCardArr [ 1 ].transform.position;
+        //                pos.y += offset;
+        //                skillCardArr [ 1 ].transform.position = pos;
+        //                skillCardArr [ 0 ] = skillCardArr [ 1 ];
+        //                skillCardArr [ 1 ] = null;
+        //            }
+        //        }
+        //        else
+        //        {
+        //            Debug.LogFormat ("出牌:{0}!" , skillCardArr [ 1 ].name);
+        //            skillCardArr [ 1 ].transform.SetParent (used);
+        //            pos = skillCardArr [ 1 ].transform.position;
+        //            pos.x = -1000;
+        //            skillCardArr [ 0 ].transform.position = pos;
+        //            skillCardArr [ 0 ] = null;
+        //            skillCardArr [ 1 ] = null;
+        //        }
+        //    }
+
+        //    //选择技能.废弃的方法1,用数组代替列表
+        //    //if ( skillCard.Count == 1 )
+        //    //{
+        //    //    if ( skillCard [ 0 ].CompareTag ("Card") && skillCard [ 0 ].transform.parent == inhand )
+        //    //    {
+        //    //        pos = skillCard [ 0 ].transform.position;
+        //    //        pos.y += offset;
+        //    //        skillCard [ 0 ].transform.position = pos;
+        //    //        Debug.LogFormat ("{0}被点击!" , skillCard [ 0 ].name);
+        //    //    }
+        //    //}
+        //    //else if( skillCard.Count == 2 )
+        //    //{
+        //    //    if ( skillCard [ 0 ] != skillCard [ 1 ] )
+        //    //    {
+        //    //        pos = skillCard [ 0 ].transform.position;
+        //    //        pos.y -= offset;
+        //    //        skillCard [ 0 ].transform.position = pos;
+        //    //        if ( skillCard [ 1 ].CompareTag ("Card") && skillCard [ 1 ].transform.parent == inhand )
+        //    //        {
+        //    //            pos = skillCard [ 1 ].transform.position;
+        //    //            pos.y += offset;
+        //    //            skillCard [ 1 ].transform.position = pos;
+        //    //            skillCard.RemoveAt (0);
+        //    //        }
+        //    //    }
+        //    //}
+        //}
+
+
+
+        
 
     }
 

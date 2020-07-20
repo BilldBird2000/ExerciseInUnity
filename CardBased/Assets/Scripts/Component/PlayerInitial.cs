@@ -29,7 +29,21 @@ public class PlayerInitial : MonoBehaviour, IRoleBase
         }
         get { return hp; }
     }
-    public int Mana { get; set; } = 0;
+    private int mana = 0;
+    public int Mana 
+    { 
+        set
+        {
+            if ( value > 0 )
+                mana = value;
+            else
+            {
+                mana = 0;
+                Debug.Log ("魔法值为0...");
+            }
+        }
+        get { return mana; }
+    }
     public int Gold { get; set; } = 0;
     public RoleType Roletype { get; set; } = RoleType.Player;
     public RoleStatus Rolestatus { get; set; } = RoleStatus.Alive;
@@ -43,6 +57,12 @@ public class PlayerInitial : MonoBehaviour, IRoleBase
     {
         Debug.Log ("UseSkill...");
     }
+
+    //使用技能思路调整:卡牌技能放到CardInitial类中,因为user一定是player,而且可以直接调用卡牌的各项属性值,更方便
+    //public void UseSkill ( GameObject tar )
+    //{
+    //    Debug.LogFormat ("Player UseSkill to {0}..." , tar.name);
+    //}
 
 
     public void Initial ( )
@@ -64,6 +84,7 @@ public class PlayerInitial : MonoBehaviour, IRoleBase
     }
 
     
+
 }
 
 

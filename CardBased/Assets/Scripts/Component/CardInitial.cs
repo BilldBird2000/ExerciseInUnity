@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using System;
 using CardBased;
 
@@ -77,5 +78,32 @@ public class CardInitial : MonoBehaviour, ICardBase
 
     }
 
+    public void SkillFormula ( GameObject tar )
+    {
+        int damage = Attack;
+        int tarHp = tar.GetComponent<EnemyInitial> ( ).Hp;
+        int mana = GameAsst._Inst.player.GetComponent<PlayerInitial> ( ).Mana;
+        tarHp -= damage;
+        mana -= ManaCast;
+        Debug.LogFormat ("{0}向{1}施放技能{2}!!!" , GameAsst._Inst.player.GetComponent<PlayerInitial> ( ).Name , tar.GetComponent<EnemyInitial> ( ).Name , Name);
 
+        tar.GetComponent<EnemyInitial> ( ).Hp = tarHp;
+        UpdateEnemyUiInform (tar , tarHp);
+        GameAsst._Inst.player.GetComponent<PlayerInitial> ( ).Mana = mana;
+        UpdatePlayerUiInform (mana);
+    }
+
+    public void UpdatePlayerUiInform ( int mana )
+    {
+        string manaToStr = Convert.ToString (mana);
+        GameAsst._Inst.player.transform.parent.Find ("Hp").GetComponent<Text> ( ).text = manaToStr;
+    }
+
+    public void UpdateEnemyUiInform ( GameObject tar , int hp )
+    {
+        string hpToStr = Convert.ToString (hp);
+        string maxhpToStr = Convert.ToString (tar.GetComponent<EnemyInitial> ( ).MaxHp);
+        tar.transform.parent.Find ("Hp").GetComponent<Text> ( ).text = hpToStr + "/" + maxhpToStr;
+
+    }
 }
