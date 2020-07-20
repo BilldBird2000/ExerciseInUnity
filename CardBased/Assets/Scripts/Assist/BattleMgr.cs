@@ -26,9 +26,10 @@ namespace CardBased
 
         public int FixCounter { set; get; } = 5;  //每回合默认发牌张数
         //public List<GameObject> skillCard = new List<GameObject> ( );
-        public GameObject [ ] skillCard = new GameObject [ 2 ];
+        public GameObject [ ] skillCardArr = new GameObject [ 2 ];
+        public GameObject skillCard;
         private Vector3 pos;
-        private int offset = 30;
+        private readonly int offset = 30;
 
 
         //洗牌
@@ -91,44 +92,46 @@ namespace CardBased
         //选择技能
         public void ChooseSkill ( )
         {
-            if ( skillCard [ 0 ] != null && skillCard [ 1 ] == null )
+            if ( skillCardArr [ 0 ] != null && skillCardArr [ 1 ] == null )
             {
-                if ( skillCard [ 0 ].CompareTag ("Card") && skillCard [ 0 ].transform.parent == inhand )
+                if ( skillCardArr [ 0 ].transform.parent == inhand )
                 {
-                    pos = skillCard [ 0 ].transform.position;
+                    pos = skillCardArr [ 0 ].transform.position;
                     pos.y += offset;
-                    skillCard [ 0 ].transform.position = pos;
-                    Debug.LogFormat ("{0}被点击!" , skillCard [ 0 ].name);
+                    skillCardArr [ 0 ].transform.position = pos;
+                    Debug.LogFormat ("{0}被选择!" , skillCardArr [ 0 ].name);
                 }
             }
-            else if( skillCard [ 0 ] != null && skillCard [ 1 ] != null )
+            if ( skillCardArr [ 0 ] != null && skillCardArr [ 1 ] != null )
             {
-                if ( skillCard [ 0 ] != skillCard [ 1 ] )
+                if ( skillCardArr [ 0 ] != skillCardArr [ 1 ] )
                 {
-                    if ( skillCard [ 1 ].CompareTag ("Card") && skillCard [ 1 ].transform.parent == inhand )
+                    if ( skillCardArr [ 1 ].transform.parent == inhand )
                     {
-                        pos = skillCard [ 0 ].transform.position;
+                        pos = skillCardArr [ 0 ].transform.position;
                         pos.y -= offset;
-                        skillCard [ 0 ].transform.position = pos;
-                        pos = skillCard [ 1 ].transform.position;
+                        skillCardArr [ 0 ].transform.position = pos;
+                        pos = skillCardArr [ 1 ].transform.position;
                         pos.y += offset;
-                        skillCard [ 1 ].transform.position = pos;
-                        skillCard [ 0 ] = skillCard [ 1 ];
-                        skillCard [ 1 ] = null;
+                        skillCardArr [ 1 ].transform.position = pos;
+                        skillCardArr [ 0 ] = skillCardArr [ 1 ];
+                        skillCardArr [ 1 ] = null;
                     }
                 }
                 else
                 {
-                    Debug.Log ("出牌!");
-                    skillCard [ 1 ].transform.parent = used;
-                    skillCard [ 0 ] = null;
-                    skillCard [ 1 ] = null;
+                    Debug.LogFormat ("出牌:{0}!" , skillCardArr [ 1 ].name);
+                    skillCardArr [ 1 ].transform.SetParent (used);
+                    pos = skillCardArr [ 1 ].transform.position;
+                    pos.x = -1000;
+                    skillCardArr [ 0 ].transform.position = pos;
+                    skillCardArr [ 0 ] = null;
+                    skillCardArr [ 1 ] = null;
                 }
             }
 
-
-
-            //if ( skillCard.Length == 1 )
+            //选择技能.废弃的方法,用数组代替列表
+            //if ( skillCard.Count == 1 )
             //{
             //    if ( skillCard [ 0 ].CompareTag ("Card") && skillCard [ 0 ].transform.parent == inhand )
             //    {
@@ -138,7 +141,7 @@ namespace CardBased
             //        Debug.LogFormat ("{0}被点击!" , skillCard [ 0 ].name);
             //    }
             //}
-            //else if( skillCard.Length == 2 )
+            //else if( skillCard.Count == 2 )
             //{
             //    if ( skillCard [ 0 ] != skillCard [ 1 ] )
             //    {
