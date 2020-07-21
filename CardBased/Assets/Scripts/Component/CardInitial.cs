@@ -96,7 +96,7 @@ public class CardInitial : MonoBehaviour, ICardBase
     public void UpdatePlayerUiInform ( int mana )
     {
         string manaToStr = Convert.ToString (mana);
-        GameAsst._Inst.player.transform.parent.Find ("Hp").GetComponent<Text> ( ).text = manaToStr;
+        GameAsst._Inst.player.transform.parent.Find ("Mana").GetComponent<Text> ( ).text = manaToStr;
     }
 
     public void UpdateEnemyUiInform ( GameObject tar , int hp )

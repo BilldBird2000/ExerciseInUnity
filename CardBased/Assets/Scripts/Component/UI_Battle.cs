@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using System;
 using CardBased;
 
@@ -13,7 +14,24 @@ public class UI_Battle : MonoBehaviour
 
     void Start()
     {
+        OnClickBtn ( );
         BuildStartCard ( );
+    }
+
+    //添加Battle界面的按钮点击事件
+    public void OnClickBtn ( )
+    {
+        Button btnRound = transform.Find ("Round").GetComponent<Button> ( );
+        btnRound.onClick.AddListener (NextRound);
+    }
+
+    public void NextRound ( )
+    {
+        Debug.Log ("Player行动结束!!!");
+        BattleMgr.Inst.ClearHand ( );
+
+
+        Debug.Log ("Enemy开始行动!!!");
     }
 
 

@@ -88,6 +88,8 @@ public class GamelvlInitial : MonoBehaviour, IGamelvBase
             enemy.GetComponent<EnemyInitial> ( ).Counter += i;
             enemy.GetComponent<EnemyInitial> ( ).Gold = GameAsst._Rd.Next (1 , 5);
             enemy.AddComponent<OnClickObj> ( );
+            UIMgr._Inst.InitUIInform (enemy);
+
             Debug.LogFormat ("++++初始化敌人{0},ID:{1}_{4},Tpye:{2},Gold:{3}." , enemy.GetComponent<EnemyInitial> ( ).Name , enemy.GetComponent<EnemyInitial> ( ).Id ,
                 enemy.GetComponent<EnemyInitial> ( ).Roletype , enemy.GetComponent<EnemyInitial> ( ).Gold , enemy.GetComponent<EnemyInitial> ( ).Counter);
         }
@@ -103,6 +105,8 @@ public class GamelvlInitial : MonoBehaviour, IGamelvBase
             enemy.GetComponent<EnemyInitial> ( ).Counter += i;
             enemy.GetComponent<EnemyInitial> ( ).Gold = GameAsst._Rd.Next (5 , 8);
             enemy.AddComponent<OnClickObj> ( );
+            UIMgr._Inst.InitUIInform (enemy);
+
             Debug.LogFormat ("++++初始化敌人{0},ID:{1}_{4},Tpye:{2},Gold:{3}." , enemy.GetComponent<EnemyInitial> ( ).Name , enemy.GetComponent<EnemyInitial> ( ).Id ,
                 enemy.GetComponent<EnemyInitial> ( ).Roletype , enemy.GetComponent<EnemyInitial> ( ).Gold , enemy.GetComponent<EnemyInitial> ( ).Counter);
         }

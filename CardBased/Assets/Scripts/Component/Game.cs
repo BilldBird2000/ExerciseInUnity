@@ -22,6 +22,7 @@ public class Game : MonoBehaviour
         GameAsst._Inst.player = Instantiate (player , new Vector3 (-3 , 2 , 0) , Quaternion.Euler (0 , 0 , 0) , parent);
         GameAsst._Inst.player.GetComponent<PlayerInitial> ( ).Initial ( );
         GameAsst._Inst.player.AddComponent<OnClickObj> ( );
+        UIMgr._Inst.InitUIInform (GameAsst._Inst.player);
 
         //GameObject.Find ("Player(Clone)").transform.SetParent (parent);
     }

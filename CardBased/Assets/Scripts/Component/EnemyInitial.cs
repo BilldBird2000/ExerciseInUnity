@@ -15,9 +15,9 @@ public class EnemyInitial : MonoBehaviour, IRoleBase
     {
         set
         {
-            if ( hp >= MaxHp )
+            if ( value >= MaxHp )
                 hp = MaxHp;
-            else if ( hp >= 0 && hp < MaxHp )
+            else if ( value > 0 && value < MaxHp )
                 hp = value;
             else
             {
@@ -25,6 +25,7 @@ public class EnemyInitial : MonoBehaviour, IRoleBase
                 Rolestatus = RoleStatus.Dead;
                 Die ( );
                 Destroy (this.gameObject , 0.1f);
+                transform.parent.gameObject.SetActive (false);
             }
         }
         get { return hp; }
@@ -36,7 +37,7 @@ public class EnemyInitial : MonoBehaviour, IRoleBase
 
     public void Die ( )
     {
-        Debug.Log ("Die...");
+        Debug.LogFormat ("{0}Die..." , Name);
     }
 
     public void UseSkill ( )

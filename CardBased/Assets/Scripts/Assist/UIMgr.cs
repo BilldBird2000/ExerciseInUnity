@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -42,7 +43,29 @@ namespace CardBased
             btnJump = null;
         }
 
+        //初始化ui面板的角色信息,血量,蓝量,buff图标等
+        public void InitUIInform ( GameObject role )
+        {
+            Transform root = role.transform.parent;
+            string hp;
+            string maxHp;
+            string mana;
+            if ( role.CompareTag ("Player") )
+            {
+                hp = Convert.ToString (role.GetComponent<PlayerInitial> ( ).Hp);
+                maxHp = Convert.ToString (role.GetComponent<PlayerInitial> ( ).MaxHp);
+                mana = Convert.ToString (role.GetComponent<PlayerInitial> ( ).Mana);
+                root.Find ("Hp").GetComponent<Text> ( ).text = hp + "/" + maxHp;
+                root.Find ("Mana").GetComponent<Text> ( ).text = mana;
+            }
+            else if ( role.CompareTag ("Enemy") )
+            {
+                hp = Convert.ToString (role.GetComponent<EnemyInitial> ( ).Hp);
+                maxHp = Convert.ToString (role.GetComponent<EnemyInitial> ( ).MaxHp);
+                root.Find ("Hp").GetComponent<Text> ( ).text = hp + "/" + maxHp;
+            }
 
+        }
 
 
     }

@@ -73,7 +73,6 @@ namespace CardBased
         //    //return disOrderList;
         //}
 
-
         //player回合开始时发牌.distribution:分配
         public IEnumerator Distribution ( )
         {
@@ -87,7 +86,6 @@ namespace CardBased
                     unused.GetChild (i).SetParent (inhand);
                 }
             }
-
         }
 
         //选择技能卡.
@@ -130,6 +128,24 @@ namespace CardBased
             skillCard = null;
             tarsList.Clear ( );
         }
+
+        //player回合结束,将剩余手牌移动到弃牌堆
+        public void ClearHand ( )
+        {
+            for ( int i = 0; i < inhand.childCount; i++ )
+            {
+                inhand.GetChild (i).SetParent (used);
+                pos = inhand.GetChild (i).position;
+                pos.x = -1000;
+                inhand.GetChild (i).position = pos;
+            }
+            Debug.Log ("剩余手牌移动到Used节点!!!");
+
+
+        }
+
+
+
 
 
 
@@ -203,10 +219,6 @@ namespace CardBased
         //    //    }
         //    //}
         //}
-
-
-
-        
 
     }
 
