@@ -56,7 +56,7 @@ namespace CardBased
                 maxHp = Convert.ToString (role.GetComponent<PlayerInitial> ( ).MaxHp);
                 mana = Convert.ToString (role.GetComponent<PlayerInitial> ( ).Mana);
                 root.Find ("Hp").GetComponent<Text> ( ).text = hp + "/" + maxHp;
-                root.Find ("Mana").GetComponent<Text> ( ).text = mana;
+                root.Find ("Mana/Text").GetComponent<Text> ( ).text = mana;
             }
             else if ( role.CompareTag ("Enemy") )
             {
@@ -66,6 +66,7 @@ namespace CardBased
             }
 
         }
+
 
 
     }

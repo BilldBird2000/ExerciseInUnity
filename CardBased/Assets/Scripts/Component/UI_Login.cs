@@ -64,7 +64,7 @@ public class UI_Login : MonoBehaviour
     //点击角色
     private void OnPlayer ( GameObject plr )
     {
-        Debug.LogFormat ("按钮{0}被点击" , plr.name);
+        //Debug.LogFormat ("按钮{0}被点击" , plr.name);
         GameAsst._Inst.player = plr;
         UIMgr._Inst.btnJump.interactable = true;
 
@@ -75,7 +75,7 @@ public class UI_Login : MonoBehaviour
     {
         if ( GameAsst._Inst.player != null )
         {
-            Debug.LogFormat ("撤销选择对象--------");
+            //Debug.LogFormat ("撤销选择对象--------");
             GameAsst._Inst.player = null;
             UIMgr._Inst.btnJump.interactable = false;
         }
@@ -84,7 +84,7 @@ public class UI_Login : MonoBehaviour
     //点击跳转按钮
     private void OnNext ( )
     {
-        Debug.LogFormat ("按钮{0}被点击~" , UIMgr._Inst.btnJump.gameObject.name);
+        //Debug.LogFormat ("按钮{0}被点击~" , UIMgr._Inst.btnJump.gameObject.name);
         GameObject.Find ("Launch").transform.Find ("UI_Login").gameObject.SetActive (false);
         UIMgr._Inst.JumpToUIBattle ( );
 

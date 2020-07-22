@@ -1,12 +1,12 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using CardBased;
-using System;
 
 public class EnemyInitial : MonoBehaviour, IRoleBase
 {
-    public int Counter { set; get; } = 1;
+    public int Counter { set; get; } = 1;   //表外属性
     public int Id { get; set; } = 0;
     public string Name { get; set; } = "";
     public int MaxHp { get; set; } = 0;
@@ -24,6 +24,7 @@ public class EnemyInitial : MonoBehaviour, IRoleBase
                 hp = 0;
                 Rolestatus = RoleStatus.Dead;
                 Die ( );
+                BattleMgr.Inst.liveList.Remove (transform.gameObject);
                 Destroy (this.gameObject , 0.1f);
                 transform.parent.gameObject.SetActive (false);
             }
@@ -62,6 +63,17 @@ public class EnemyInitial : MonoBehaviour, IRoleBase
     }
 
 
-
+    public float atkadd;
+    public int atkaddrnd;
+    public float atkrdc;
+    public int atkrdcrnd;
+    public float blcadd;
+    public int blcaddrnd;
+    public float blcrdc;
+    public int blcrdcrnd;
+    public float wounded;
+    public int wndrnd;
+    public int poison;
+    public int psnrnd;
 
 }

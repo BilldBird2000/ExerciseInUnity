@@ -34,9 +34,9 @@ namespace CardBased
         public string gamelvDataPath = Application.streamingAssetsPath + "/Csv/GamelevelTable.csv";
         public string cardWrrDataPath = Application.streamingAssetsPath + "/Csv/CardWarriorTable.csv";
 
+        //创建关卡
         public void BuildGamelevle ( )
         {
-            //game.gameObject.AddComponent<GamelvlInitial> ( );
             game.gameObject.GetComponent<GamelvlInitial> ( ).Initial (glvIndex);
             game.gameObject.GetComponent<GamelvlInitial> ( ).BuildEnemy ( );
             glvIndex++;

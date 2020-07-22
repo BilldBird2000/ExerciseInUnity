@@ -1,8 +1,8 @@
-﻿using CardBased;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using CardBased;
 
 public class OnClickObj : MonoBehaviour, IPointerClickHandler
 {
@@ -22,27 +22,16 @@ public class OnClickObj : MonoBehaviour, IPointerClickHandler
                 BattleMgr.Inst.ChooseCard ( );
             }
         }
-        else if ( eventData.pointerEnter.CompareTag ("Enemy") )
+        else if ( eventData.pointerEnter.CompareTag ("Enemy") || eventData.pointerEnter.CompareTag ("Player") )
         {
             if ( BattleMgr.Inst.skillCard != null )
             {
                 BattleMgr.Inst.tarsList.Add (eventData.pointerEnter);
                 BattleMgr.Inst.UseCard ( );
             }
-
-
         }
 
-
-
-
-
     }
-
-
-
-
-
 
 
     //废弃的方法,逻辑更改

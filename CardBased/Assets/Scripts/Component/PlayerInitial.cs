@@ -7,7 +7,7 @@ using System;
 
 public class PlayerInitial : MonoBehaviour, IRoleBase
 {
-    public int Counter { set; get; } = 1;
+    //public int Counter { set; get; } = 1;
     public int Id { get; set; } = 0;
     public string Name { get; set; } = "";
     public int MaxHp { get; set; } = 0;
@@ -29,9 +29,10 @@ public class PlayerInitial : MonoBehaviour, IRoleBase
         }
         get { return hp; }
     }
+    public int MaxMana { set; get; } = 3;   //表外,用于每回合初始化蓝量
     private int mana = 0;
-    public int Mana 
-    { 
+    public int Mana
+    {
         set
         {
             if ( value > 0 )
@@ -52,7 +53,6 @@ public class PlayerInitial : MonoBehaviour, IRoleBase
     {
         Debug.LogFormat ("{0}挂了..." , Name);
     }
-
     public void UseSkill ( )
     {
         Debug.Log ("UseSkill...");
@@ -79,11 +79,25 @@ public class PlayerInitial : MonoBehaviour, IRoleBase
         Roletype = ( RoleType ) ( Enum.Parse (typeof (RoleType) , rowData [ header [ 6 ] ]) );
         Rolestatus = ( RoleStatus ) ( Enum.Parse (typeof (RoleStatus) , rowData [ header [ 7 ] ]) );
 
-        Debug.LogFormat ("++++++++初始化角色{0}" , Name);
-        Debug.LogFormat ("{0},{1},{2},{3},{4},{5},{6},{7}" , Id , Name , MaxHp , Hp , Mana , Gold , Roletype , Rolestatus);
+        Debug.Log ("++++++++初始化角色:" + Name);
+        //Debug.LogFormat ("{0},{1},{2},{3},{4},{5},{6},{7}" , Id , Name , MaxHp , Hp , Mana , Gold , Roletype , Rolestatus);
     }
 
-    
+
+    //战中角色携带的buff
+    public float atkadd;
+    public int atkaddrnd;
+    public float atkrdc;
+    public int atkrdcrnd;
+    public float blcadd;
+    public int blcaddrnd;
+    public float blcrdc;
+    public int blcrdcrnd;
+    public float wounded;
+    public int wndrnd;
+    public int poison;
+    public int psnrnd;
+
 
 }
 
