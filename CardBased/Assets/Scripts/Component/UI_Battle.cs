@@ -18,18 +18,20 @@ public class UI_Battle : MonoBehaviour
         BuildStartCard ( );
     }
 
-    public void Update ( )
-    {
-        if ( BattleMgr.Inst.liveList.Count == 0 )
-        {
-            BattleMgr.Inst.ClearHand ( );
-            Debug.Log ("当前关卡结束,获得奖励,即将进入下一关!!!");
-            GameAsst._Inst.game.gameObject.transform.Find ("UI_PopUp").gameObject.SetActive (true);
-            GameAsst._Inst.game.gameObject.transform.Find ("UI_PopUp/Reward").gameObject.SetActive (true);
-            BattleMgr.Inst.liveList.Add (GameAsst._Inst.player);
-            //GameAsst._Inst.BuildGamelevle ( );
-        }
-    }
+    //public void Update ( )
+    //{
+    //    if ( BattleMgr.Inst.liveList.Count == 0 )
+    //    {
+    //        BattleMgr.Inst.ClearHand ( );
+    //        Debug.Log ("当前关卡结束,获得奖励,即将进入下一关!!!");
+    //        GameAsst._Inst.game.gameObject.transform.Find ("UI_PopUp").gameObject.SetActive (true);
+    //        GameAsst._Inst.game.gameObject.transform.Find ("UI_PopUp/Reward").gameObject.SetActive (true);
+    //        BattleMgr.Inst.SelectReward ( );
+
+    //        BattleMgr.Inst.liveList.Add (GameAsst._Inst.player);
+    //        //GameAsst._Inst.BuildGamelevle ( );
+    //    }
+    //}
 
     //添加Battle界面的按钮点击事件
     public void OnClickBtn ( )

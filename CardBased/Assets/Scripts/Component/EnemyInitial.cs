@@ -63,17 +63,17 @@ public class EnemyInitial : MonoBehaviour, IRoleBase
     }
 
 
-    public float atkadd;
-    public int atkaddrnd;
-    public float atkrdc;
-    public int atkrdcrnd;
-    public float blcadd;
-    public int blcaddrnd;
-    public float blcrdc;
-    public int blcrdcrnd;
-    public float wounded;
-    public int wndrnd;
-    public int poison;
-    public int psnrnd;
+    //战中角色携带的buff
+    public int Block { set; get; } = 0;
+    public int Strength { set; get; } = 0;
+    public int StrengthRnd { set; get; } = 0;
+    public int Agility { set; get; } = 0;
+    public int AgilityRnd { set; get; } = 0;
+    public float Weak { set; get; } = 0;
+    public int WeakRnd { set; get; } = 0;
+    public float Fragile { set; get; } = 0;
+    public int FragileRnd { set; get; } = 0;
+    public float Wounded { set; get; } = 0;
+    public int WndRnd { set; get; } = 0;
 
 }

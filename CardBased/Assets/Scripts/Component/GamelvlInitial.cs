@@ -25,29 +25,20 @@ public class GamelvlInitial : MonoBehaviour, IGamelvBase
     public int Enemy5Num { set; get; } = 0;
 
 
-    //public void Update ( )
-    //{
-    //    if ( BattleMgr.Inst.liveList.Count == 0 )
-    //    {
-    //        BattleMgr.Inst.ClearHand ( );
-    //        Debug.Log ("当前关卡结束,获得奖励,即将进入下一关!!!");
-    //        transform.Find ("UI_PopUp").gameObject.SetActive (true);
-    //        transform.Find ("UI_PopUp/Reward").gameObject.SetActive (true);
-    //        BattleMgr.Inst.liveList.Add (GameAsst._Inst.player);
-    //        //GameAsst._Inst.BuildGamelevle ( );
-    //    }
-    //    //if ( !NotPass )
-    //    //{
-    //    //    GameAsst._Inst.lvPass = true;
-    //    //    NotPass = false;
-    //    //}
-    //    //if( GameAsst._Inst.lvPass )
-    //    //{
-    //    //    Glvstatus = GamelevelStatus.Done;
-    //    //    GameAsst._Inst.lvPass = false;
-    //    //}
-
-    //}
+    public void Update ( )
+    {
+        if ( GameAsst._Inst.lvPass )
+        {
+            Glvstatus = GamelevelStatus.Done;
+            BattleMgr.Inst.ClearHand ( );
+            Debug.Log ("当前关卡结束,获得奖励,即将进入下一关!!!");
+            GameAsst._Inst.game.gameObject.transform.Find ("UI_PopUp").gameObject.SetActive (true);
+            GameAsst._Inst.game.gameObject.transform.Find ("UI_PopUp/Reward").gameObject.SetActive (true);
+            BattleMgr.Inst.SelectReward ( );
+            GameAsst._Inst.BuildGamelevle ( );
+            GameAsst._Inst.lvPass = false;
+        }
+    }
 
     public void Initial ( int glvIndex )
     {
@@ -87,6 +78,7 @@ public class GamelvlInitial : MonoBehaviour, IGamelvBase
             pos += i * 1.2f;
             parent = GameAsst._Inst.game.gameObject.transform.Find ("UI_RoleInform").transform.GetChild (childNum);
             GameObject enemy = Instantiate (GameAsst._Inst.game.enemyArray [ 0 ] , new Vector3 (pos , 1.5f , 0) , Quaternion.Euler (0 , 0 , 0) , parent);
+            enemy.transform.parent.gameObject.SetActive (true);
             childNum++;
             enemy.AddComponent<EnemyInitial> ( );
             enemy.GetComponent<EnemyInitial> ( ).Initial (Enemy1Id);
@@ -105,6 +97,7 @@ public class GamelvlInitial : MonoBehaviour, IGamelvBase
             pos += i * 1.2f + 1.2f;
             parent = GameAsst._Inst.game.gameObject.transform.Find ("UI_RoleInform").transform.GetChild (childNum);
             GameObject enemy = Instantiate (GameAsst._Inst.game.enemyArray [ 1 ] , new Vector3 (pos , 2f , 0) , Quaternion.Euler (0 , 0 , 0) , parent);
+            enemy.transform.parent.gameObject.SetActive (true);
             childNum++;
             enemy.AddComponent<EnemyInitial> ( );
             enemy.GetComponent<EnemyInitial> ( ).Initial (Enemy2Id);

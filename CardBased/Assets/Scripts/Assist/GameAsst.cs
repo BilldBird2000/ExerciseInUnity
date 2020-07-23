@@ -32,7 +32,7 @@ namespace CardBased
         public string playerDataPath = Application.streamingAssetsPath + "/Csv/PlayerTable.csv";
         public string enemyDataPath = Application.streamingAssetsPath + "/Csv/EnemyTable.csv";
         public string gamelvDataPath = Application.streamingAssetsPath + "/Csv/GamelevelTable.csv";
-        public string cardWrrDataPath = Application.streamingAssetsPath + "/Csv/CardWarriorTable.csv";
+        public string cardWrrDataPath = Application.streamingAssetsPath + "/Csv/CardWarriorTableV2.csv";
 
         //创建关卡
         public void BuildGamelevle ( )

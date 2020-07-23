@@ -134,6 +134,12 @@ namespace CardBased
             //Debug.Log ("剩余手牌移动到Used节点!!!");
         }
 
+        //选择战利品
+        public void SelectReward ( )
+        {
+
+        }
+
 
         //洗牌,废弃的方法,由更换父节点代替列表切换
         //public int maxEnemies = 5;
