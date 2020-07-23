@@ -1,0 +1,14 @@
+Id,Name,Cardtype,Skilltype,Cardrare,Cardlevel,ManaCast,MaxCounter,Attack,Block,Strength,StrengthRnd,Agility,AgilityRnd,Wounded,WndRnd,Weak,WeakRnd,Fiagile,FiagileRnd,Repeat,DrawNum,RandomTars,,,CardTarget
+50001,´ò»÷,Attack,Single,LvC,LvB,1,5,5,0,0,0,0,0,0,0,0,0,0,0,,,,,,Enemy
+50002,·ÀÓù,Skill,Single,LvC,LvB,1,5,0,6,0,0,0,0,0,0,0,0,0,0,,,,,,Player
+50003,Í´»÷,Attack,Single,LvC,LvB,2,3,8,0,0,0,0,0,0.5,3,0,0,0,0,,,,,,Enemy
+50004,½»·æ,Attack,Single,LvC,LvB,0,2,14,0,0,0,0,0,0,0,0,0,0,0,,,,,,Enemy
+50005,È«Éí×²»÷,Attack,Single,LvC,LvB,1,2,0,0,0,0,0,0,0,0,0,0,0,0,,,,,,Enemy
+50006,»î¶¯¼¡Èâ,Skill,Single,LvC,LvB,0,2,0,0,2,1,0,0,0,0,0,0,0,0,,,,,,Player
+50007,ËÊ¼çÎÞÊÓ,Skill,Single,LvC,LvB,1,2,0,8,0,0,0,0,0,0,0,0,0,0,,,,,,Player
+50008,½ð¸Õ±Û,Attack,Single,LvC,LvB,2,2,12,0,0,0,0,0,0,0,0.25,3,0,0,,,,,,Enemy
+50009,Ë³ÅüÕ¶,Attack,All,LvC,LvB,1,2,8,0,0,0,0,0,0,0,0,0,0,0,,,,,,Enemy
+50010,»ØÐýïÚ,Attack,Random,LvC,LvB,1,2,3,0,0,0,0,0,0,0,0,0,0,0,,,3,,,Enemy
+50011,Ë«ÖØ´ò»÷,Attack,Single,LvC,LvB,1,3,5,0,0,0,0,0,0,0,0,0,0,0,,,,,,Enemy
+50012,ÌúÕ¶²¨,Attack,Single,LvC,LvB,1,2,5,5,0,0,0,0,0,0,0,0,0,0,,,,,,Enemy
+50013,½£±ú´ò»÷,Attack,Single,LvC,LvB,1,3,9,0,0,0,0,0,0,0,0,0,0,0,,,,,,Enemy
