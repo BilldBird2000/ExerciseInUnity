@@ -6,6 +6,8 @@ using CardBased;
 
 public class OnClickObj : MonoBehaviour, IPointerClickHandler
 {
+    //private List<GameObject> tempList = new List<GameObject> ( );
+    private List<EnemyInitial> tempList = new List<EnemyInitial> ( );
     public void OnPointerClick ( PointerEventData eventData )
     {
         if ( eventData.pointerEnter.CompareTag ("Card") )
@@ -26,7 +28,19 @@ public class OnClickObj : MonoBehaviour, IPointerClickHandler
         {
             if ( BattleMgr.Inst.skillCard != null )
             {
-                BattleMgr.Inst.tarsList.Add (eventData.pointerEnter);
+                if ( BattleMgr.Inst.skillCard.GetComponent<CardInitial> ( ).Skilltype == SkillType.Single )
+                    BattleMgr.Inst.tarsList.Add (eventData.pointerEnter);
+                else if ( BattleMgr.Inst.skillCard.GetComponent<CardInitial> ( ).Skilltype == SkillType.All )
+                {
+                    tempList.AddRange (GameAsst._Inst.game.transform.Find ("UI_RoleInform").GetComponentsInChildren<EnemyInitial> ( ));
+                    for ( int i = 0; i < tempList.Count; i++ )
+                        BattleMgr.Inst.tarsList.Add (tempList [ i ].gameObject);
+                    tempList.Clear ( );
+                }
+                else if ( BattleMgr.Inst.skillCard.GetComponent<CardInitial> ( ).Skilltype == SkillType.Random )
+                {
+
+                }
                 BattleMgr.Inst.UseCard ( );
             }
         }

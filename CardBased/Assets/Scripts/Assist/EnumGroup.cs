@@ -51,9 +51,10 @@ namespace CardBased
     //技能对象数量
     public enum SkillType
     {
-        Single,
-        Multi,
-        All,
+        Single, //指定一个目标
+        Multi,  //指定两个目标
+        Random, //点选一个目标,得到随机个敌人(可以重复)
+        All,    //点选一个目标,得到全部敌人
         None,
         Region,
     }
