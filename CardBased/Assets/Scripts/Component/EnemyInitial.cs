@@ -24,9 +24,9 @@ public class EnemyInitial : MonoBehaviour, IRoleBase
                 hp = 0;
                 Rolestatus = RoleStatus.Dead;
                 Die ( );
-                BattleMgr.Inst.liveList.Remove (transform.gameObject);
-                Destroy (this.gameObject , 0.1f);
-                transform.parent.gameObject.SetActive (false);
+                BattleMgr.Inst.liveList.Remove (transform.parent.gameObject);
+                Destroy (transform.parent.gameObject , 0.1f);
+                transform.parent.parent.parent.gameObject.SetActive (false);
             }
         }
         get { return hp; }

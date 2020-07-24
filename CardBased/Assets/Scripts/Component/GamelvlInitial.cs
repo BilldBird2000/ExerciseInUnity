@@ -32,10 +32,9 @@ public class GamelvlInitial : MonoBehaviour, IGamelvBase
             Glvstatus = GamelevelStatus.Done;
             BattleMgr.Inst.ClearHand ( );
             Debug.Log ("当前关卡结束,获得奖励,即将进入下一关!!!");
-            GameAsst._Inst.game.gameObject.transform.Find ("UI_PopUp").gameObject.SetActive (true);
-            GameAsst._Inst.game.gameObject.transform.Find ("UI_PopUp/Reward").gameObject.SetActive (true);
+            
             BattleMgr.Inst.SelectReward ( );
-            GameAsst._Inst.BuildGamelevle ( );
+            //GameAsst._Inst.BuildGamelevle ( );
             GameAsst._Inst.lvPass = false;
         }
     }
@@ -69,16 +68,14 @@ public class GamelvlInitial : MonoBehaviour, IGamelvBase
 
     public void BuildEnemy ( )
     {
-        float pos = 0.5f;
         int childNum = 1;
         Transform parent;
 
         for ( int i = 0; i < Enemy1Num; i++ )
         {
-            pos += i * 1.2f;
-            parent = GameAsst._Inst.game.gameObject.transform.Find ("UI_RoleInform").transform.GetChild (childNum);
-            GameObject enemy = Instantiate (GameAsst._Inst.game.enemyArray [ 0 ] , new Vector3 (pos , 1.5f , 0) , Quaternion.Euler (0 , 0 , 0) , parent);
-            enemy.transform.parent.gameObject.SetActive (true);
+            parent = GameAsst._Inst.game.gameObject.transform.Find ("UI_RoleInform").transform.GetChild (childNum).Find ("Pos");
+            GameObject enemy = Instantiate (GameAsst._Inst.game.enemyPrefabArray [ 0 ] , parent).transform.GetChild (0).gameObject;
+            enemy.transform.parent.parent.parent.gameObject.SetActive (true);
             childNum++;
             enemy.AddComponent<EnemyInitial> ( );
             enemy.GetComponent<EnemyInitial> ( ).Initial (Enemy1Id);
@@ -86,7 +83,7 @@ public class GamelvlInitial : MonoBehaviour, IGamelvBase
             enemy.GetComponent<EnemyInitial> ( ).Gold = GameAsst._Rd.Next (1 , 5);
             enemy.AddComponent<OnClickObj> ( );
             UIMgr._Inst.InitUIInform (enemy);
-            BattleMgr.Inst.liveList.Add (enemy);
+            BattleMgr.Inst.liveList.Add (enemy.transform.parent.gameObject);
 
             //Debug.LogFormat ("++++初始化敌人{0},ID:{1}_{4},Tpye:{2},Gold:{3}." , enemy.GetComponent<EnemyInitial> ( ).Name , enemy.GetComponent<EnemyInitial> ( ).Id ,
             //    enemy.GetComponent<EnemyInitial> ( ).Roletype , enemy.GetComponent<EnemyInitial> ( ).Gold , enemy.GetComponent<EnemyInitial> ( ).Counter);
@@ -94,10 +91,9 @@ public class GamelvlInitial : MonoBehaviour, IGamelvBase
 
         for ( int i = 0; i < Enemy2Num; i++ )
         {
-            pos += i * 1.2f + 1.2f;
-            parent = GameAsst._Inst.game.gameObject.transform.Find ("UI_RoleInform").transform.GetChild (childNum);
-            GameObject enemy = Instantiate (GameAsst._Inst.game.enemyArray [ 1 ] , new Vector3 (pos , 2f , 0) , Quaternion.Euler (0 , 0 , 0) , parent);
-            enemy.transform.parent.gameObject.SetActive (true);
+            parent = GameAsst._Inst.game.gameObject.transform.Find ("UI_RoleInform").transform.GetChild (childNum).Find ("Pos");
+            GameObject enemy = Instantiate (GameAsst._Inst.game.enemyPrefabArray [ 1 ] , parent).transform.GetChild (0).gameObject;
+            enemy.transform.parent.parent.parent.gameObject.SetActive (true);
             childNum++;
             enemy.AddComponent<EnemyInitial> ( );
             enemy.GetComponent<EnemyInitial> ( ).Initial (Enemy2Id);
@@ -105,7 +101,7 @@ public class GamelvlInitial : MonoBehaviour, IGamelvBase
             enemy.GetComponent<EnemyInitial> ( ).Gold = GameAsst._Rd.Next (5 , 8);
             enemy.AddComponent<OnClickObj> ( );
             UIMgr._Inst.InitUIInform (enemy);
-            BattleMgr.Inst.liveList.Add (enemy);
+            BattleMgr.Inst.liveList.Add (enemy.transform.parent.gameObject);
 
             //Debug.LogFormat ("++++初始化敌人{0},ID:{1}_{4},Tpye:{2},Gold:{3}." , enemy.GetComponent<EnemyInitial> ( ).Name , enemy.GetComponent<EnemyInitial> ( ).Id ,
             //    enemy.GetComponent<EnemyInitial> ( ).Roletype , enemy.GetComponent<EnemyInitial> ( ).Gold , enemy.GetComponent<EnemyInitial> ( ).Counter);

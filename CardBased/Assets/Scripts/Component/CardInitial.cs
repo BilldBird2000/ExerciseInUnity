@@ -14,7 +14,7 @@ public class CardInitial : MonoBehaviour, ICardBase
     public CardRare Cardrare { set; get; } = CardRare.LvC;
     public CardLevel Cardlevel { set; get; } = CardLevel.LvB;
     public int ManaCast { set; get; } = 0;      //蓝耗
-    public int MaxCounter { set; get; } = 0;    //最大重复数量,超出将不能被实例化
+    public int MaxCounter { set; get; } = 0;    //最大重复数量,超出将不能被实例化,涉及到写表
     public int Attack { set; get; } = 0;        //攻击力
     public int Block { set; get; } = 0;         //格挡值
     public int Strength { set; get; } = 0;      //力量buff,当前回合额外增加攻击力
@@ -106,7 +106,7 @@ public class CardInitial : MonoBehaviour, ICardBase
             enmInit.Hp = tarHp;
             UpdateEnemyUiInform (tar , tarHp);
         }
-        
+
         float blc = ( Block + plrInit.Agility ) * ( 1 - plrInit.Fragile );
         int block = Convert.ToInt32 (Math.Floor (blc));
         blc -= block;
@@ -114,7 +114,7 @@ public class CardInitial : MonoBehaviour, ICardBase
             block++;
         BattleMgr.Inst.block += block;
         string blockToStr = Convert.ToString (BattleMgr.Inst.block);
-        GameAsst._Inst.player.transform.parent.Find ("Block/Text").GetComponent<Text> ( ).text = blockToStr;
+        GameAsst._Inst.player.transform.parent.parent.parent.Find ("Block/Text").GetComponent<Text> ( ).text = blockToStr;
 
         int mana = plrInit.Mana;
         mana -= ManaCast;
@@ -131,7 +131,7 @@ public class CardInitial : MonoBehaviour, ICardBase
     public void UpdatePlayerUiInform ( int mana )
     {
         string manaToStr = Convert.ToString (mana);
-        GameAsst._Inst.player.transform.parent.Find ("Mana/Text").GetComponent<Text> ( ).text = manaToStr;
+        GameAsst._Inst.player.transform.parent.parent.parent.Find ("Mana/Text").GetComponent<Text> ( ).text = manaToStr;
     }
 
     //更新Enemy面板信息
@@ -139,7 +139,7 @@ public class CardInitial : MonoBehaviour, ICardBase
     {
         string hpToStr = Convert.ToString (hp);
         string maxhpToStr = Convert.ToString (tar.GetComponent<EnemyInitial> ( ).MaxHp);
-        tar.transform.parent.Find ("Hp").GetComponent<Text> ( ).text = hpToStr + "/" + maxhpToStr;
+        tar.transform.parent.parent.parent.Find ("Hp").GetComponent<Text> ( ).text = hpToStr + "/" + maxhpToStr;
 
     }
 

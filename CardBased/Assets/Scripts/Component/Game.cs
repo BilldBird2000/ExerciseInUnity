@@ -6,8 +6,8 @@ using CardBased;
 public class Game : MonoBehaviour
 {
     //prefab
-    public GameObject player;
-    public GameObject [ ] enemyArray;
+    public GameObject playerPrefab;
+    public GameObject [ ] enemyPrefabArray;
 
     
     public void Start ( )
@@ -18,8 +18,9 @@ public class Game : MonoBehaviour
     //实例化player
     public void BuildPlayer ( )
     {
-        Transform parent = GameObject.Find ("Launch").transform.Find ("UI_RoleInform/Player").transform;
-        GameAsst._Inst.player = Instantiate (player , new Vector3 (-3 , 2 , 0) , Quaternion.Euler (0 , 0 , 0) , parent);
+        Transform parent = GameObject.Find ("Launch").transform.Find ("UI_RoleInform/Player/Pos").transform;
+        GameAsst._Inst.player = Instantiate (playerPrefab , parent).transform.GetChild (0).gameObject;
+        GameAsst._Inst.player.transform.parent.parent.parent.gameObject.SetActive (true);
         GameAsst._Inst.player.GetComponent<PlayerInitial> ( ).Initial ( );
         GameAsst._Inst.player.AddComponent<OnClickObj> ( );
         UIMgr._Inst.InitUIInform (GameAsst._Inst.player);

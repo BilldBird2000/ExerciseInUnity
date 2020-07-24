@@ -36,6 +36,7 @@ namespace CardBased
         public List<GameObject> tarsList = new List<GameObject> ( );    //存放战中对象
         public List<GameObject> liveList = new List<GameObject> ( );    //用于检查是否还有存活
         public int block;
+        public UI_Battle uiBattle = GameAsst._Inst.game.transform.Find ("UI_Battle").GetComponent<UI_Battle> ( );
 
 
         //洗牌
@@ -121,9 +122,10 @@ namespace CardBased
             skillCard = null;
             tarsList.Clear ( );
             block = 0;
-            GameAsst._Inst.player.transform.parent.Find ("Block/Text").GetComponent<Text> ( ).text = Convert.ToString (block);
-            GameAsst._Inst.player.GetComponent<PlayerInitial> ( ).Mana = GameAsst._Inst.player.GetComponent<PlayerInitial> ( ).MaxMana;
-            GameAsst._Inst.player.transform.parent.Find ("Mana/Text").GetComponent<Text> ( ).text = Convert.ToString (GameAsst._Inst.player.GetComponent<PlayerInitial> ( ).MaxMana);
+            GameAsst._Inst.player.transform.parent.parent.parent.Find ("Block/Text").GetComponent<Text> ( ).text = Convert.ToString (block);
+            GameAsst._Inst.player.GetComponent<PlayerInitial> ( ).Mana =GameAsst._Inst.player.GetComponent<PlayerInitial> ( ).MaxMana;
+            GameAsst._Inst.player.transform.parent.parent.parent.Find ("Mana/Text").GetComponent<Text> ( ).text =
+                Convert.ToString (GameAsst._Inst.player.GetComponent<PlayerInitial> ( ).MaxMana);
             for ( int i = inhand.childCount - 1; i >= 0; i-- )
             {
                 pos = inhand.GetChild (i).position;
@@ -137,7 +139,33 @@ namespace CardBased
         //选择战利品
         public void SelectReward ( )
         {
+            GameAsst._Inst.game.gameObject.transform.Find ("UI_PopUp").gameObject.SetActive (true);
+            GameAsst._Inst.game.gameObject.transform.Find ("UI_PopUp/Reward").gameObject.SetActive (true);
+            Transform parent = GameAsst._Inst.game.gameObject.transform.Find ("UI_PopUp/Reward/Select");
+            GameObject card;
+            int cardNum = 0;
+            while ( cardNum != 3 )
+            {
+                int rd = GameAsst._Rd.Next (0 , uiBattle.cardPrefabArray.Length);
+                card= uiBattle.BuildCard (rd);
+                card.transform.SetParent (parent);
+                cardNum++;
+            }
 
+            //int [ ] randomArray = new int [ 3 ];
+            //int [ ] counterArray = new int [ 3 ];
+            //int cardNum = 0;
+            //while( cardNum !=3)
+            //{
+            //    int rd = GameAsst._Rd.Next (0 , uiBattle.cardPrefabArray.Length);
+            //    if ( uiBattle.cardPrefabArray [ rd ].GetComponent<CardInitial> ( ).CanGet )
+            //    {
+            //        randomArray [ cardNum ] = rd;
+            //        counterArray [ cardNum ] = uiBattle.cardPrefabArray [ rd ].GetComponent<CardInitial> ( ).Counter;
+            //        uiBattle.cardPrefabArray [ rd ].GetComponent<CardInitial> ( ).Counter++;
+            //        cardNum++;
+            //    }
+            //}
         }
 
 

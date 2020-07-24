@@ -10,7 +10,7 @@ public class OnClickObj : MonoBehaviour, IPointerClickHandler
     private List<EnemyInitial> tempList = new List<EnemyInitial> ( );
     public void OnPointerClick ( PointerEventData eventData )
     {
-        if ( eventData.pointerEnter.CompareTag ("Card") )
+        if ( eventData.pointerEnter.CompareTag ("Card") && eventData.pointerEnter.transform.parent == BattleMgr.Inst.inhand )
         {
             if ( BattleMgr.Inst.skillCard == null )
             {
@@ -24,6 +24,22 @@ public class OnClickObj : MonoBehaviour, IPointerClickHandler
                 BattleMgr.Inst.ChooseCard ( );
             }
         }
+        if ( eventData.pointerEnter.CompareTag ("Card") &&
+            eventData.pointerEnter.transform.parent == GameAsst._Inst.game.transform.Find ("UI_PopUp/Reward/Select") )
+        {
+            if ( BattleMgr.Inst.skillCard == null )
+            {
+                BattleMgr.Inst.skillCard = eventData.pointerEnter;
+                BattleMgr.Inst.ChooseCard ( );
+            }
+            else
+            {
+                BattleMgr.Inst.RevokeCard ( );
+                BattleMgr.Inst.skillCard = eventData.pointerEnter;
+                BattleMgr.Inst.ChooseCard ( );
+            }
+        }
+
         else if ( eventData.pointerEnter.CompareTag ("Enemy") || eventData.pointerEnter.CompareTag ("Player") )
         {
             if ( BattleMgr.Inst.skillCard != null )

@@ -46,7 +46,7 @@ namespace CardBased
         //初始化ui面板的角色信息,血量,蓝量,buff图标等
         public void InitUIInform ( GameObject role )
         {
-            Transform root = role.transform.parent;
+            Transform root = role.transform.parent.parent.parent;
             string hp;
             string maxHp;
             string mana;
