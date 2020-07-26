@@ -50,7 +50,7 @@ public class CardInitial : MonoBehaviour, ICardBase
         get { return counter; }
     }
 
-    //初始化卡牌属性值
+    ///初始化卡牌属性值
     public void Initial ( int index )
     {
         Dictionary<string , string> rowDict = CsvReader.Inst.GetRowDict (GameAsst._Inst.cardWrrDataPath , index);
@@ -80,7 +80,7 @@ public class CardInitial : MonoBehaviour, ICardBase
         WithScript = Convert.ToBoolean (rowDict [ header [ 21 ] ]);
     }
 
-    //使用卡牌技能,得到结果
+    ///使用卡牌技能,得到结果
     public void SkillResult ( GameObject tar )
     {
         PlayerInitial plrInit = GameAsst._Inst.player.GetComponent<PlayerInitial> ( );
@@ -96,7 +96,7 @@ public class CardInitial : MonoBehaviour, ICardBase
             EnemyInitial enmInit = tar.GetComponent<EnemyInitial> ( );
             enmInit.Wounded = Wounded;
             enmInit.WndRnd += WndRnd;
-            float dmg = ( Attack + Strength ) * ( 1 - plrInit.Weak ) * ( 1 + enmInit.Wounded );
+            float dmg = ( Attack + Strength ) * ( 1 - plrInit.Weak ) * ( 1 + enmInit.Wounded ) * Repeat;
             int damage = Convert.ToInt32 (Math.Floor (dmg));
             dmg -= damage;
             if ( dmg >= 0.5 )
@@ -127,14 +127,14 @@ public class CardInitial : MonoBehaviour, ICardBase
 
     }
 
-    //更新player面板信息
+    ///更新player面板信息
     public void UpdatePlayerUiInform ( int mana )
     {
         string manaToStr = Convert.ToString (mana);
         GameAsst._Inst.player.transform.parent.parent.parent.Find ("Mana/Text").GetComponent<Text> ( ).text = manaToStr;
     }
 
-    //更新Enemy面板信息
+    ///更新Enemy面板信息
     public void UpdateEnemyUiInform ( GameObject tar , int hp )
     {
         string hpToStr = Convert.ToString (hp);

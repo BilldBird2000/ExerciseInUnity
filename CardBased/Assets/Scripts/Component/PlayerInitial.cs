@@ -84,7 +84,7 @@ public class PlayerInitial : MonoBehaviour, IRoleBase
     }
 
 
-    //战中角色携带的buff
+    ///战中角色携带的buff
     //public int Block { set; get; } = 0;
     public int Strength { set; get; } = 0;
     public int StrengthRnd { set; get; } = 0;

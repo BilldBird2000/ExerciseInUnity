@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 //查找子节点: usedPanel.GetChild (i).gameObject; usedPanel是Transform类型
-
+//不继承MonoBehaviour的脚本,不能直接实例化,销毁,调用协程
 
 namespace CardBased
 {
@@ -25,21 +25,23 @@ namespace CardBased
         public Transform used = GameObject.Find ("Launch/UI_Battle/Used").transform;
         public Transform unused = GameObject.Find ("Launch/UI_Battle/Unused").transform;
         public Transform inhand = GameObject.Find ("Launch/UI_Battle/Inhand").transform;
+        public Transform popup = GameAsst._Inst.game.transform.Find ("UI_PopUp");
 
         //public List<GameObject> skillCard = new List<GameObject> ( );
         //public GameObject [ ] skillCardArr = new GameObject [ 2 ];
 
-        public int FixCounter { set; get; } = 5;  //每回合默认发牌张数
+        public int FixCounter { set; get; } = 5;  ///每回合默认发牌张数
         public GameObject skillCard;
         private Vector3 pos;
         private readonly int offset = 30;
-        public List<GameObject> tarsList = new List<GameObject> ( );    //存放战中对象
-        public List<GameObject> liveList = new List<GameObject> ( );    //用于检查是否还有存活
+        public List<GameObject> tarsList = new List<GameObject> ( );    ///存放战中对象
+        public List<GameObject> liveList = new List<GameObject> ( );    ///用于检查是否还有存活
         public int block;
         public UI_Battle uiBattle = GameAsst._Inst.game.transform.Find ("UI_Battle").GetComponent<UI_Battle> ( );
 
 
-        //洗牌
+
+        ///洗牌
         public void DisOrder ( )
         {
             List<GameObject> disOrderList = new List<GameObject> ( );
@@ -64,19 +66,19 @@ namespace CardBased
             //    disOrderList.Add (card.gameObject);
         }
 
-        //player回合开始时发牌.distribution:分配
+        ///player回合开始时发牌.distribution:分配
         public IEnumerator Distribution ( )
         {
             if ( unused.childCount < FixCounter )
                 DisOrder ( );
             for ( int i = FixCounter - 1; i >= 0; i-- )
             {
-                yield return new WaitForSeconds (0.5f);
+                yield return new WaitForSeconds (0.2f);
                 unused.GetChild (i).SetParent (inhand);
             }
         }
 
-        //选择技能卡.
+        ///选择技能卡.
         public void ChooseCard ( )
         {
             pos = skillCard.transform.position;
@@ -85,7 +87,7 @@ namespace CardBased
             //Debug.LogFormat ("当前选择的技能卡:{0}!" , skillCard.name);
         }
 
-        //撤销技能卡.revoke,撤销
+        ///撤销技能卡.revoke,撤销
         public void RevokeCard ( )
         {
             pos = skillCard.transform.position;
@@ -93,18 +95,17 @@ namespace CardBased
             skillCard.transform.position = pos;
         }
 
-        //出牌
+        ///出牌
         public void UseCard ( )
         {
             if ( GameAsst._Inst.player.GetComponent<PlayerInitial> ( ).Mana >= skillCard.GetComponent<CardInitial> ( ).ManaCast )
             {
                 for ( int i = 0; i < tarsList.Count; i++ )
                     skillCard.GetComponent<CardInitial> ( ).SkillResult (tarsList [ i ]);
-
             }
         }
 
-        //将卡牌移动到弃牌堆
+        ///将卡牌移动到弃牌堆
         public void RemoveToUsed ( )
         {
             skillCard.transform.SetParent (used);
@@ -116,16 +117,27 @@ namespace CardBased
             tarsList.Clear ( );
         }
 
-        //player回合结束,重置参数,并将剩余手牌移动到弃牌堆
+        ///每回合开始重置防御值和蓝量
+        public void ResetBlockAndMana ( )
+        {
+            block = 0;
+            GameAsst._Inst.player.transform.parent.parent.parent.Find ("Block/Text").GetComponent<Text> ( ).text = Convert.ToString (block);
+            GameAsst._Inst.player.GetComponent<PlayerInitial> ( ).Mana = GameAsst._Inst.player.GetComponent<PlayerInitial> ( ).MaxMana;
+            GameAsst._Inst.player.transform.parent.parent.parent.Find ("Mana/Text").GetComponent<Text> ( ).text =
+                Convert.ToString (GameAsst._Inst.player.GetComponent<PlayerInitial> ( ).MaxMana);
+        }
+
+        ///player回合结束,重置参数,并将剩余手牌移动到弃牌堆
         public void ClearHand ( )
         {
             skillCard = null;
             tarsList.Clear ( );
-            block = 0;
-            GameAsst._Inst.player.transform.parent.parent.parent.Find ("Block/Text").GetComponent<Text> ( ).text = Convert.ToString (block);
-            GameAsst._Inst.player.GetComponent<PlayerInitial> ( ).Mana =GameAsst._Inst.player.GetComponent<PlayerInitial> ( ).MaxMana;
-            GameAsst._Inst.player.transform.parent.parent.parent.Find ("Mana/Text").GetComponent<Text> ( ).text =
-                Convert.ToString (GameAsst._Inst.player.GetComponent<PlayerInitial> ( ).MaxMana);
+            ResetBlockAndMana ( );
+            //block = 0;
+            //GameAsst._Inst.player.transform.parent.parent.parent.Find ("Block/Text").GetComponent<Text> ( ).text = Convert.ToString (block);
+            //GameAsst._Inst.player.GetComponent<PlayerInitial> ( ).Mana =GameAsst._Inst.player.GetComponent<PlayerInitial> ( ).MaxMana;
+            //GameAsst._Inst.player.transform.parent.parent.parent.Find ("Mana/Text").GetComponent<Text> ( ).text =
+            //    Convert.ToString (GameAsst._Inst.player.GetComponent<PlayerInitial> ( ).MaxMana);
             for ( int i = inhand.childCount - 1; i >= 0; i-- )
             {
                 pos = inhand.GetChild (i).position;
@@ -136,36 +148,64 @@ namespace CardBased
             //Debug.Log ("剩余手牌移动到Used节点!!!");
         }
 
-        //选择战利品
-        public void SelectReward ( )
+        ///当前关卡结束,清理牌堆
+        public void ClearGlv ( )
         {
-            GameAsst._Inst.game.gameObject.transform.Find ("UI_PopUp").gameObject.SetActive (true);
-            GameAsst._Inst.game.gameObject.transform.Find ("UI_PopUp/Reward").gameObject.SetActive (true);
+            skillCard = null;
+            tarsList.Clear ( );
+            for ( int i = inhand.childCount - 1; i >= 0; i-- )
+            {
+                pos = inhand.GetChild (i).position;
+                pos.x = -1000;
+                inhand.GetChild (i).position = pos;
+                inhand.GetChild (i).SetParent (used);
+            }
+            for ( int i = unused.childCount - 1; i >= 0; i-- )
+            {
+                pos = unused.GetChild (i).position;
+                pos.x = -1000;
+                unused.GetChild (i).position = pos;
+                unused.GetChild (i).SetParent (used);
+            }
+        }
+
+        ///选择卡牌战利品
+        public void SelectRewardCard ( )
+        {
+            GameAsst._Inst.game.transform.Find ("UI_PopUp").gameObject.SetActive (true);
+            GameAsst._Inst.game.transform.Find ("UI_PopUp/Reward").gameObject.SetActive (true);
+            UIMgr._Inst.btnJump = popup.Find ("Reward/Next").GetComponent<Button> ( );
+            UIMgr._Inst.btnJump.onClick.AddListener (NextGlv);
             Transform parent = GameAsst._Inst.game.gameObject.transform.Find ("UI_PopUp/Reward/Select");
             GameObject card;
             int cardNum = 0;
             while ( cardNum != 3 )
             {
                 int rd = GameAsst._Rd.Next (0 , uiBattle.cardPrefabArray.Length);
-                card= uiBattle.BuildCard (rd);
+                card= uiBattle.BuildRewardCard (rd);
                 card.transform.SetParent (parent);
                 cardNum++;
             }
 
-            //int [ ] randomArray = new int [ 3 ];
-            //int [ ] counterArray = new int [ 3 ];
-            //int cardNum = 0;
-            //while( cardNum !=3)
-            //{
-            //    int rd = GameAsst._Rd.Next (0 , uiBattle.cardPrefabArray.Length);
-            //    if ( uiBattle.cardPrefabArray [ rd ].GetComponent<CardInitial> ( ).CanGet )
-            //    {
-            //        randomArray [ cardNum ] = rd;
-            //        counterArray [ cardNum ] = uiBattle.cardPrefabArray [ rd ].GetComponent<CardInitial> ( ).Counter;
-            //        uiBattle.cardPrefabArray [ rd ].GetComponent<CardInitial> ( ).Counter++;
-            //        cardNum++;
-            //    }
-            //}
+        }
+
+        ///进入下一关卡
+        public void NextGlv ( )
+        {
+            skillCard.tag = "Card";
+            skillCard.transform.SetParent (used);
+            skillCard.transform.position = new Vector3 (-1000 , -400 , uiBattle.transform.position.z);
+            skillCard.transform.localScale = new Vector3 (1 , 1 , 1);
+            skillCard = null;
+            for ( int i = popup.Find ("Reward/Select").childCount - 1; i >= 0; i-- )
+                uiBattle.DestroyCard (popup.Find ("Reward/Select").GetChild (i).gameObject);
+
+            GameAsst._Inst.game.transform.Find ("UI_PopUp/Reward").gameObject.SetActive (false);
+            GameAsst._Inst.game.transform.Find ("UI_PopUp").gameObject.SetActive (false);
+            GameAsst._Inst.BuildGamelevle ( );
+            ResetBlockAndMana ( );
+            DisOrder ( );
+            uiBattle.CallCoroutine ( );
         }
 
 
@@ -230,33 +270,33 @@ namespace CardBased
         //        }
         //    }
 
-        //    //选择技能.废弃的方法1,用数组代替列表
-        //    //if ( skillCard.Count == 1 )
-        //    //{
-        //    //    if ( skillCard [ 0 ].CompareTag ("Card") && skillCard [ 0 ].transform.parent == inhand )
-        //    //    {
-        //    //        pos = skillCard [ 0 ].transform.position;
-        //    //        pos.y += offset;
-        //    //        skillCard [ 0 ].transform.position = pos;
-        //    //        Debug.LogFormat ("{0}被点击!" , skillCard [ 0 ].name);
-        //    //    }
-        //    //}
-        //    //else if( skillCard.Count == 2 )
-        //    //{
-        //    //    if ( skillCard [ 0 ] != skillCard [ 1 ] )
-        //    //    {
-        //    //        pos = skillCard [ 0 ].transform.position;
-        //    //        pos.y -= offset;
-        //    //        skillCard [ 0 ].transform.position = pos;
-        //    //        if ( skillCard [ 1 ].CompareTag ("Card") && skillCard [ 1 ].transform.parent == inhand )
-        //    //        {
-        //    //            pos = skillCard [ 1 ].transform.position;
-        //    //            pos.y += offset;
-        //    //            skillCard [ 1 ].transform.position = pos;
-        //    //            skillCard.RemoveAt (0);
-        //    //        }
-        //    //    }
-        //    //}
+        //    选择技能.废弃的方法1,用数组代替列表
+        //            if ( skillcard.count == 1 )
+        //    {
+        //        if ( skillcard [ 0 ].comparetag ("card") && skillcard [ 0 ].transform.parent == inhand )
+        //        {
+        //            pos = skillcard [ 0 ].transform.position;
+        //            pos.y += offset;
+        //            skillcard [ 0 ].transform.position = pos;
+        //            debug.logformat ("{0}被点击!" , skillcard [ 0 ].name);
+        //        }
+        //    }
+        //    else if ( skillcard.count == 2 )
+        //    {
+        //        if ( skillcard [ 0 ] != skillcard [ 1 ] )
+        //        {
+        //            pos = skillcard [ 0 ].transform.position;
+        //            pos.y -= offset;
+        //            skillcard [ 0 ].transform.position = pos;
+        //            if ( skillcard [ 1 ].comparetag ("card") && skillcard [ 1 ].transform.parent == inhand )
+        //            {
+        //                pos = skillcard [ 1 ].transform.position;
+        //                pos.y += offset;
+        //                skillcard [ 1 ].transform.position = pos;
+        //                skillcard.removeat (0);
+        //            }
+        //        }
+        //    }
         //}
 
     }

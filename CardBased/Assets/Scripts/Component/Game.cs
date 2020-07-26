@@ -5,7 +5,7 @@ using CardBased;
 
 public class Game : MonoBehaviour
 {
-    //prefab
+    ///prefab
     public GameObject playerPrefab;
     public GameObject [ ] enemyPrefabArray;
 
@@ -15,7 +15,7 @@ public class Game : MonoBehaviour
         UIMgr._Inst.StartUILogin ( );
     }
 
-    //实例化player
+    ///实例化player.约定UI_RoleInform的第一个子节点存放player
     public void BuildPlayer ( )
     {
         Transform parent = GameObject.Find ("Launch").transform.Find ("UI_RoleInform/Player/Pos").transform;

@@ -33,7 +33,7 @@ public class UI_Login : MonoBehaviour
         AddButton ( );
     }
 
-    //给当前界面的按钮统一增加点击事件
+    ///给当前界面的按钮统一增加点击事件
     public void AddButton ( )
     {
         UIMgr._Inst.btnList.AddRange (transform.GetComponentsInChildren<Button> ( ));
@@ -61,7 +61,7 @@ public class UI_Login : MonoBehaviour
 
     }
 
-    //点击角色
+    ///点击角色
     private void OnPlayer ( GameObject plr )
     {
         //Debug.LogFormat ("按钮{0}被点击" , plr.name);
@@ -70,7 +70,7 @@ public class UI_Login : MonoBehaviour
 
     }
 
-    //点击空白区域,用于撤销
+    ///点击空白区域,用于撤销
     private void OnBlank ( )
     {
         if ( GameAsst._Inst.player != null )
@@ -81,7 +81,7 @@ public class UI_Login : MonoBehaviour
         }
     }
 
-    //点击跳转按钮
+    ///点击跳转按钮
     private void OnNext ( )
     {
         //Debug.LogFormat ("按钮{0}被点击~" , UIMgr._Inst.btnJump.gameObject.name);

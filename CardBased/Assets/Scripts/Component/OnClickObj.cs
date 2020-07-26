@@ -6,11 +6,10 @@ using CardBased;
 
 public class OnClickObj : MonoBehaviour, IPointerClickHandler
 {
-    //private List<GameObject> tempList = new List<GameObject> ( );
     private List<EnemyInitial> tempList = new List<EnemyInitial> ( );
     public void OnPointerClick ( PointerEventData eventData )
     {
-        if ( eventData.pointerEnter.CompareTag ("Card") && eventData.pointerEnter.transform.parent == BattleMgr.Inst.inhand )
+        if ( eventData.pointerEnter.CompareTag ("Card")  )
         {
             if ( BattleMgr.Inst.skillCard == null )
             {
@@ -24,21 +23,20 @@ public class OnClickObj : MonoBehaviour, IPointerClickHandler
                 BattleMgr.Inst.ChooseCard ( );
             }
         }
-        if ( eventData.pointerEnter.CompareTag ("Card") &&
-            eventData.pointerEnter.transform.parent == GameAsst._Inst.game.transform.Find ("UI_PopUp/Reward/Select") )
+        if ( eventData.pointerEnter.CompareTag ("Reward") )
         {
             if ( BattleMgr.Inst.skillCard == null )
             {
                 BattleMgr.Inst.skillCard = eventData.pointerEnter;
-                BattleMgr.Inst.ChooseCard ( );
+                eventData.pointerEnter.transform.localScale = new Vector3 (1.2f , 1.2f , 1);
             }
             else
             {
-                BattleMgr.Inst.RevokeCard ( );
+                BattleMgr.Inst.skillCard.transform.localScale = new Vector3 (1 , 1 , 1);
                 BattleMgr.Inst.skillCard = eventData.pointerEnter;
-                BattleMgr.Inst.ChooseCard ( );
+                eventData.pointerEnter.transform.localScale = new Vector3 (1.2f , 1.2f , 1);
             }
-        }
+        } 
 
         else if ( eventData.pointerEnter.CompareTag ("Enemy") || eventData.pointerEnter.CompareTag ("Player") )
         {

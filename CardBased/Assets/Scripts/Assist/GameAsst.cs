@@ -28,13 +28,13 @@ namespace CardBased
             {"Coney",10003 }
         };
 
-        //集中管理表路径
+        ///集中管理表路径
         public string playerDataPath = Application.streamingAssetsPath + "/Csv/PlayerTable.csv";
         public string enemyDataPath = Application.streamingAssetsPath + "/Csv/EnemyTable.csv";
         public string gamelvDataPath = Application.streamingAssetsPath + "/Csv/GamelevelTable.csv";
         public string cardWrrDataPath = Application.streamingAssetsPath + "/Csv/CardWarriorTableV2.csv";
 
-        //创建关卡
+        ///创建关卡
         public void BuildGamelevle ( )
         {
             game.gameObject.GetComponent<GamelvlInitial> ( ).Initial (glvIndex);

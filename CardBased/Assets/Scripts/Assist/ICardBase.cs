@@ -6,7 +6,7 @@ namespace CardBased
 {
     interface ICardBase
     {
-        //CardTableV2
+        ///CardTableV2
         int Id { set; get; }
         string Name { set; get; }
         CardTpye Cardtype { set; get; }

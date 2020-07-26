@@ -7,7 +7,7 @@ using CardBased;
 
 public class UI_Battle : MonoBehaviour
 {
-    //prefab
+    ///prefab
     public GameObject [ ] cardPrefabArray;
 
     public void Start ( )
@@ -31,14 +31,14 @@ public class UI_Battle : MonoBehaviour
     //    }
     //}
 
-    //添加Battle界面的按钮点击事件
+    ///添加Battle界面的按钮点击事件
     public void OnClickBtn ( )
     {
         Button btnRound = transform.Find ("Round").GetComponent<Button> ( );
         btnRound.onClick.AddListener (NextRound);
     }
 
-    //结束player行动
+    ///结束player行动
     public void NextRound ( )
     {
         Debug.Log ("Player行动结束!!!");
@@ -47,7 +47,7 @@ public class UI_Battle : MonoBehaviour
         StartCoroutine (BattleMgr.Inst.Distribution ( ));
     }
 
-    //战斗开始,生成起手的10张牌,重新排序,发5张牌
+    ///战斗开始,生成起手的10张牌,重新排序,发5张牌
     public void BuildStartCard ( )
     {
         Transform parent = GameObject.Find ("Launch/UI_Battle/Used").transform;
@@ -67,7 +67,7 @@ public class UI_Battle : MonoBehaviour
             card.GetComponent<CardInitial> ( ).Counter += i;
             card.AddComponent<OnClickObj> ( );
 
-            //缺少一个核心操作:写表;把CanGet改写为false.
+            //缺少一个核心操作:写表. 把CanGet改写为false.这个版本忽略对单张牌最大数量的限制
             //if ( card.GetComponent<CardInitial> ( ).Counter == card.GetComponent<CardInitial> ( ).MaxCounter )
             //{
             //    Debug.LogFormat ("卡牌<{0}>已经达到最大数量,不能继续实例化.........." , card.GetComponent<CardInitial> ( ).Name);
@@ -95,17 +95,30 @@ public class UI_Battle : MonoBehaviour
         StartCoroutine (BattleMgr.Inst.Distribution ( ));
     }
 
-    public GameObject BuildCard ( int rd )
+    ///实例化战利品卡牌
+    public GameObject BuildRewardCard ( int rd )
     {
         GameObject card = Instantiate (cardPrefabArray [ rd ]);
-        int index = Convert.ToInt32 (cardPrefabArray [ rd ].name);
+        int id = Convert.ToInt32 (cardPrefabArray [ rd ].name);
         card.AddComponent<CardInitial> ( );
-        card.GetComponent<CardInitial> ( ).Initial (index);
+        card.GetComponent<CardInitial> ( ).Initial (id);
         card.AddComponent<OnClickObj> ( );
+        card.tag = "Reward";
         return card;
+    }
 
+    public void DestroyCard ( GameObject obj )
+    {
+        Destroy (obj);
+    }
+
+    public void CallCoroutine ( )
+    {
+        StartCoroutine (BattleMgr.Inst.Distribution ( ));
     }
 
 
+
+    //Destroy ( GetComponent<CardInitial> ( ));
 
 }

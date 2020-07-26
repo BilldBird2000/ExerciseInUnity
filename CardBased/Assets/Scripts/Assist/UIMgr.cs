@@ -18,15 +18,15 @@ namespace CardBased
         public List<Button> btnList = new List<Button> ( );
 
 
-        //启动游戏后加载的第一个界面
+        ///启动游戏后加载的第一个界面
         public void StartUILogin ( )
         {
             GameObject.Find ("Launch").transform.Find ("UI_Login").gameObject.SetActive (true);
             Debug.Log ("成功加载角色选择界面>>>>>>>>>>");
         }
 
-        //跳转到战斗界面,实例化player,实例化关卡
-        //清空之前界面中的不会再被调用的数据,将指针准备好,给其他界面使用,减少新开辟内存
+        ///跳转到战斗界面,实例化player,实例化关卡
+        ///清空之前界面中的不会再被调用的数据,将指针准备好,给其他界面使用,减少新开辟内存
         public void JumpToUIBattle ( )
         {
             GameObject.Find ("Launch").transform.Find ("UI_Battle").gameObject.SetActive (true);
@@ -43,7 +43,7 @@ namespace CardBased
             btnJump = null;
         }
 
-        //初始化ui面板的角色信息,血量,蓝量,buff图标等
+        ///初始化ui面板的角色信息,血量,蓝量,buff图标等
         public void InitUIInform ( GameObject role )
         {
             Transform root = role.transform.parent.parent.parent;

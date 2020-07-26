@@ -1,8 +1,8 @@
 ﻿Id,Name,MaxHp,Hp,Mana,Gold,RoleType,RoleStatus
 20001,Slime,10,10,0,0,Enemy,Alive
-20002,Goblin,10,10,0,0,Enemy,Alive
-20003,Bat,10,10,0,0,Enemy,Alive
+20002,Goblin,12,12,0,0,Enemy,Alive
+20003,Bat,8,8,0,0,Enemy,Alive
 20004,Rabbit,10,10,0,0,Enemy,Alive
-20005,Wolf,10,10,0,0,Enemy,Alive
-20006,Rockman,10,10,0,0,Enemy,Alive
-20007,Snowman,10,10,0,0,Enemy,Alive
+20005,Wolf,15,15,0,0,Enemy,Alive
+20006,Rockman,25,25,0,0,Enemy,Alive
+20007,Snowman,30,30,0,0,Enemy,Alive

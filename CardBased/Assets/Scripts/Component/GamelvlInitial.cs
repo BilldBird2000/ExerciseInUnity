@@ -30,12 +30,12 @@ public class GamelvlInitial : MonoBehaviour, IGamelvBase
         if ( GameAsst._Inst.lvPass )
         {
             Glvstatus = GamelevelStatus.Done;
-            BattleMgr.Inst.ClearHand ( );
+            BattleMgr.Inst.ClearGlv ( );
             Debug.Log ("当前关卡结束,获得奖励,即将进入下一关!!!");
             
-            BattleMgr.Inst.SelectReward ( );
-            //GameAsst._Inst.BuildGamelevle ( );
+            BattleMgr.Inst.SelectRewardCard ( );
             GameAsst._Inst.lvPass = false;
+            //GameAsst._Inst.BuildGamelevle ( );
         }
     }
 
@@ -107,6 +107,25 @@ public class GamelvlInitial : MonoBehaviour, IGamelvBase
             //    enemy.GetComponent<EnemyInitial> ( ).Roletype , enemy.GetComponent<EnemyInitial> ( ).Gold , enemy.GetComponent<EnemyInitial> ( ).Counter);
         }
 
+        for ( int i = 0; i < Enemy3Num; i++ )
+        {
+            parent = GameAsst._Inst.game.gameObject.transform.Find ("UI_RoleInform").transform.GetChild (childNum).Find ("Pos");
+            GameObject enemy = Instantiate (GameAsst._Inst.game.enemyPrefabArray [ 2 ] , parent).transform.GetChild (0).gameObject;
+            enemy.transform.parent.parent.parent.gameObject.SetActive (true);
+            childNum++;
+            enemy.AddComponent<EnemyInitial> ( );
+            enemy.GetComponent<EnemyInitial> ( ).Initial (Enemy3Id);
+            enemy.GetComponent<EnemyInitial> ( ).Counter += i;
+            enemy.GetComponent<EnemyInitial> ( ).Gold = GameAsst._Rd.Next (8 , 10);
+            enemy.AddComponent<OnClickObj> ( );
+            UIMgr._Inst.InitUIInform (enemy);
+            BattleMgr.Inst.liveList.Add (enemy.transform.parent.gameObject);
+
+            //Debug.LogFormat ("++++初始化敌人{0},ID:{1}_{4},Tpye:{2},Gold:{3}." , enemy.GetComponent<EnemyInitial> ( ).Name , enemy.GetComponent<EnemyInitial> ( ).Id ,
+            //    enemy.GetComponent<EnemyInitial> ( ).Roletype , enemy.GetComponent<EnemyInitial> ( ).Gold , enemy.GetComponent<EnemyInitial> ( ).Counter);
+        }
+
+ 
 
 
     }

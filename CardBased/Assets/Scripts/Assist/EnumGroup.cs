@@ -27,7 +27,7 @@ namespace CardBased
         Battle,
         Room,
         Shop,
-        Boos,
+        Boss,
     }
 
     //关卡状态
