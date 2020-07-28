@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using CardBased;
 
-public class CardInitial : MonoBehaviour, ICardBase
+public class CardInitial : MonoBehaviour//, ICardBase
 {
     public int Id { set; get; } = 0;
     public string Name { set; get; } = "";
@@ -53,7 +53,7 @@ public class CardInitial : MonoBehaviour, ICardBase
     ///初始化卡牌属性值
     public void Initial ( int index )
     {
-        Dictionary<string , string> rowDict = CsvReader.Inst.GetRowDict (GameAsst._Inst.cardWrrDataPath , index);
+        Dictionary<string , string> rowDict = CsvReader.Inst.GetRowDict (GameAsst.Inst.cardWrrDataPath , index);
         List<string> header = CsvReader.Inst.GetHeaderList (rowDict);
 
         Id = index;
@@ -68,12 +68,12 @@ public class CardInitial : MonoBehaviour, ICardBase
         Block = Convert.ToInt32 (rowDict [ header [ 9 ] ]);
         Strength = Convert.ToInt32 (rowDict [ header [ 10 ] ]);
         Agility = Convert.ToInt32 (rowDict [ header [ 11 ] ]);
-        Wounded = Convert.ToSingle (rowDict [ header [ 12 ] ]);
-        WndRnd = Convert.ToInt32 (rowDict [ header [ 13 ] ]);
-        Weak = Convert.ToSingle (rowDict [ header [ 14 ] ]);
-        WeakRnd = Convert.ToInt32 (rowDict [ header [ 15 ] ]);
-        Fragile = Convert.ToSingle (rowDict [ header [ 16 ] ]);
-        FragileRnd = Convert.ToInt32 (rowDict [ header [ 17 ] ]);
+        Weak = Convert.ToSingle (rowDict [ header [ 12 ] ]);
+        WeakRnd = Convert.ToInt32 (rowDict [ header [ 13 ] ]);
+        Fragile = Convert.ToSingle (rowDict [ header [ 14 ] ]);
+        FragileRnd = Convert.ToInt32 (rowDict [ header [ 15 ] ]);
+        Wounded = Convert.ToSingle (rowDict [ header [ 16 ] ]);
+        WndRnd = Convert.ToInt32 (rowDict [ header [ 17 ] ]);
         Repeat = Convert.ToInt32 (rowDict [ header [ 18 ] ]);
         DrawNum = Convert.ToInt32 (rowDict [ header [ 19 ] ]);
         RandomTars = Convert.ToInt32 (rowDict [ header [ 20 ] ]);
@@ -83,20 +83,20 @@ public class CardInitial : MonoBehaviour, ICardBase
     ///使用卡牌技能,得到结果
     public void SkillResult ( GameObject tar )
     {
-        PlayerInitial plrInit = GameAsst._Inst.player.GetComponent<PlayerInitial> ( );
+        PlayerInitial plrInit = GameAsst.Inst.player.GetComponent<PlayerInitial> ( );
         plrInit.Strength += Strength;
         plrInit.Agility += Agility;
-        plrInit.Weak = Weak;
-        plrInit.WeakRnd += WeakRnd;
-        plrInit.Fragile = Fragile;
-        plrInit.FragileRnd += FragileRnd;
-
+        
         if ( tar.CompareTag ("Enemy") )
         {
             EnemyInitial enmInit = tar.GetComponent<EnemyInitial> ( );
+            enmInit.Weak = Weak;
+            enmInit.WeakRnd += WeakRnd;
+            enmInit.Fragile = Fragile;
+            enmInit.FragileRnd += FragileRnd;
             enmInit.Wounded = Wounded;
             enmInit.WndRnd += WndRnd;
-            float dmg = ( Attack + Strength ) * ( 1 - plrInit.Weak ) * ( 1 + enmInit.Wounded ) * Repeat;
+            float dmg = ( Attack + plrInit.Strength ) * ( 1 - plrInit.Weak ) * ( 1 + enmInit.Wounded ) * Repeat;
             int damage = Convert.ToInt32 (Math.Floor (dmg));
             dmg -= damage;
             if ( dmg >= 0.5 )
@@ -112,9 +112,9 @@ public class CardInitial : MonoBehaviour, ICardBase
         blc -= block;
         if ( blc >= 0.5 )
             block++;
-        BattleMgr.Inst.block += block;
-        string blockToStr = Convert.ToString (BattleMgr.Inst.block);
-        GameAsst._Inst.player.transform.parent.parent.parent.Find ("Block/Text").GetComponent<Text> ( ).text = blockToStr;
+        plrInit.Block += block;
+        string blockToStr = Convert.ToString (plrInit.Block);
+        GameAsst.Inst.player.transform.parent.parent.parent.Find ("Block/Text").GetComponent<Text> ( ).text = blockToStr;
 
         int mana = plrInit.Mana;
         mana -= ManaCast;
@@ -123,7 +123,7 @@ public class CardInitial : MonoBehaviour, ICardBase
         BattleMgr.Inst.RemoveToUsed ( );
 
         if ( BattleMgr.Inst.liveList.Count == 0 )
-            GameAsst._Inst.lvPass = true;
+            GameAsst.Inst.lvPass = true;
 
     }
 
@@ -131,7 +131,7 @@ public class CardInitial : MonoBehaviour, ICardBase
     public void UpdatePlayerUiInform ( int mana )
     {
         string manaToStr = Convert.ToString (mana);
-        GameAsst._Inst.player.transform.parent.parent.parent.Find ("Mana/Text").GetComponent<Text> ( ).text = manaToStr;
+        GameAsst.Inst.player.transform.parent.parent.parent.Find ("Mana/Text").GetComponent<Text> ( ).text = manaToStr;
     }
 
     ///更新Enemy面板信息

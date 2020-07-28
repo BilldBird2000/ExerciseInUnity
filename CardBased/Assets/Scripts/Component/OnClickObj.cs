@@ -46,7 +46,7 @@ public class OnClickObj : MonoBehaviour, IPointerClickHandler
                     BattleMgr.Inst.tarsList.Add (eventData.pointerEnter);
                 else if ( BattleMgr.Inst.skillCard.GetComponent<CardInitial> ( ).Skilltype == SkillType.All )
                 {
-                    tempList.AddRange (GameAsst._Inst.game.transform.Find ("UI_RoleInform").GetComponentsInChildren<EnemyInitial> ( ));
+                    tempList.AddRange (GameAsst.Inst.game.transform.Find ("UI_RoleInform").GetComponentsInChildren<EnemyInitial> ( ));
                     for ( int i = 0; i < tempList.Count; i++ )
                         BattleMgr.Inst.tarsList.Add (tempList [ i ].gameObject);
                     tempList.Clear ( );

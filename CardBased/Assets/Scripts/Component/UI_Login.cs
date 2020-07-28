@@ -36,26 +36,26 @@ public class UI_Login : MonoBehaviour
     ///给当前界面的按钮统一增加点击事件
     public void AddButton ( )
     {
-        UIMgr._Inst.btnList.AddRange (transform.GetComponentsInChildren<Button> ( ));
-        for ( int i = 0; i < UIMgr._Inst.btnList.Count; i++ )
+        UIMgr.Inst.btnList.AddRange (transform.GetComponentsInChildren<Button> ( ));
+        for ( int i = 0; i < UIMgr.Inst.btnList.Count; i++ )
         {
-            Button sender = UIMgr._Inst.btnList [ i ];
+            Button sender = UIMgr.Inst.btnList [ i ];
             if ( sender.gameObject.name == "Next" )
             {
-                UIMgr._Inst.btnJump = UIMgr._Inst.btnList [ i ];
-                UIMgr._Inst.btnJump.interactable = false;
-                UIMgr._Inst.btnJump.onClick.AddListener (OnNext);
+                UIMgr.Inst.btnJump = UIMgr.Inst.btnList [ i ];
+                UIMgr.Inst.btnJump.interactable = false;
+                UIMgr.Inst.btnJump.onClick.AddListener (OnNext);
 
             }
             else if ( sender.gameObject.name == "Blank" )
             {
                 sender.interactable = true;
-                UIMgr._Inst.btnList [ i ].onClick.AddListener (OnBlank);
+                UIMgr.Inst.btnList [ i ].onClick.AddListener (OnBlank);
             }
             else
             {
                 sender.interactable = true;
-                UIMgr._Inst.btnList [ i ].onClick.AddListener (delegate ( ) { OnPlayer (sender.gameObject); });
+                UIMgr.Inst.btnList [ i ].onClick.AddListener (delegate ( ) { OnPlayer (sender.gameObject); });
             }
         }
 
@@ -65,19 +65,19 @@ public class UI_Login : MonoBehaviour
     private void OnPlayer ( GameObject plr )
     {
         //Debug.LogFormat ("按钮{0}被点击" , plr.name);
-        GameAsst._Inst.player = plr;
-        UIMgr._Inst.btnJump.interactable = true;
+        GameAsst.Inst.player = plr;
+        UIMgr.Inst.btnJump.interactable = true;
 
     }
 
     ///点击空白区域,用于撤销
     private void OnBlank ( )
     {
-        if ( GameAsst._Inst.player != null )
+        if ( GameAsst.Inst.player != null )
         {
             //Debug.LogFormat ("撤销选择对象--------");
-            GameAsst._Inst.player = null;
-            UIMgr._Inst.btnJump.interactable = false;
+            GameAsst.Inst.player = null;
+            UIMgr.Inst.btnJump.interactable = false;
         }
     }
 
@@ -86,7 +86,7 @@ public class UI_Login : MonoBehaviour
     {
         //Debug.LogFormat ("按钮{0}被点击~" , UIMgr._Inst.btnJump.gameObject.name);
         GameObject.Find ("Launch").transform.Find ("UI_Login").gameObject.SetActive (false);
-        UIMgr._Inst.JumpToUIBattle ( );
+        UIMgr.Inst.JumpToUIBattle ( );
 
     }
 

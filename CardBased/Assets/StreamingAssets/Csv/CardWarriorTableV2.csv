@@ -6,7 +6,7 @@ Id,Name,Cardtype,Skilltype,Cardrare,Cardlevel,ManaCast,MaxCounter,Attack,Block,S
 50005,QuanShenZhuangJi,Attack,Single,LvC,LvB,1,2,0,0,0,0,0,0,0,0,0,0,1,0,0,TRUE
 50006,HuoDongJiRou,Skill,Single,LvC,LvB,0,2,0,0,2,0,0,0,0,0,0,0,1,0,0,FALSE
 50007,SongJianWuShi,Skill,Single,LvC,LvB,1,2,0,8,0,0,0,0,0,0,0,0,1,1,0,FALSE
-50008,JinGangBi,Attack,Single,LvC,LvB,2,2,12,0,0,0,0.25,2,0,0,1,0,1,0,0,FALSE
+50008,JinGangBi,Attack,Single,LvC,LvB,2,2,12,0,0,0,0.25,2,0,0,0,0,1,0,0,FALSE
 50009,ShunPiZhan,Attack,All,LvC,LvB,1,2,8,0,0,0,0,0,0,0,1,0,1,0,0,FALSE
 50010,HuiXuanBiao,Attack,Random,LvC,LvB,1,2,3,0,0,0,0,0,0,0,3,0,1,0,3,FALSE
 50011,ShuangChongDaJi,Attack,Single,LvC,LvB,1,3,5,0,0,0,0,0,0,0,0,0,2,0,0,FALSE

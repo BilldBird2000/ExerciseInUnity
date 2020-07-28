@@ -10,7 +10,7 @@ namespace CardBased
 {
     public class GameAsst
     {
-        public static GameAsst _Inst = new GameAsst ( );
+        public static GameAsst Inst = new GameAsst ( );
         public static System.Random _Rd = new System.Random ( );
         public Game game = GameObject.Find ("Launch").GetComponent<Game> ( );
         public GameObject player;
@@ -37,8 +37,9 @@ namespace CardBased
         ///创建关卡
         public void BuildGamelevle ( )
         {
-            game.gameObject.GetComponent<GamelvlInitial> ( ).Initial (glvIndex);
-            game.gameObject.GetComponent<GamelvlInitial> ( ).BuildEnemy ( );
+            game.gameObject.GetComponent<GamelvInitial> ( ).Initial (glvIndex);
+            BattleMgr.Inst.ShowGlvCount ( );
+            game.gameObject.GetComponent<GamelvInitial> ( ).BuildEnemy ( );
             glvIndex++;
         }
 

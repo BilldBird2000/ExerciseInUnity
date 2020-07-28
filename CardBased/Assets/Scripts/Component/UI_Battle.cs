@@ -16,21 +16,6 @@ public class UI_Battle : MonoBehaviour
         BuildStartCard ( );
     }
 
-    //public void Update ( )
-    //{
-    //    if ( BattleMgr.Inst.liveList.Count == 0 )
-    //    {
-    //        BattleMgr.Inst.ClearHand ( );
-    //        Debug.Log ("当前关卡结束,获得奖励,即将进入下一关!!!");
-    //        GameAsst._Inst.game.gameObject.transform.Find ("UI_PopUp").gameObject.SetActive (true);
-    //        GameAsst._Inst.game.gameObject.transform.Find ("UI_PopUp/Reward").gameObject.SetActive (true);
-    //        BattleMgr.Inst.SelectReward ( );
-
-    //        BattleMgr.Inst.liveList.Add (GameAsst._Inst.player);
-    //        //GameAsst._Inst.BuildGamelevle ( );
-    //    }
-    //}
-
     ///添加Battle界面的按钮点击事件
     public void OnClickBtn ( )
     {
@@ -44,7 +29,10 @@ public class UI_Battle : MonoBehaviour
         Debug.Log ("Player行动结束!!!");
         BattleMgr.Inst.ClearHand ( );
         Debug.Log ("Enemy开始行动...Enemy行动结束...开始下一回合!!!!");
-        StartCoroutine (BattleMgr.Inst.Distribution ( ));
+
+        if ( BattleMgr.Inst.unused.childCount < BattleMgr.Inst.FixCounter )
+            BattleMgr.Inst.DisOrder ( );
+        StartCoroutine (Distribution ( ));
     }
 
     ///战斗开始,生成起手的10张牌,重新排序,发5张牌
@@ -67,7 +55,7 @@ public class UI_Battle : MonoBehaviour
             card.GetComponent<CardInitial> ( ).Counter += i;
             card.AddComponent<OnClickObj> ( );
 
-            //缺少一个核心操作:写表. 把CanGet改写为false.这个版本忽略对单张牌最大数量的限制
+            ///缺少一个核心操作:写表. 把CanGet改写为false.这个版本忽略对单张牌最大数量的限制
             //if ( card.GetComponent<CardInitial> ( ).Counter == card.GetComponent<CardInitial> ( ).MaxCounter )
             //{
             //    Debug.LogFormat ("卡牌<{0}>已经达到最大数量,不能继续实例化.........." , card.GetComponent<CardInitial> ( ).Name);
@@ -92,7 +80,19 @@ public class UI_Battle : MonoBehaviour
         BattleMgr.Inst.DisOrder ( );
         Debug.Log ("洗牌完成~~~~~~~~");
 
-        StartCoroutine (BattleMgr.Inst.Distribution ( ));
+        StartCoroutine (Distribution ( ));
+    }
+
+    ///player回合开始时发牌.distribution:分配
+    public IEnumerator Distribution ( )
+    {
+        //if ( BattleMgr.Inst.unused.childCount < BattleMgr.Inst.FixCounter )
+        //    BattleMgr.Inst.DisOrder ( );
+        for ( int i = BattleMgr.Inst.FixCounter - 1; i >= 0; i-- )
+        {
+            yield return new WaitForSeconds (0.2f);
+            BattleMgr.Inst.unused.GetChild (i).SetParent (BattleMgr.Inst.inhand);
+        }
     }
 
     ///实例化战利品卡牌
@@ -114,7 +114,7 @@ public class UI_Battle : MonoBehaviour
 
     public void CallCoroutine ( )
     {
-        StartCoroutine (BattleMgr.Inst.Distribution ( ));
+        StartCoroutine (Distribution ( ));
     }
 
 

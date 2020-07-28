@@ -79,7 +79,7 @@
     <Compile Include="Assets\Scripts\Component\CardInitial.cs" />
     <Compile Include="Assets\Scripts\Component\EnemyInitial.cs" />
     <Compile Include="Assets\Scripts\Component\Game.cs" />
-    <Compile Include="Assets\Scripts\Component\GamelvlInitial.cs" />
+    <Compile Include="Assets\Scripts\Component\GamelvInitial.cs" />
     <Compile Include="Assets\Scripts\Component\Main.cs" />
     <Compile Include="Assets\Scripts\Component\OnClickObj.cs" />
     <Compile Include="Assets\Scripts\Component\PlayerInitial.cs" />

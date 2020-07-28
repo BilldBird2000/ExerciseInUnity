@@ -68,9 +68,9 @@ public class PlayerInitial : MonoBehaviour, IRoleBase
     public void Initial ( )
     {
         //查表赋值
-        Dictionary<string , string> rowData = CsvReader.Inst.GetRowDict (GameAsst._Inst.playerDataPath , GameAsst._Inst.checkId);
+        Dictionary<string , string> rowData = CsvReader.Inst.GetRowDict (GameAsst.Inst.playerDataPath , GameAsst.Inst.checkId);
         List<string> header = CsvReader.Inst.GetHeaderList (rowData);
-        Id = GameAsst._Inst.checkId;
+        Id = GameAsst.Inst.checkId;
         Name = rowData [ header [ 1 ] ];
         MaxHp = Convert.ToInt32 (rowData [ header [ 2 ] ]);
         Hp = Convert.ToInt32 (rowData [ header [ 3 ] ]);
@@ -85,17 +85,52 @@ public class PlayerInitial : MonoBehaviour, IRoleBase
 
 
     ///战中角色携带的buff
-    //public int Block { set; get; } = 0;
+    public int Block { set; get; } = 0;
     public int Strength { set; get; } = 0;
-    public int StrengthRnd { set; get; } = 0;
     public int Agility { set; get; } = 0;
-    public int AgilityRnd { set; get; } = 0;
+
     public float Weak { set; get; } = 0;
-    public int WeakRnd { set; get; } = 0;
+    private int weakRnd = 0;
+    public int WeakRnd
+    {
+        set
+        {
+            if ( value > 0 )
+                weakRnd = value;
+            if ( value <= 0 )
+                weakRnd = 0;
+        }
+        get { return weakRnd; }
+    }
+
     public float Fragile { set; get; } = 0;
-    public int FragileRnd { set; get; } = 0;
+    private int fragileRnd = 0;
+    public int FragileRnd
+    {
+        set
+        {
+            if ( value > 0 )
+                fragileRnd = value;
+            if ( value <= 0 )
+                fragileRnd = 0;
+        }
+        get { return fragileRnd; }
+    }
+
     public float Wounded { set; get; } = 0;
-    public int WndRnd { set; get; } = 0;
+    private int wndRnd = 0;
+    public int WndRnd
+    {
+        set
+        {
+            if ( value > 0 )
+                wndRnd = value;
+            if ( value <= 0 )
+                wndRnd = 0;
+        }
+        get { return wndRnd; }
+    }
+
 
 
 }

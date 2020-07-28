@@ -13,7 +13,7 @@ namespace CardBased
 {
     public class UIMgr
     {
-        public static UIMgr _Inst = new UIMgr ( );
+        public static UIMgr Inst = new UIMgr ( );
         public Button btnJump = null;
         public List<Button> btnList = new List<Button> ( );
 
@@ -33,11 +33,11 @@ namespace CardBased
             GameObject.Find ("Launch").transform.Find ("UI_RoleInform").gameObject.SetActive (true);
             Debug.Log ("成功加载战斗界面>>>>>>>>>>");
 
-            GameAsst._Inst.checkId = GameAsst._Inst.playerDict [ GameAsst._Inst.player.name ];
-            GameAsst._Inst.game.BuildPlayer ( );
+            GameAsst.Inst.checkId = GameAsst.Inst.playerDict [ GameAsst.Inst.player.name ];
+            GameAsst.Inst.game.BuildPlayer ( );
 
-            GameAsst._Inst.game.gameObject.AddComponent<GamelvlInitial> ( );
-            GameAsst._Inst.BuildGamelevle ( );
+            GameAsst.Inst.game.gameObject.AddComponent<GamelvInitial> ( );
+            GameAsst.Inst.BuildGamelevle ( );
 
             btnList = null;
             btnJump = null;

@@ -5,7 +5,7 @@ using CardBased;
 using System;
 
 
-public class GamelvlInitial : MonoBehaviour, IGamelvBase
+public class GamelvInitial : MonoBehaviour, IGamelvBase
 {
     public int Id { set; get; } = 0;
     public string Name { set; get; } = "";
@@ -27,21 +27,22 @@ public class GamelvlInitial : MonoBehaviour, IGamelvBase
 
     public void Update ( )
     {
-        if ( GameAsst._Inst.lvPass )
+        if ( GameAsst.Inst.lvPass )
         {
             Glvstatus = GamelevelStatus.Done;
             BattleMgr.Inst.ClearGlv ( );
             Debug.Log ("当前关卡结束,获得奖励,即将进入下一关!!!");
             
             BattleMgr.Inst.SelectRewardCard ( );
-            GameAsst._Inst.lvPass = false;
+            GameAsst.Inst.lvPass = false;
+            BattleMgr.Inst.ShowGlvCount ( );
             //GameAsst._Inst.BuildGamelevle ( );
         }
     }
 
     public void Initial ( int glvIndex )
     {
-        Dictionary<string , string> rowData = CsvReader.Inst.GetRowDict (GameAsst._Inst.gamelvDataPath , glvIndex);
+        Dictionary<string , string> rowData = CsvReader.Inst.GetRowDict (GameAsst.Inst.gamelvDataPath , glvIndex);
         List<string> header = CsvReader.Inst.GetHeaderList (rowData);
 
         Id = glvIndex;
@@ -70,11 +71,21 @@ public class GamelvlInitial : MonoBehaviour, IGamelvBase
     {
         int childNum = 1;
         Transform parent;
+        GameObject findObj = null;
+        GameObject enemy;
 
         for ( int i = 0; i < Enemy1Num; i++ )
         {
-            parent = GameAsst._Inst.game.gameObject.transform.Find ("UI_RoleInform").transform.GetChild (childNum).Find ("Pos");
-            GameObject enemy = Instantiate (GameAsst._Inst.game.enemyPrefabArray [ 0 ] , parent).transform.GetChild (0).gameObject;
+            parent = GameAsst.Inst.game.gameObject.transform.Find ("UI_RoleInform").transform.GetChild (childNum).Find ("Pos");
+            for ( int j = 0; j < GameAsst.Inst.game.enemyPrefabArray.Length; j++ )
+            {
+                if ( Convert.ToString (Enemy1Id) == GameAsst.Inst.game.enemyPrefabArray [ j ].name )
+                {
+                    findObj = GameAsst.Inst.game.enemyPrefabArray [ j ];
+                    break;
+                }
+            }
+            enemy = Instantiate (findObj , parent).transform.GetChild (0).gameObject;
             enemy.transform.parent.parent.parent.gameObject.SetActive (true);
             childNum++;
             enemy.AddComponent<EnemyInitial> ( );
@@ -82,7 +93,7 @@ public class GamelvlInitial : MonoBehaviour, IGamelvBase
             enemy.GetComponent<EnemyInitial> ( ).Counter += i;
             enemy.GetComponent<EnemyInitial> ( ).Gold = GameAsst._Rd.Next (1 , 5);
             enemy.AddComponent<OnClickObj> ( );
-            UIMgr._Inst.InitUIInform (enemy);
+            UIMgr.Inst.InitUIInform (enemy);
             BattleMgr.Inst.liveList.Add (enemy.transform.parent.gameObject);
 
             //Debug.LogFormat ("++++初始化敌人{0},ID:{1}_{4},Tpye:{2},Gold:{3}." , enemy.GetComponent<EnemyInitial> ( ).Name , enemy.GetComponent<EnemyInitial> ( ).Id ,
@@ -91,8 +102,16 @@ public class GamelvlInitial : MonoBehaviour, IGamelvBase
 
         for ( int i = 0; i < Enemy2Num; i++ )
         {
-            parent = GameAsst._Inst.game.gameObject.transform.Find ("UI_RoleInform").transform.GetChild (childNum).Find ("Pos");
-            GameObject enemy = Instantiate (GameAsst._Inst.game.enemyPrefabArray [ 1 ] , parent).transform.GetChild (0).gameObject;
+            parent = GameAsst.Inst.game.gameObject.transform.Find ("UI_RoleInform").transform.GetChild (childNum).Find ("Pos");
+            for ( int j = 0; j < GameAsst.Inst.game.enemyPrefabArray.Length; j++ )
+            {
+                if ( Convert.ToString (Enemy2Id) == GameAsst.Inst.game.enemyPrefabArray [ j ].name )
+                {
+                    findObj = GameAsst.Inst.game.enemyPrefabArray [ j ];
+                    break;
+                }
+            }
+            enemy = Instantiate (findObj , parent).transform.GetChild (0).gameObject;
             enemy.transform.parent.parent.parent.gameObject.SetActive (true);
             childNum++;
             enemy.AddComponent<EnemyInitial> ( );
@@ -100,7 +119,7 @@ public class GamelvlInitial : MonoBehaviour, IGamelvBase
             enemy.GetComponent<EnemyInitial> ( ).Counter += i;
             enemy.GetComponent<EnemyInitial> ( ).Gold = GameAsst._Rd.Next (5 , 8);
             enemy.AddComponent<OnClickObj> ( );
-            UIMgr._Inst.InitUIInform (enemy);
+            UIMgr.Inst.InitUIInform (enemy);
             BattleMgr.Inst.liveList.Add (enemy.transform.parent.gameObject);
 
             //Debug.LogFormat ("++++初始化敌人{0},ID:{1}_{4},Tpye:{2},Gold:{3}." , enemy.GetComponent<EnemyInitial> ( ).Name , enemy.GetComponent<EnemyInitial> ( ).Id ,
@@ -109,8 +128,16 @@ public class GamelvlInitial : MonoBehaviour, IGamelvBase
 
         for ( int i = 0; i < Enemy3Num; i++ )
         {
-            parent = GameAsst._Inst.game.gameObject.transform.Find ("UI_RoleInform").transform.GetChild (childNum).Find ("Pos");
-            GameObject enemy = Instantiate (GameAsst._Inst.game.enemyPrefabArray [ 2 ] , parent).transform.GetChild (0).gameObject;
+            parent = GameAsst.Inst.game.gameObject.transform.Find ("UI_RoleInform").transform.GetChild (childNum).Find ("Pos");
+            for ( int j = 0; j < GameAsst.Inst.game.enemyPrefabArray.Length; j++ )
+            {
+                if ( Convert.ToString (Enemy3Id) == GameAsst.Inst.game.enemyPrefabArray [ j ].name )
+                {
+                    findObj = GameAsst.Inst.game.enemyPrefabArray [ j ];
+                    break;
+                }
+            }
+            enemy = Instantiate (findObj , parent).transform.GetChild (0).gameObject;
             enemy.transform.parent.parent.parent.gameObject.SetActive (true);
             childNum++;
             enemy.AddComponent<EnemyInitial> ( );
@@ -118,7 +145,7 @@ public class GamelvlInitial : MonoBehaviour, IGamelvBase
             enemy.GetComponent<EnemyInitial> ( ).Counter += i;
             enemy.GetComponent<EnemyInitial> ( ).Gold = GameAsst._Rd.Next (8 , 10);
             enemy.AddComponent<OnClickObj> ( );
-            UIMgr._Inst.InitUIInform (enemy);
+            UIMgr.Inst.InitUIInform (enemy);
             BattleMgr.Inst.liveList.Add (enemy.transform.parent.gameObject);
 
             //Debug.LogFormat ("++++初始化敌人{0},ID:{1}_{4},Tpye:{2},Gold:{3}." , enemy.GetComponent<EnemyInitial> ( ).Name , enemy.GetComponent<EnemyInitial> ( ).Id ,

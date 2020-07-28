@@ -27,10 +27,10 @@ namespace CardBased
         public void LoadTable ( )
         {
             superDict = new Dictionary<string , Dictionary<int , Dictionary<string , string>>> ( );
-            ReadTable (GameAsst._Inst.playerDataPath);
-            ReadTable (GameAsst._Inst.enemyDataPath);
-            ReadTable (GameAsst._Inst.gamelvDataPath);
-            ReadTable (GameAsst._Inst.cardWrrDataPath);
+            ReadTable (GameAsst.Inst.playerDataPath);
+            ReadTable (GameAsst.Inst.enemyDataPath);
+            ReadTable (GameAsst.Inst.gamelvDataPath);
+            ReadTable (GameAsst.Inst.cardWrrDataPath);
             Debug.Log ("LoadTable...");
         }
 

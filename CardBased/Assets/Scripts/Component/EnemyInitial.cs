@@ -48,7 +48,7 @@ public class EnemyInitial : MonoBehaviour, IRoleBase
 
     public void Initial ( int enemyId )
     {
-        Dictionary<string , string> rowData = CsvReader.Inst.GetRowDict (GameAsst._Inst.enemyDataPath , enemyId);
+        Dictionary<string , string> rowData = CsvReader.Inst.GetRowDict (GameAsst.Inst.enemyDataPath , enemyId);
         List<string> header = CsvReader.Inst.GetHeaderList (rowData);
         Id = enemyId;
         Name = rowData [ header [ 1 ] ];
@@ -66,14 +66,47 @@ public class EnemyInitial : MonoBehaviour, IRoleBase
     ///战中角色携带的buff
     public int Block { set; get; } = 0;
     public int Strength { set; get; } = 0;
-    public int StrengthRnd { set; get; } = 0;
     public int Agility { set; get; } = 0;
-    public int AgilityRnd { set; get; } = 0;
-    public float Weak { set; get; } = 0;
-    public int WeakRnd { set; get; } = 0;
-    public float Fragile { set; get; } = 0;
-    public int FragileRnd { set; get; } = 0;
-    public float Wounded { set; get; } = 0;
-    public int WndRnd { set; get; } = 0;
 
+    public float Weak { set; get; } = 0;
+    private int weakRnd = 0;
+    public int WeakRnd
+    {
+        set
+        {
+            if ( value > 0 )
+                weakRnd = value;
+            if ( value <= 0 )
+                weakRnd = 0;
+        }
+        get { return weakRnd; }
+    }
+
+    public float Fragile { set; get; } = 0;
+    private int fragileRnd = 0;
+    public int FragileRnd
+    {
+        set
+        {
+            if ( value > 0 )
+                fragileRnd = value;
+            if ( value <= 0 )
+                fragileRnd = 0;
+        }
+        get { return fragileRnd; }
+    }
+
+    public float Wounded { set; get; } = 0;
+    private int wndRnd = 0;
+    public int WndRnd
+    {
+        set
+        {
+            if ( value > 0 )
+                wndRnd = value;
+            if ( value <= 0 )
+                wndRnd = 0;
+        }
+        get { return wndRnd; }
+    }
 }
