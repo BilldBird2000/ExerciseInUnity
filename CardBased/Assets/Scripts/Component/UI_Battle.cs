@@ -30,6 +30,8 @@ public class UI_Battle : MonoBehaviour
         BattleMgr.Inst.ClearHand ( );
         Debug.Log ("Enemy开始行动...Enemy行动结束...开始下一回合!!!!");
 
+
+
         if ( BattleMgr.Inst.unused.childCount < BattleMgr.Inst.FixCounter )
             BattleMgr.Inst.DisOrder ( );
         StartCoroutine (Distribution ( ));
@@ -53,6 +55,7 @@ public class UI_Battle : MonoBehaviour
             index = Convert.ToInt32 (cardPrefabArray [ 0 ].name);
             card.GetComponent<CardInitial> ( ).Initial (index);
             card.GetComponent<CardInitial> ( ).Counter += i;
+            //card.transform.Find ("OnClick").gameObject.AddComponent<OnClickObj> ( );
             card.AddComponent<OnClickObj> ( );
 
             ///缺少一个核心操作:写表. 把CanGet改写为false.这个版本忽略对单张牌最大数量的限制
@@ -73,6 +76,7 @@ public class UI_Battle : MonoBehaviour
             index = Convert.ToInt32 (cardPrefabArray [ 1 ].name);
             card.GetComponent<CardInitial> ( ).Initial (index);
             card.GetComponent<CardInitial> ( ).Counter += i;
+            //card.transform.Find ("OnClick").gameObject.AddComponent<OnClickObj> ( );
             card.AddComponent<OnClickObj> ( );
         }
         Debug.Log ("10张起手牌实例化完成++++++++");
@@ -103,7 +107,7 @@ public class UI_Battle : MonoBehaviour
         card.AddComponent<CardInitial> ( );
         card.GetComponent<CardInitial> ( ).Initial (id);
         card.AddComponent<OnClickObj> ( );
-        card.tag = "Reward";
+        card.transform.Find ("OnClick").tag = "Reward";
         return card;
     }
 

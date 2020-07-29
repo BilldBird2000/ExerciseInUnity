@@ -5,7 +5,7 @@ using UnityEngine.UI;
 using CardBased;
 using System;
 
-public class PlayerInitial : MonoBehaviour, IRoleBase
+public class PlayerInitial : MonoBehaviour//, IRoleBase
 {
     //public int Counter { set; get; } = 1;
     public int Id { get; set; } = 0;
@@ -53,10 +53,11 @@ public class PlayerInitial : MonoBehaviour, IRoleBase
     {
         Debug.LogFormat ("{0}挂了..." , Name);
     }
-    public void UseSkill ( )
-    {
-        Debug.Log ("UseSkill...");
-    }
+
+    //public void UseSkill ( )
+    //{
+    //    Debug.Log ("UseSkill...");
+    //}
 
     //使用技能思路调整:卡牌技能放到CardInitial类中,因为user一定是player,而且可以直接调用卡牌的各项属性值,更方便
     //public void UseSkill ( GameObject tar )

@@ -34,9 +34,9 @@ namespace CardBased
             Debug.Log ("成功加载战斗界面>>>>>>>>>>");
 
             GameAsst.Inst.checkId = GameAsst.Inst.playerDict [ GameAsst.Inst.player.name ];
-            GameAsst.Inst.game.BuildPlayer ( );
+            GameAsst.Inst.launch.BuildPlayer ( );
 
-            GameAsst.Inst.game.gameObject.AddComponent<GamelvInitial> ( );
+            GameAsst.Inst.launch.gameObject.AddComponent<GamelvInitial> ( );
             GameAsst.Inst.BuildGamelevle ( );
 
             btnList = null;

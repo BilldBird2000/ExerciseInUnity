@@ -65,17 +65,18 @@
   <ItemGroup>
     <Compile Include="Assets\Scripts\Abandon\Battle.cs" />
     <Compile Include="Assets\Scripts\Abandon\ButtonProperty.cs" />
+    <Compile Include="Assets\Scripts\Abandon\ICardBase.cs" />
+    <Compile Include="Assets\Scripts\Abandon\IGamelvBase.cs" />
+    <Compile Include="Assets\Scripts\Abandon\IRoleBase.cs" />
     <Compile Include="Assets\Scripts\Assist\BattleMgr.cs" />
     <Compile Include="Assets\Scripts\Assist\CsvReader.cs" />
     <Compile Include="Assets\Scripts\Assist\EnumGroup.cs" />
     <Compile Include="Assets\Scripts\Assist\GameAsst.cs" />
-    <Compile Include="Assets\Scripts\Assist\ICardBase.cs" />
-    <Compile Include="Assets\Scripts\Assist\IGamelvBase.cs" />
     <Compile Include="Assets\Scripts\Assist\InputReader.cs" />
-    <Compile Include="Assets\Scripts\Assist\IRoleBase.cs" />
     <Compile Include="Assets\Scripts\Assist\RoleMgr.cs" />
     <Compile Include="Assets\Scripts\Assist\UIMgr.cs" />
     <Compile Include="Assets\Scripts\Assist\Version1.0.cs" />
+    <Compile Include="Assets\Scripts\Component\Buff.cs" />
     <Compile Include="Assets\Scripts\Component\CardInitial.cs" />
     <Compile Include="Assets\Scripts\Component\EnemyInitial.cs" />
     <Compile Include="Assets\Scripts\Component\Game.cs" />
@@ -85,6 +86,7 @@
     <Compile Include="Assets\Scripts\Component\PlayerInitial.cs" />
     <Compile Include="Assets\Scripts\Component\UI_Battle.cs" />
     <Compile Include="Assets\Scripts\Component\UI_Login.cs" />
+    <None Include="Assets\Shaders\Diffuse.shader" />
     <Reference Include="Unity.TextMeshPro.Editor">
       <HintPath>H:/GitHub/CardBased/CardBased/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
     </Reference>

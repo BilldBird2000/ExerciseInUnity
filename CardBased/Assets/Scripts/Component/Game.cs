@@ -7,9 +7,15 @@ public class Game : MonoBehaviour
 {
     ///prefab
     public GameObject playerPrefab;
+    public Sprite strengthSprite;
+    public Sprite agilitySprite;
+    public Sprite weakSprite;
+    public Sprite fragileSprite;
+    public Sprite woundenSprite;
     public GameObject [ ] enemyPrefabArray;
 
-    
+
+
     public void Start ( )
     {
         UIMgr.Inst.StartUILogin ( );

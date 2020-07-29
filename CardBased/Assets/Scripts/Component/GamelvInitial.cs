@@ -1,11 +1,11 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using CardBased;
-using System;
 
-
-public class GamelvInitial : MonoBehaviour, IGamelvBase
+public class GamelvInitial : MonoBehaviour//, IGamelvBase
 {
     public int Id { set; get; } = 0;
     public string Name { set; get; } = "";
@@ -31,12 +31,21 @@ public class GamelvInitial : MonoBehaviour, IGamelvBase
         {
             Glvstatus = GamelevelStatus.Done;
             BattleMgr.Inst.ClearGlv ( );
+
+            if ( GameAsst.Inst.glvIndex == 40007 )
+            {
+                GameAsst.Inst.launch.transform.Find ("UI_Battle").gameObject.SetActive (false);
+                GameAsst.Inst.launch.transform.Find ("UI_RoleInform").gameObject.SetActive (false);
+                GameAsst.Inst.launch.transform.Find ("UI_PopUp").gameObject.SetActive (true);
+                GameAsst.Inst.launch.transform.Find ("UI_PopUp/Test").gameObject.SetActive (true);
+                UIMgr.Inst.btnJump = GameAsst.Inst.launch.transform.Find ("UI_PopUp/Test/Next").GetComponent<Button> ( );
+                UIMgr.Inst.btnJump.onClick.AddListener (OnClickQuit);
+            }
+
             Debug.Log ("当前关卡结束,获得奖励,即将进入下一关!!!");
-            
             BattleMgr.Inst.SelectRewardCard ( );
             GameAsst.Inst.lvPass = false;
             BattleMgr.Inst.ShowGlvCount ( );
-            //GameAsst._Inst.BuildGamelevle ( );
         }
     }
 
@@ -76,12 +85,12 @@ public class GamelvInitial : MonoBehaviour, IGamelvBase
 
         for ( int i = 0; i < Enemy1Num; i++ )
         {
-            parent = GameAsst.Inst.game.gameObject.transform.Find ("UI_RoleInform").transform.GetChild (childNum).Find ("Pos");
-            for ( int j = 0; j < GameAsst.Inst.game.enemyPrefabArray.Length; j++ )
+            parent = GameAsst.Inst.launch.gameObject.transform.Find ("UI_RoleInform").transform.GetChild (childNum).Find ("Pos");
+            for ( int j = 0; j < GameAsst.Inst.launch.enemyPrefabArray.Length; j++ )
             {
-                if ( Convert.ToString (Enemy1Id) == GameAsst.Inst.game.enemyPrefabArray [ j ].name )
+                if ( Convert.ToString (Enemy1Id) == GameAsst.Inst.launch.enemyPrefabArray [ j ].name )
                 {
-                    findObj = GameAsst.Inst.game.enemyPrefabArray [ j ];
+                    findObj = GameAsst.Inst.launch.enemyPrefabArray [ j ];
                     break;
                 }
             }
@@ -102,12 +111,12 @@ public class GamelvInitial : MonoBehaviour, IGamelvBase
 
         for ( int i = 0; i < Enemy2Num; i++ )
         {
-            parent = GameAsst.Inst.game.gameObject.transform.Find ("UI_RoleInform").transform.GetChild (childNum).Find ("Pos");
-            for ( int j = 0; j < GameAsst.Inst.game.enemyPrefabArray.Length; j++ )
+            parent = GameAsst.Inst.launch.gameObject.transform.Find ("UI_RoleInform").transform.GetChild (childNum).Find ("Pos");
+            for ( int j = 0; j < GameAsst.Inst.launch.enemyPrefabArray.Length; j++ )
             {
-                if ( Convert.ToString (Enemy2Id) == GameAsst.Inst.game.enemyPrefabArray [ j ].name )
+                if ( Convert.ToString (Enemy2Id) == GameAsst.Inst.launch.enemyPrefabArray [ j ].name )
                 {
-                    findObj = GameAsst.Inst.game.enemyPrefabArray [ j ];
+                    findObj = GameAsst.Inst.launch.enemyPrefabArray [ j ];
                     break;
                 }
             }
@@ -128,12 +137,12 @@ public class GamelvInitial : MonoBehaviour, IGamelvBase
 
         for ( int i = 0; i < Enemy3Num; i++ )
         {
-            parent = GameAsst.Inst.game.gameObject.transform.Find ("UI_RoleInform").transform.GetChild (childNum).Find ("Pos");
-            for ( int j = 0; j < GameAsst.Inst.game.enemyPrefabArray.Length; j++ )
+            parent = GameAsst.Inst.launch.gameObject.transform.Find ("UI_RoleInform").transform.GetChild (childNum).Find ("Pos");
+            for ( int j = 0; j < GameAsst.Inst.launch.enemyPrefabArray.Length; j++ )
             {
-                if ( Convert.ToString (Enemy3Id) == GameAsst.Inst.game.enemyPrefabArray [ j ].name )
+                if ( Convert.ToString (Enemy3Id) == GameAsst.Inst.launch.enemyPrefabArray [ j ].name )
                 {
-                    findObj = GameAsst.Inst.game.enemyPrefabArray [ j ];
+                    findObj = GameAsst.Inst.launch.enemyPrefabArray [ j ];
                     break;
                 }
             }
@@ -151,9 +160,12 @@ public class GamelvInitial : MonoBehaviour, IGamelvBase
             //Debug.LogFormat ("++++初始化敌人{0},ID:{1}_{4},Tpye:{2},Gold:{3}." , enemy.GetComponent<EnemyInitial> ( ).Name , enemy.GetComponent<EnemyInitial> ( ).Id ,
             //    enemy.GetComponent<EnemyInitial> ( ).Roletype , enemy.GetComponent<EnemyInitial> ( ).Gold , enemy.GetComponent<EnemyInitial> ( ).Counter);
         }
+    }
 
- 
-
+    ///结束运行
+    public void OnClickQuit ( )
+    {
+        UnityEditor.EditorApplication.isPlaying = false;
 
     }
 

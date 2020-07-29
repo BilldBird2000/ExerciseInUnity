@@ -27,7 +27,7 @@ namespace CardBased
         public Transform used = GameObject.Find ("Launch/UI_Battle/Used").transform;
         public Transform unused = GameObject.Find ("Launch/UI_Battle/Unused").transform;
         public Transform inhand = GameObject.Find ("Launch/UI_Battle/Inhand").transform;
-        public Transform popup = GameAsst.Inst.game.transform.Find ("UI_PopUp");
+        public Transform popup = GameAsst.Inst.launch.transform.Find ("UI_PopUp");
 
         //public List<GameObject> skillCard = new List<GameObject> ( );
         //public GameObject [ ] skillCardArr = new GameObject [ 2 ];
@@ -40,16 +40,15 @@ namespace CardBased
         public List<GameObject> tarsList = new List<GameObject> ( );    ///存放战中对象
         public List<GameObject> liveList = new List<GameObject> ( );    ///用于检查是否还有存活
         //public int block;
-        public UI_Battle uiBattle = GameAsst.Inst.game.transform.Find ("UI_Battle").GetComponent<UI_Battle> ( );
+        public UI_Battle uiBattle = GameAsst.Inst.launch.transform.Find ("UI_Battle").GetComponent<UI_Battle> ( );
 
 
         ///显示关卡计数
         public void ShowGlvCount ( )
         {
-            int glvCount = GameAsst.Inst.game.GetComponent<GamelvInitial> ( ).Id - 40000;
+            int glvCount = GameAsst.Inst.launch.GetComponent<GamelvInitial> ( ).Id - 40000;
             string glvCountStr = Convert.ToString (glvCount);
             uiBattle.transform.Find ("TopTitle/Text").GetComponent<Text> ( ).text = "关卡 " + glvCountStr;
-
         }
 
         ///洗牌
@@ -138,11 +137,17 @@ namespace CardBased
             GameAsst.Inst.player.transform.parent.parent.parent.Find ("Mana/Text").GetComponent<Text> ( ).text =
                 Convert.ToString (GameAsst.Inst.player.GetComponent<PlayerInitial> ( ).MaxMana);
 
+            Transform plrRoot = GameAsst.Inst.player.transform.parent.parent.parent;
             GameAsst.Inst.player.GetComponent<PlayerInitial> ( ).Strength = 0;
             GameAsst.Inst.player.GetComponent<PlayerInitial> ( ).Agility = 0;
             GameAsst.Inst.player.GetComponent<PlayerInitial> ( ).WeakRnd--;
             GameAsst.Inst.player.GetComponent<PlayerInitial> ( ).FragileRnd--;
             GameAsst.Inst.player.GetComponent<PlayerInitial> ( ).WndRnd--;
+            try
+            {
+                plrRoot.GetComponent<Buff> ( ).UpDateBuff (plrRoot.Find ("BuffGroup/Strength"));
+            }
+            catch { }
         }
 
         ///player回合结束,重置参数,并将剩余手牌移动到弃牌堆
@@ -185,11 +190,11 @@ namespace CardBased
         ///选择卡牌战利品
         public void SelectRewardCard ( )
         {
-            GameAsst.Inst.game.transform.Find ("UI_PopUp").gameObject.SetActive (true);
-            GameAsst.Inst.game.transform.Find ("UI_PopUp/Reward").gameObject.SetActive (true);
+            GameAsst.Inst.launch.transform.Find ("UI_PopUp").gameObject.SetActive (true);
+            GameAsst.Inst.launch.transform.Find ("UI_PopUp/Reward").gameObject.SetActive (true);
             UIMgr.Inst.btnJump = popup.Find ("Reward/Next").GetComponent<Button> ( );
             UIMgr.Inst.btnJump.onClick.AddListener (OnClickNextGlv);
-            Transform parent = GameAsst.Inst.game.gameObject.transform.Find ("UI_PopUp/Reward/Select");
+            Transform parent = GameAsst.Inst.launch.gameObject.transform.Find ("UI_PopUp/Reward/Select");
             GameObject card;
             int cardNum = 0;
             while ( cardNum != 3 )
@@ -204,7 +209,7 @@ namespace CardBased
         ///点击下一关按钮
         public void OnClickNextGlv ( )
         {
-            skillCard.tag = "Card";
+            skillCard.transform.Find ("OnClick").tag = "Card";
             skillCard.transform.SetParent (used);
             skillCard.transform.position = new Vector3 (-1000 , -400 , uiBattle.transform.position.z);
             skillCard.transform.localScale = new Vector3 (1 , 1 , 1);
@@ -212,8 +217,8 @@ namespace CardBased
             for ( int i = popup.Find ("Reward/Select").childCount - 1; i >= 0; i-- )
                 uiBattle.DestroyCard (popup.Find ("Reward/Select").GetChild (i).gameObject);
 
-            GameAsst.Inst.game.transform.Find ("UI_PopUp/Reward").gameObject.SetActive (false);
-            GameAsst.Inst.game.transform.Find ("UI_PopUp").gameObject.SetActive (false);
+            GameAsst.Inst.launch.transform.Find ("UI_PopUp/Reward").gameObject.SetActive (false);
+            GameAsst.Inst.launch.transform.Find ("UI_PopUp").gameObject.SetActive (false);
             GameAsst.Inst.BuildGamelevle ( );
             ResetBasicProperty ( );
             DisOrder ( );

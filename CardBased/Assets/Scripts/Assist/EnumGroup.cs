@@ -74,6 +74,7 @@ namespace CardBased
         LvB,  //初级
     }
 
+    //目标类型
     public enum CardTarget
     {
         Player,

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using CardBased;
 
-public class EnemyInitial : MonoBehaviour, IRoleBase
+public class EnemyInitial : MonoBehaviour//, IRoleBase
 {
     public int Counter { set; get; } = 1;   //表外属性
     public int Id { get; set; } = 0;

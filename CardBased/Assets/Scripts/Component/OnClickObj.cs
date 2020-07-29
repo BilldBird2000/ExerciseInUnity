@@ -9,36 +9,38 @@ public class OnClickObj : MonoBehaviour, IPointerClickHandler
     private List<EnemyInitial> tempList = new List<EnemyInitial> ( );
     public void OnPointerClick ( PointerEventData eventData )
     {
-        if ( eventData.pointerEnter.CompareTag ("Card")  )
+        if ( eventData.pointerEnter.CompareTag ("Card") )
         {
             if ( BattleMgr.Inst.skillCard == null )
             {
-                BattleMgr.Inst.skillCard = eventData.pointerEnter;
+                BattleMgr.Inst.skillCard = eventData.pointerEnter.transform.parent.gameObject;
+                //BattleMgr.Inst.skillCard = eventData.pointerEnter;
                 BattleMgr.Inst.ChooseCard ( );
             }
             else
             {
                 BattleMgr.Inst.RevokeCard ( );
-                BattleMgr.Inst.skillCard = eventData.pointerEnter;
+                BattleMgr.Inst.skillCard = eventData.pointerEnter.transform.parent.gameObject;
+                //BattleMgr.Inst.skillCard = eventData.pointerEnter;
                 BattleMgr.Inst.ChooseCard ( );
             }
         }
-        if ( eventData.pointerEnter.CompareTag ("Reward") )
+        else if ( eventData.pointerEnter.CompareTag ("Reward") )
         {
             if ( BattleMgr.Inst.skillCard == null )
             {
-                BattleMgr.Inst.skillCard = eventData.pointerEnter;
-                eventData.pointerEnter.transform.localScale = new Vector3 (1.2f , 1.2f , 1);
+                BattleMgr.Inst.skillCard = eventData.pointerEnter.transform.parent.gameObject;
+                eventData.pointerEnter.transform.parent.localScale = new Vector3 (1.2f , 1.2f , 1);
             }
             else
             {
                 BattleMgr.Inst.skillCard.transform.localScale = new Vector3 (1 , 1 , 1);
-                BattleMgr.Inst.skillCard = eventData.pointerEnter;
-                eventData.pointerEnter.transform.localScale = new Vector3 (1.2f , 1.2f , 1);
+                BattleMgr.Inst.skillCard = eventData.pointerEnter.transform.parent.gameObject;
+                eventData.pointerEnter.transform.parent.localScale = new Vector3 (1.2f , 1.2f , 1);
             }
-        } 
+        }
 
-        else if ( eventData.pointerEnter.CompareTag ("Enemy") || eventData.pointerEnter.CompareTag ("Player") )
+        else if ( eventData.pointerEnter.CompareTag ("Enemy") )
         {
             if ( BattleMgr.Inst.skillCard != null )
             {
@@ -46,7 +48,7 @@ public class OnClickObj : MonoBehaviour, IPointerClickHandler
                     BattleMgr.Inst.tarsList.Add (eventData.pointerEnter);
                 else if ( BattleMgr.Inst.skillCard.GetComponent<CardInitial> ( ).Skilltype == SkillType.All )
                 {
-                    tempList.AddRange (GameAsst.Inst.game.transform.Find ("UI_RoleInform").GetComponentsInChildren<EnemyInitial> ( ));
+                    tempList.AddRange (GameAsst.Inst.launch.transform.Find ("UI_RoleInform").GetComponentsInChildren<EnemyInitial> ( ));
                     for ( int i = 0; i < tempList.Count; i++ )
                         BattleMgr.Inst.tarsList.Add (tempList [ i ].gameObject);
                     tempList.Clear ( );
@@ -58,6 +60,32 @@ public class OnClickObj : MonoBehaviour, IPointerClickHandler
                 BattleMgr.Inst.UseCard ( );
             }
         }
+        else if ( eventData.pointerEnter.CompareTag ("Player") )
+        {
+
+            if ( BattleMgr.Inst.skillCard != null )
+            {
+                if ( BattleMgr.Inst.skillCard.GetComponent<CardInitial> ( ).Cardtarget == CardTarget.Player )
+                {
+                    if ( BattleMgr.Inst.skillCard.GetComponent<CardInitial> ( ).Skilltype == SkillType.Single )
+                        BattleMgr.Inst.tarsList.Add (eventData.pointerEnter);
+                    else if ( BattleMgr.Inst.skillCard.GetComponent<CardInitial> ( ).Skilltype == SkillType.All )
+                    {
+                        tempList.AddRange (GameAsst.Inst.launch.transform.Find ("UI_RoleInform").GetComponentsInChildren<EnemyInitial> ( ));
+                        for ( int i = 0; i < tempList.Count; i++ )
+                            BattleMgr.Inst.tarsList.Add (tempList [ i ].gameObject);
+                        tempList.Clear ( );
+                    }
+                    else if ( BattleMgr.Inst.skillCard.GetComponent<CardInitial> ( ).Skilltype == SkillType.Random )
+                    {
+
+                    }
+                    BattleMgr.Inst.UseCard ( );
+                }
+            }
+
+        }
+
 
     }
 

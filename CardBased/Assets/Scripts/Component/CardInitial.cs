@@ -13,6 +13,7 @@ public class CardInitial : MonoBehaviour//, ICardBase
     public SkillType Skilltype { set; get; } = SkillType.Single;
     public CardRare Cardrare { set; get; } = CardRare.LvC;
     public CardLevel Cardlevel { set; get; } = CardLevel.LvB;
+    public CardTarget Cardtarget { set; get; } = CardTarget.Enemy;
     public int ManaCast { set; get; } = 0;      //蓝耗
     public int MaxCounter { set; get; } = 0;    //最大重复数量,超出将不能被实例化,涉及到写表
     public int Attack { set; get; } = 0;        //攻击力
@@ -31,6 +32,7 @@ public class CardInitial : MonoBehaviour//, ICardBase
     public bool WithScript { set; get; } = false;   //带脚本的特殊技能
 
     //表之外的属性
+    public Game game;
     public bool CanGet { set; get; } = true;
     private int counter = 1;
     public int Counter
@@ -62,8 +64,9 @@ public class CardInitial : MonoBehaviour//, ICardBase
         Skilltype = ( SkillType ) ( Enum.Parse (typeof (SkillType) , rowDict [ header [ 3 ] ]) );
         Cardrare = ( CardRare ) ( Enum.Parse (typeof (CardRare) , rowDict [ header [ 4 ] ]) );
         Cardlevel = ( CardLevel ) ( Enum.Parse (typeof (CardLevel) , rowDict [ header [ 5 ] ]) );
-        ManaCast = Convert.ToInt32 (rowDict [ header [ 6 ] ]);
-        MaxCounter = Convert.ToInt32 (rowDict [ header [ 7 ] ]);
+        Cardtarget = ( CardTarget ) ( Enum.Parse (typeof (CardTarget) , rowDict [ header [ 6 ] ]) );
+        ManaCast = Convert.ToInt32 (rowDict [ header [ 7 ] ]);
+        //MaxCounter = Convert.ToInt32 (rowDict [ header [ 7 ] ]);
         Attack = Convert.ToInt32 (rowDict [ header [ 8 ] ]);
         Block = Convert.ToInt32 (rowDict [ header [ 9 ] ]);
         Strength = Convert.ToInt32 (rowDict [ header [ 10 ] ]);
@@ -83,10 +86,41 @@ public class CardInitial : MonoBehaviour//, ICardBase
     ///使用卡牌技能,得到结果
     public void SkillResult ( GameObject tar )
     {
+        game = GameObject.Find ("Launch").GetComponent<Game> ( );
+        Transform playerRoot = GameAsst.Inst.player.transform.parent.parent.parent;
         PlayerInitial plrInit = GameAsst.Inst.player.GetComponent<PlayerInitial> ( );
+
         plrInit.Strength += Strength;
+        if ( plrInit.Strength > 0 )
+        {
+            string findPath = "BuffGroup/Strength";
+            string toName = "Strength";
+            Transform findBuff = null;
+            try
+            {
+                findBuff = playerRoot.transform.Find (findPath);
+            }
+            catch { }
+            if ( findBuff == null )
+                playerRoot.GetComponent<Buff> ( ).AddBuff (toName , game.strengthSprite , 1);
+        }
+
         plrInit.Agility += Agility;
-        
+        if ( plrInit.Agility > 0 )
+        {
+            string findPath = "BuffGroup/Agility";
+            string toName = "Agility";
+            Transform findBuff = null;
+            try
+            {
+                findBuff = playerRoot.transform.Find (findPath);
+            }
+            catch { }
+            if ( findBuff == null )
+                playerRoot.GetComponent<Buff> ( ).AddBuff (toName , game.agilitySprite , 1);
+        }
+
+
         if ( tar.CompareTag ("Enemy") )
         {
             EnemyInitial enmInit = tar.GetComponent<EnemyInitial> ( );
@@ -114,7 +148,7 @@ public class CardInitial : MonoBehaviour//, ICardBase
             block++;
         plrInit.Block += block;
         string blockToStr = Convert.ToString (plrInit.Block);
-        GameAsst.Inst.player.transform.parent.parent.parent.Find ("Block/Text").GetComponent<Text> ( ).text = blockToStr;
+        playerRoot.Find ("Block/Text").GetComponent<Text> ( ).text = blockToStr;
 
         int mana = plrInit.Mana;
         mana -= ManaCast;
@@ -126,6 +160,12 @@ public class CardInitial : MonoBehaviour//, ICardBase
             GameAsst.Inst.lvPass = true;
 
     }
+
+
+
+
+
+
 
     ///更新player面板信息
     public void UpdatePlayerUiInform ( int mana )
