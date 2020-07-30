@@ -41,6 +41,7 @@ namespace CardBased
         public List<GameObject> liveList = new List<GameObject> ( );    ///用于检查是否还有存活
         //public int block;
         public UI_Battle uiBattle = GameAsst.Inst.launch.transform.Find ("UI_Battle").GetComponent<UI_Battle> ( );
+        public Transform uiRoleInform = GameAsst.Inst.launch.transform.Find ("UI_RoleInform");
 
 
         ///显示关卡计数
@@ -74,6 +75,38 @@ namespace CardBased
             //cardList.AddRange (usedPanel.gameObject.GetComponentsInChildren<CardInitial> ( ));
             //foreach ( CardInitial card in cardList )
             //    disOrderList.Add (card.gameObject);
+        }
+
+        ///抓牌,抽牌
+        public void PickUpCard ( int drawNum )
+        {
+            if ( unused.childCount < drawNum )
+                DisOrder ( );
+            for ( int i = 0; i < drawNum; i++ )
+                unused.GetChild (0).SetParent (inhand);
+            if ( inhand.childCount > 6 )
+                FitPosition (inhand.childCount);
+        }
+
+        ///手牌超过6张时,适配网格
+        public void FitPosition (int num )
+        {
+            Vector2 space = inhand.GetComponent<GridLayoutGroup> ( ).spacing;
+            switch( num )
+            {
+                case 7:
+                    space.x = -10;
+                    break;
+                case 8:
+                    space.x = -36;
+                    break;
+                case 9:
+                    space.x = -50;
+                    break;
+                case 10:
+                    space.x = -60;
+                    break;
+            }
         }
 
         ///player回合开始时发牌.distribution:分配
@@ -127,27 +160,43 @@ namespace CardBased
             tarsList.Clear ( );
         }
 
-        ///每回合开始重置防御值和蓝量
+        ///每回合开始更新角色属性
         public void ResetBasicProperty ( )
         {
-            GameAsst.Inst.player.GetComponent<PlayerInitial> ( ).Block = 0;
-            GameAsst.Inst.player.transform.parent.parent.parent.Find ("Block/Text").GetComponent<Text> ( ).text =
-                Convert.ToString (GameAsst.Inst.player.GetComponent<PlayerInitial> ( ).Block);
-            GameAsst.Inst.player.GetComponent<PlayerInitial> ( ).Mana = GameAsst.Inst.player.GetComponent<PlayerInitial> ( ).MaxMana;
-            GameAsst.Inst.player.transform.parent.parent.parent.Find ("Mana/Text").GetComponent<Text> ( ).text =
-                Convert.ToString (GameAsst.Inst.player.GetComponent<PlayerInitial> ( ).MaxMana);
-
+            PlayerInitial player = GameAsst.Inst.player.GetComponent<PlayerInitial> ( );
             Transform plrRoot = GameAsst.Inst.player.transform.parent.parent.parent;
-            GameAsst.Inst.player.GetComponent<PlayerInitial> ( ).Strength = 0;
-            GameAsst.Inst.player.GetComponent<PlayerInitial> ( ).Agility = 0;
-            GameAsst.Inst.player.GetComponent<PlayerInitial> ( ).WeakRnd--;
-            GameAsst.Inst.player.GetComponent<PlayerInitial> ( ).FragileRnd--;
-            GameAsst.Inst.player.GetComponent<PlayerInitial> ( ).WndRnd--;
-            try
-            {
-                plrRoot.GetComponent<Buff> ( ).UpDateBuff (plrRoot.Find ("BuffGroup/Strength"));
-            }
+
+            player.Block = 0;
+            plrRoot.Find ("Block/Text").GetComponent<Text> ( ).text = Convert.ToString (player.Block);
+            player.Mana = player.MaxMana;
+            plrRoot.Find ("Mana/Text").GetComponent<Text> ( ).text = Convert.ToString (player.MaxMana);
+            player.Strength = 0;
+            player.Agility = 0;
+            player.WeakRnd--;
+            player.FragileRnd--;
+            player.WndRnd--;
+            try { plrRoot.GetComponent<Buff> ( ).UpDateBuff (plrRoot.Find ("BuffGroup/Strength")); }
             catch { }
+
+            for ( int i = 1; i < 4; i++ )
+            {
+                if ( uiRoleInform.GetChild (i).GetChild (0).childCount != 0 )
+                {
+                    EnemyInitial enemy = uiRoleInform.GetChild (i).GetChild (0).GetChild (0).GetChild (0).GetComponent<EnemyInitial> ( );
+                    enemy.Strength = 0;
+                    enemy.Agility = 0;
+                    enemy.WeakRnd--;
+                    if ( enemy.WeakRnd > 0 )
+                        uiRoleInform.GetChild (i).GetComponent<Buff> ( ).UpDateBuff ("Weak" , enemy.WeakRnd);
+                    enemy.FragileRnd--;
+                    if ( enemy.FragileRnd > 0 )
+                        uiRoleInform.GetChild (i).GetComponent<Buff> ( ).UpDateBuff ("Fragile" , enemy.FragileRnd);
+                    enemy.WndRnd--;
+                    if ( enemy.WndRnd > 0 )
+                        uiRoleInform.GetChild (i).GetComponent<Buff> ( ).UpDateBuff ("Wounded" , enemy.WndRnd);
+                }
+            }
+
         }
 
         ///player回合结束,重置参数,并将剩余手牌移动到弃牌堆
@@ -166,7 +215,7 @@ namespace CardBased
             //Debug.Log ("剩余手牌移动到Used节点!!!");
         }
 
-        ///当前关卡结束,清理牌堆
+        ///当前关卡结束,清理牌堆,清理buff
         public void ClearGlv ( )
         {
             skillCard = null;
@@ -184,6 +233,12 @@ namespace CardBased
                 pos.x = -1000;
                 unused.GetChild (i).position = pos;
                 unused.GetChild (i).SetParent (used);
+            }
+            for ( int i = 1; i < 4; i++ )
+            {
+                Transform buffGroup = uiRoleInform.GetChild (i).Find ("BuffGroup");
+                for ( int j = buffGroup.childCount - 1; j >= 0; j-- )
+                    uiBattle.DestroyCard (buffGroup.GetChild (buffGroup.childCount - 1).gameObject);
             }
         }
 

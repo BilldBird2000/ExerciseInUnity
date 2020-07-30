@@ -32,7 +32,12 @@ public class CardInitial : MonoBehaviour//, ICardBase
     public bool WithScript { set; get; } = false;   //带脚本的特殊技能
 
     //表之外的属性
-    public Game game;
+    private Game game;
+    public string strengthName = "Strength";
+    public string agilitythName = "Agility";
+    public string weakName = "Weak";
+    public string fragileName = "Fragile";
+    public string woundenName = "Wounded";
     public bool CanGet { set; get; } = true;
     private int counter = 1;
     public int Counter
@@ -87,49 +92,48 @@ public class CardInitial : MonoBehaviour//, ICardBase
     public void SkillResult ( GameObject tar )
     {
         game = GameObject.Find ("Launch").GetComponent<Game> ( );
-        Transform playerRoot = GameAsst.Inst.player.transform.parent.parent.parent;
         PlayerInitial plrInit = GameAsst.Inst.player.GetComponent<PlayerInitial> ( );
+        Transform playerRoot = GameAsst.Inst.player.transform.parent.parent.parent;
 
         plrInit.Strength += Strength;
         if ( plrInit.Strength > 0 )
-        {
-            string findPath = "BuffGroup/Strength";
-            string toName = "Strength";
-            Transform findBuff = null;
-            try
-            {
-                findBuff = playerRoot.transform.Find (findPath);
-            }
-            catch { }
-            if ( findBuff == null )
-                playerRoot.GetComponent<Buff> ( ).AddBuff (toName , game.strengthSprite , 1);
-        }
-
+            CheckBuff (playerRoot , strengthName , game.strengthSprite , 1);
         plrInit.Agility += Agility;
         if ( plrInit.Agility > 0 )
-        {
-            string findPath = "BuffGroup/Agility";
-            string toName = "Agility";
-            Transform findBuff = null;
-            try
-            {
-                findBuff = playerRoot.transform.Find (findPath);
-            }
-            catch { }
-            if ( findBuff == null )
-                playerRoot.GetComponent<Buff> ( ).AddBuff (toName , game.agilitySprite , 1);
-        }
-
+            CheckBuff (playerRoot , agilitythName , game.agilitySprite , 1);
 
         if ( tar.CompareTag ("Enemy") )
         {
             EnemyInitial enmInit = tar.GetComponent<EnemyInitial> ( );
-            enmInit.Weak = Weak;
+            Transform enmRoot = tar.transform.parent.parent.parent;
+
             enmInit.WeakRnd += WeakRnd;
-            enmInit.Fragile = Fragile;
+            if ( enmInit.WeakRnd > 0 )
+            {
+                enmInit.Weak = 0.25f;
+                CheckBuff (enmRoot , weakName , game.weakSprite , enmInit.WeakRnd);
+            }
+            else
+                enmInit.Weak = 0;
+
             enmInit.FragileRnd += FragileRnd;
-            enmInit.Wounded = Wounded;
+            if ( enmInit.FragileRnd > 0 )
+            {
+                enmInit.Fragile = 0.25f;
+                CheckBuff (enmRoot , fragileName , game.fragileSprite , enmInit.FragileRnd);
+            }
+            else
+                enmInit.Fragile = 0;
+
             enmInit.WndRnd += WndRnd;
+            if ( enmInit.WndRnd > 0 )
+            {
+                enmInit.Wounded = 0.5f;
+                CheckBuff (enmRoot , woundenName , game.woundenSprite , enmInit.WndRnd);
+            }
+            else
+                enmInit.Wounded = 0;
+
             float dmg = ( Attack + plrInit.Strength ) * ( 1 - plrInit.Weak ) * ( 1 + enmInit.Wounded ) * Repeat;
             int damage = Convert.ToInt32 (Math.Floor (dmg));
             dmg -= damage;
@@ -150,6 +154,9 @@ public class CardInitial : MonoBehaviour//, ICardBase
         string blockToStr = Convert.ToString (plrInit.Block);
         playerRoot.Find ("Block/Text").GetComponent<Text> ( ).text = blockToStr;
 
+        if ( DrawNum > 0 )
+            BattleMgr.Inst.PickUpCard (DrawNum);
+
         int mana = plrInit.Mana;
         mana -= ManaCast;
         plrInit.Mana = mana;
@@ -161,11 +168,18 @@ public class CardInitial : MonoBehaviour//, ICardBase
 
     }
 
-
-
-
-
-
+    ///判断是否添加buff,叠加buff回合数
+    public void CheckBuff ( Transform roleRoot , string buffName , Sprite icon , int rnd )
+    {
+        Transform findBuff = null;
+        try
+        {
+            findBuff = roleRoot.transform.Find ("BuffGroup" + "/" + buffName);
+        }
+        catch { }
+        if ( findBuff == null )
+            roleRoot.GetComponent<Buff> ( ).AddBuff (buffName , icon , rnd);
+    }
 
     ///更新player面板信息
     public void UpdatePlayerUiInform ( int mana )

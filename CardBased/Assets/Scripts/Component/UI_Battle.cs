@@ -111,11 +111,13 @@ public class UI_Battle : MonoBehaviour
         return card;
     }
 
+    ///销毁
     public void DestroyCard ( GameObject obj )
     {
         Destroy (obj);
     }
 
+    ///BattleMgr调用协程
     public void CallCoroutine ( )
     {
         StartCoroutine (Distribution ( ));

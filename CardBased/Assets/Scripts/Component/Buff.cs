@@ -7,30 +7,41 @@ using UnityEngine.UI;
 
 public class Buff : MonoBehaviour
 {
-    public GameObject BuffImagePrdfab;
+    public GameObject BuffImagePrefab;
 
     public void AddBuff (string name, Sprite icon , int rnd )
     {
         Transform buffGroup = transform.Find ("BuffGroup");
-        GameObject buff = Instantiate (BuffImagePrdfab , buffGroup);
+        GameObject buff = Instantiate (BuffImagePrefab , buffGroup);
         buff.name = name;
         buff.GetComponent<Image> ( ).sprite = icon;
         buff.transform.GetChild (0).GetComponent<Text> ( ).text = Convert.ToString (rnd);
     }
 
+    ///更新Strength,Agility类型的buff
+    public void UpDateBuff ( Transform buff )
+    {
+        Destroy (buff.gameObject);
+    }
+
+    ///更新Weak,Fragile,Wounded类型的buff
     public void UpDateBuff ( string name , int rnd )
     {
         string path = "BuffGroup" + "/" + name;
         Transform buff = transform.Find (path);
-        if ( rnd > 0 )
+        //if ( rnd > 0 )
             buff.GetChild (0).GetComponent<Text> ( ).text = Convert.ToString (rnd);
-        else
-            Destroy (buff.gameObject);
+        //else
+            //Destroy (buff.gameObject);
     }
 
-    public void UpDateBuff ( Transform buff )
+    
+
+    public void ClearBuff ( )
     {
-        Destroy (buff.gameObject);
+        Transform buffGroup = transform.Find ("BuffGroup");
+        for ( int i = buffGroup.childCount - 1; i >= 0; i-- )
+            Destroy (buffGroup.GetChild (i));
     }
 
 

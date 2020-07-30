@@ -58,12 +58,14 @@ public class EnemyInitial : MonoBehaviour//, IRoleBase
         Gold = Convert.ToInt32 (rowData [ header [ 5 ] ]);
         Roletype = ( RoleType ) ( Enum.Parse (typeof (RoleType) , rowData [ header [ 6 ] ]) );
         Rolestatus = ( RoleStatus ) ( Enum.Parse (typeof (RoleStatus) , rowData [ header [ 7 ] ]) );
+        buff = transform.parent.parent.parent.GetComponent<Buff> ( );
 
         //Debug.LogFormat ("++++++++初始化敌人{0},{1},{2},{3},{4},{5},{6},{7}" , Name , Id , MaxHp , Hp , Mana , Gold , Roletype , Rolestatus);
     }
 
 
     ///战中角色携带的buff
+    public Buff buff;
     public int Block { set; get; } = 0;
     public int Strength { set; get; } = 0;
     public int Agility { set; get; } = 0;
@@ -74,10 +76,17 @@ public class EnemyInitial : MonoBehaviour//, IRoleBase
     {
         set
         {
+            Transform buffWeak = null;
             if ( value > 0 )
                 weakRnd = value;
             if ( value <= 0 )
+            {
                 weakRnd = 0;
+                try { buffWeak = buff.transform.Find ("BuffGroup/Weak"); }
+                catch { }
+                if ( buffWeak != null )
+                    buff.UpDateBuff (buffWeak);
+            }
         }
         get { return weakRnd; }
     }
@@ -88,10 +97,17 @@ public class EnemyInitial : MonoBehaviour//, IRoleBase
     {
         set
         {
+            Transform buffFragile = null;
             if ( value > 0 )
                 fragileRnd = value;
             if ( value <= 0 )
+            {
                 fragileRnd = 0;
+                try { buffFragile = buff.transform.Find ("BuffGroup/Fragile"); }
+                catch { }
+                if ( buffFragile != null )
+                    buff.UpDateBuff (buffFragile);
+            }
         }
         get { return fragileRnd; }
     }
@@ -102,10 +118,17 @@ public class EnemyInitial : MonoBehaviour//, IRoleBase
     {
         set
         {
+            Transform buffWounded = null;
             if ( value > 0 )
                 wndRnd = value;
             if ( value <= 0 )
+            {
                 wndRnd = 0;
+                try { buffWounded = buff.transform.Find ("BuffGroup/Wounded"); }
+                catch { }
+                if ( buffWounded != null )
+                    buff.UpDateBuff (buffWounded);
+            }
         }
         get { return wndRnd; }
     }
