@@ -33,11 +33,12 @@ public class CardInitial : MonoBehaviour//, ICardBase
 
     //表之外的属性
     private Game game;
-    public string strengthName = "Strength";
-    public string agilitythName = "Agility";
-    public string weakName = "Weak";
-    public string fragileName = "Fragile";
-    public string woundenName = "Wounded";
+    private readonly string strengthName = "Strength";
+    private readonly string agilitythName = "Agility";
+    private readonly string weakName = "Weak";
+    private readonly string fragileName = "Fragile";
+    private readonly string woundedName = "Wounded";
+    public int rdTars;
     public bool CanGet { set; get; } = true;
     private int counter = 1;
     public int Counter
@@ -86,6 +87,7 @@ public class CardInitial : MonoBehaviour//, ICardBase
         DrawNum = Convert.ToInt32 (rowDict [ header [ 19 ] ]);
         RandomTars = Convert.ToInt32 (rowDict [ header [ 20 ] ]);
         WithScript = Convert.ToBoolean (rowDict [ header [ 21 ] ]);
+        rdTars = RandomTars - 1;
     }
 
     ///使用卡牌技能,得到结果
@@ -129,7 +131,7 @@ public class CardInitial : MonoBehaviour//, ICardBase
             if ( enmInit.WndRnd > 0 )
             {
                 enmInit.Wounded = 0.5f;
-                CheckBuff (enmRoot , woundenName , game.woundenSprite , enmInit.WndRnd);
+                CheckBuff (enmRoot , woundedName , game.woundedSprite , enmInit.WndRnd);
             }
             else
                 enmInit.Wounded = 0;
@@ -154,14 +156,27 @@ public class CardInitial : MonoBehaviour//, ICardBase
         string blockToStr = Convert.ToString (plrInit.Block);
         playerRoot.Find ("Block/Text").GetComponent<Text> ( ).text = blockToStr;
 
+
+        if ( rdTars > 0 )
+        {
+            rdTars--;
+            BattleMgr.Inst.tarsList.Clear ( );
+            if ( BattleMgr.Inst.liveList.Count != 0 )
+            {
+                BattleMgr.Inst.ChooseRandomTar ( );
+                BattleMgr.Inst.UseCard ( );
+            }
+        }
+
+        //int mana = plrInit.Mana;
+        //mana -= ManaCast;
+        //plrInit.Mana = mana;
+        //UpdatePlayerUiInform (mana);
+
+        BattleMgr.Inst.RemoveToUsed ( );
+
         if ( DrawNum > 0 )
             BattleMgr.Inst.PickUpCard (DrawNum);
-
-        int mana = plrInit.Mana;
-        mana -= ManaCast;
-        plrInit.Mana = mana;
-        UpdatePlayerUiInform (mana);
-        BattleMgr.Inst.RemoveToUsed ( );
 
         if ( BattleMgr.Inst.liveList.Count == 0 )
             GameAsst.Inst.lvPass = true;
@@ -172,19 +187,21 @@ public class CardInitial : MonoBehaviour//, ICardBase
     public void CheckBuff ( Transform roleRoot , string buffName , Sprite icon , int rnd )
     {
         Transform findBuff = null;
-        try
-        {
-            findBuff = roleRoot.transform.Find ("BuffGroup" + "/" + buffName);
-        }
+        try { findBuff = roleRoot.transform.Find ("BuffGroup" + "/" + buffName); }
         catch { }
         if ( findBuff == null )
             roleRoot.GetComponent<Buff> ( ).AddBuff (buffName , icon , rnd);
+        else
+            roleRoot.GetComponent<Buff> ( ).UpDateBuff (buffName , rnd);
     }
 
     ///更新player面板信息
-    public void UpdatePlayerUiInform ( int mana )
+    public void UpdatePlayerUiInform ( )
     {
-        string manaToStr = Convert.ToString (mana);
+        int plrMana = GameAsst.Inst.player.GetComponent<PlayerInitial> ( ).Mana;
+        plrMana -= ManaCast;
+        GameAsst.Inst.player.GetComponent<PlayerInitial> ( ).Mana = plrMana;
+        string manaToStr = Convert.ToString (plrMana);
         GameAsst.Inst.player.transform.parent.parent.parent.Find ("Mana/Text").GetComponent<Text> ( ).text = manaToStr;
     }
 

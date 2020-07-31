@@ -30,10 +30,9 @@ public class UI_Battle : MonoBehaviour
         BattleMgr.Inst.ClearHand ( );
         Debug.Log ("Enemy开始行动...Enemy行动结束...开始下一回合!!!!");
 
-
-
         if ( BattleMgr.Inst.unused.childCount < BattleMgr.Inst.FixCounter )
             BattleMgr.Inst.DisOrder ( );
+        BattleMgr.Inst.inhand.GetComponent<GridLayoutGroup> ( ).spacing = new Vector2 (10 , 0);
         StartCoroutine (Distribution ( ));
     }
 

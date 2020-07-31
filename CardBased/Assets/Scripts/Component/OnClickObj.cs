@@ -55,7 +55,9 @@ public class OnClickObj : MonoBehaviour, IPointerClickHandler
                 }
                 else if ( BattleMgr.Inst.skillCard.GetComponent<CardInitial> ( ).Skilltype == SkillType.Random )
                 {
-
+                    tempList.AddRange (GameAsst.Inst.launch.transform.Find ("UI_RoleInform").GetComponentsInChildren<EnemyInitial> ( ));
+                    int rd = GameAsst._Rd.Next (0 , tempList.Count);
+                    BattleMgr.Inst.tarsList.Add (tempList [ rd ].gameObject);
                 }
                 BattleMgr.Inst.UseCard ( );
             }

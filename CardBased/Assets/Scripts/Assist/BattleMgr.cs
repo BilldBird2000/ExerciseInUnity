@@ -39,7 +39,9 @@ namespace CardBased
         private readonly int offset = 30;
         public List<GameObject> tarsList = new List<GameObject> ( );    ///存放战中对象
         public List<GameObject> liveList = new List<GameObject> ( );    ///用于检查是否还有存活
-        //public int block;
+        private List<EnemyInitial> tempList = new List<EnemyInitial> ( );       ///临时列表
+        private int skillCounter;
+
         public UI_Battle uiBattle = GameAsst.Inst.launch.transform.Find ("UI_Battle").GetComponent<UI_Battle> ( );
         public Transform uiRoleInform = GameAsst.Inst.launch.transform.Find ("UI_RoleInform");
 
@@ -84,42 +86,43 @@ namespace CardBased
                 DisOrder ( );
             for ( int i = 0; i < drawNum; i++ )
                 unused.GetChild (0).SetParent (inhand);
-            if ( inhand.childCount > 6 )
-                FitPosition (inhand.childCount);
+            FitPosition (inhand.childCount);
         }
 
-        ///手牌超过6张时,适配网格
-        public void FitPosition (int num )
+        ///手牌超过8张时,适配网格
+        public void FitPosition ( int num )
         {
             Vector2 space = inhand.GetComponent<GridLayoutGroup> ( ).spacing;
-            switch( num )
+            if ( inhand.childCount <= 8 )
+                inhand.GetComponent<GridLayoutGroup> ( ).spacing = new Vector2 (10 , 0);
+            else
             {
-                case 7:
-                    space.x = -10;
-                    break;
-                case 8:
-                    space.x = -36;
-                    break;
-                case 9:
-                    space.x = -50;
-                    break;
-                case 10:
-                    space.x = -60;
-                    break;
+                switch ( num )
+                {
+                    case 9:
+                        space.x = -10;
+                        inhand.GetComponent<GridLayoutGroup> ( ).spacing = space;
+                        Debug.LogFormat ("{0}张手牌,space.x={1}..." , num , space.x);
+                        break;
+                    case 10:
+                        space.x = -25;
+                        inhand.GetComponent<GridLayoutGroup> ( ).spacing = space;
+                        Debug.LogFormat ("{0}张手牌,space.x={1}..." , num , space.x);
+                        break;
+                    case 11:
+                        space.x = -40;
+                        inhand.GetComponent<GridLayoutGroup> ( ).spacing = space;
+                        Debug.LogFormat ("{0}张手牌,space.x={1}..." , num , space.x);
+                        break;
+                    case 12:
+                        space.x = -50;
+                        inhand.GetComponent<GridLayoutGroup> ( ).spacing = space;
+                        Debug.LogFormat ("{0}张手牌,space.x={1}..." , num , space.x);
+                        break;
+                }
             }
-        }
 
-        ///player回合开始时发牌.distribution:分配
-        //public IEnumerator Distribution ( )
-        //{
-        //    if ( unused.childCount < FixCounter )
-        //        DisOrder ( );
-        //    for ( int i = FixCounter - 1; i >= 0; i-- )
-        //    {
-        //        yield return new WaitForSeconds (0.2f);
-        //        unused.GetChild (i).SetParent (inhand);
-        //    }
-        //}
+        }
 
         ///选择技能卡.
         public void ChooseCard ( )
@@ -143,21 +146,30 @@ namespace CardBased
         {
             if ( GameAsst.Inst.player.GetComponent<PlayerInitial> ( ).Mana >= skillCard.GetComponent<CardInitial> ( ).ManaCast )
             {
+                skillCounter = tarsList.Count;
                 for ( int i = 0; i < tarsList.Count; i++ )
                     skillCard.GetComponent<CardInitial> ( ).SkillResult (tarsList [ i ]);
             }
+            FitPosition (inhand.childCount);
         }
 
         ///将卡牌移动到弃牌堆
         public void RemoveToUsed ( )
         {
-            skillCard.transform.SetParent (used);
-            pos = skillCard.transform.position;
-            pos.x = -1000;
-            pos.y = -400;
-            skillCard.transform.position = pos;
-            skillCard = null;
-            tarsList.Clear ( );
+            skillCounter--;
+            if ( skillCounter == 0 )
+            {
+                skillCard.transform.SetParent (used);
+                pos = skillCard.transform.position;
+                pos.x = -1000;
+                pos.y = -400;
+                skillCard.transform.position = pos;
+
+                skillCard.GetComponent<CardInitial> ( ).UpdatePlayerUiInform ( );
+                skillCard.GetComponent<CardInitial> ( ).rdTars = skillCard.GetComponent<CardInitial> ( ).RandomTars - 1;
+                skillCard = null;
+                tarsList.Clear ( );
+            }
         }
 
         ///每回合开始更新角色属性
@@ -254,7 +266,7 @@ namespace CardBased
             int cardNum = 0;
             while ( cardNum != 3 )
             {
-                int rd = GameAsst._Rd.Next (0 , uiBattle.cardPrefabArray.Length);
+                int rd = GameAsst._Rd.Next (2 , uiBattle.cardPrefabArray.Length);
                 card= uiBattle.BuildRewardCard (rd);
                 card.transform.SetParent (parent);
                 cardNum++;
@@ -280,6 +292,14 @@ namespace CardBased
             uiBattle.CallCoroutine ( );
         }
 
+        ///选择一个随机目标
+        public void ChooseRandomTar ( )
+        {
+            tempList.AddRange (uiRoleInform.GetComponentsInChildren<EnemyInitial> ( ));
+            int rd = GameAsst._Rd.Next (0 , tempList.Count);
+            tarsList.Add (tempList [ rd ].gameObject);
+            tempList.Clear ( );
+        }
 
         //洗牌,废弃的方法,由更换父节点代替列表切换
         //public int maxEnemies = 5;

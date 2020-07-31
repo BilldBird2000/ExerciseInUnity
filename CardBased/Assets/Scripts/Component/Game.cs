@@ -11,7 +11,7 @@ public class Game : MonoBehaviour
     public Sprite agilitySprite;
     public Sprite weakSprite;
     public Sprite fragileSprite;
-    public Sprite woundenSprite;
+    public Sprite woundedSprite;
     public GameObject [ ] enemyPrefabArray;
 
 

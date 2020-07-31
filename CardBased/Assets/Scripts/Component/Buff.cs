@@ -29,10 +29,7 @@ public class Buff : MonoBehaviour
     {
         string path = "BuffGroup" + "/" + name;
         Transform buff = transform.Find (path);
-        //if ( rnd > 0 )
-            buff.GetChild (0).GetComponent<Text> ( ).text = Convert.ToString (rnd);
-        //else
-            //Destroy (buff.gameObject);
+        buff.GetChild (0).GetComponent<Text> ( ).text = Convert.ToString (rnd);
     }
 
     
