@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using CardBased;
+using System.Reflection;
 
 public class CardInitial : MonoBehaviour//, ICardBase
 {
@@ -93,6 +94,24 @@ public class CardInitial : MonoBehaviour//, ICardBase
     ///使用卡牌技能,得到结果
     public void SkillResult ( GameObject tar )
     {
+        if ( WithScript )
+        {
+            //继承接口,重写方法,多态!!
+            transform.GetComponent<IUniqueCard> ( ).Redefine ( );
+
+            ///废弃方法1
+            //string scriptName = "Card" + Id.ToString ( );
+            //var unique = transform.GetComponent (scriptName);
+            //Debug.Log (unique);
+            //unique.SendMessage ("ReDefine");
+            ///废弃方法2
+            //string scriptName = "Card" + Id.ToString ( );
+            //Type type = Type.GetType (scriptName);
+            ////var obj = type.Assembly.CreateInstance (scriptName);
+            //MethodInfo method = type.GetMethod ("ReDefine");
+            //method.Invoke (this.gameObject , null);
+            
+        }
         game = GameObject.Find ("Launch").GetComponent<Game> ( );
         PlayerInitial plrInit = GameAsst.Inst.player.GetComponent<PlayerInitial> ( );
         Transform playerRoot = GameAsst.Inst.player.transform.parent.parent.parent;

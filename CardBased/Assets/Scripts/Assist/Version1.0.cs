@@ -33,6 +33,9 @@
 //      但是,使用上有些繁琐,尤其变量的通用性不多时,反而增加逻辑复杂程度,比如btnJump
 //      另一种解决方案是,在其他脚本内采用一个成员变量存储该组件,效果是相同的
 //      两种方法,思考在合适的情况,采取合适的方法
+//5. 特殊技能的实现方法: 继承接口+多态
+//      接口类IUniqueCard中定义虚方法Redefine(); 特殊技能类技能该接口,并重写Redefine(); 
+//      CardInitial类中直接调用: transform.GetCompnent<IUniqueCard>().Redefine();
 
 
 /// 待解决的问题

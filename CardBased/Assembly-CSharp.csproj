@@ -86,6 +86,8 @@
     <Compile Include="Assets\Scripts\Component\PlayerInitial.cs" />
     <Compile Include="Assets\Scripts\Component\UI_Battle.cs" />
     <Compile Include="Assets\Scripts\Component\UI_Login.cs" />
+    <Compile Include="Assets\Scripts\Component\UniqueSkill\Card50005.cs" />
+    <Compile Include="Assets\Scripts\Component\UniqueSkill\IUniqueCard.cs" />
     <None Include="Assets\Shaders\Diffuse.shader" />
     <Reference Include="Unity.TextMeshPro.Editor">
       <HintPath>H:/GitHub/CardBased/CardBased/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>

@@ -259,8 +259,7 @@ namespace CardBased
         {
             GameAsst.Inst.launch.transform.Find ("UI_PopUp").gameObject.SetActive (true);
             GameAsst.Inst.launch.transform.Find ("UI_PopUp/Reward").gameObject.SetActive (true);
-            UIMgr.Inst.btnJump = popup.Find ("Reward/Next").GetComponent<Button> ( );
-            UIMgr.Inst.btnJump.onClick.AddListener (OnClickNextGlv);
+            
             Transform parent = GameAsst.Inst.launch.gameObject.transform.Find ("UI_PopUp/Reward/Select");
             GameObject card;
             int cardNum = 0;
@@ -271,6 +270,9 @@ namespace CardBased
                 card.transform.SetParent (parent);
                 cardNum++;
             }
+
+            UIMgr.Inst.btnJump = popup.Find ("Reward/Next").GetComponent<Button> ( );
+            UIMgr.Inst.btnJump.onClick.AddListener (OnClickNextGlv);
         }
 
         ///点击下一关按钮
