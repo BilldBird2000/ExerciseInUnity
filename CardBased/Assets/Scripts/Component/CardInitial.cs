@@ -91,13 +91,17 @@ public class CardInitial : MonoBehaviour//, ICardBase
         rdTars = RandomTars - 1;
     }
 
-    ///使用卡牌技能,得到结果
+    ///判断卡牌是否带有特殊脚本,是否能执行技能,最终返回技能执行后的结果
     public void SkillResult ( GameObject tar )
     {
+        
         if ( WithScript )
         {
+            bool adjudgement;
             //继承接口,重写方法,多态!!
-            transform.GetComponent<IUniqueCard> ( ).Redefine ( );
+            adjudgement = transform.GetComponent<IUniqueCard> ( ).Redefine ( );
+            if ( adjudgement )
+                SkillToDo (tar);
 
             ///废弃方法1
             //string scriptName = "Card" + Id.ToString ( );
@@ -110,8 +114,16 @@ public class CardInitial : MonoBehaviour//, ICardBase
             ////var obj = type.Assembly.CreateInstance (scriptName);
             //MethodInfo method = type.GetMethod ("ReDefine");
             //method.Invoke (this.gameObject , null);
-            
+
         }
+        else
+            SkillToDo (tar);
+
+    }
+
+    ///技能计算过程
+    public void SkillToDo ( GameObject tar )
+    {
         game = GameObject.Find ("Launch").GetComponent<Game> ( );
         PlayerInitial plrInit = GameAsst.Inst.player.GetComponent<PlayerInitial> ( );
         Transform playerRoot = GameAsst.Inst.player.transform.parent.parent.parent;
@@ -194,13 +206,14 @@ public class CardInitial : MonoBehaviour//, ICardBase
 
         BattleMgr.Inst.RemoveToUsed ( );
 
-        if ( DrawNum > 0 )
-            BattleMgr.Inst.PickUpCard (DrawNum);
-
         if ( BattleMgr.Inst.liveList.Count == 0 )
             GameAsst.Inst.lvPass = true;
 
+        if ( DrawNum > 0 )
+            BattleMgr.Inst.PickUpCard (DrawNum);
+
     }
+
 
     ///判断是否添加buff,叠加buff回合数
     public void CheckBuff ( Transform roleRoot , string buffName , Sprite icon , int rnd )

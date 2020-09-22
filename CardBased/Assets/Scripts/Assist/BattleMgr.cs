@@ -265,8 +265,8 @@ namespace CardBased
             int cardNum = 0;
             while ( cardNum != 3 )
             {
-                int rd = GameAsst._Rd.Next (2 , uiBattle.cardPrefabArray.Length);
-                card= uiBattle.BuildRewardCard (rd);
+                int rd = GameAsst._Rd.Next (8 , uiBattle.cardPrefabArray.Length);
+                card = uiBattle.BuildRewardCard (rd);
                 card.transform.SetParent (parent);
                 cardNum++;
             }

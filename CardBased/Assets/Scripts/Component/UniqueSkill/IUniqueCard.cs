@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class IUniqueCard : MonoBehaviour
 {
-    public virtual void Redefine ( )
+    public virtual bool Redefine ( )
     {
-        
+        return false;
 
     }
 }
