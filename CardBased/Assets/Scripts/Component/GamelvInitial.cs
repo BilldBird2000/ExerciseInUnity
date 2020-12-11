@@ -57,8 +57,8 @@ public class GamelvInitial : MonoBehaviour//, IGamelvBase
         Id = glvIndex;
         Name = rowData [ header [ 1 ] ];
         NotPass = Convert.ToBoolean (rowData [ header [ 2 ] ]);
-        Glvtype = ( GamelevelType ) ( Enum.Parse (typeof (GamelevelType) , rowData [ header [ 3 ] ]) );
-        Glvstatus = ( GamelevelStatus ) ( Enum.Parse (typeof (GamelevelStatus) , rowData [ header [ 4 ] ]) );
+        Glvtype = ( GamelevelType ) Enum.Parse (typeof (GamelevelType) , rowData [ header [ 3 ] ]);
+        Glvstatus = ( GamelevelStatus ) Enum.Parse (typeof (GamelevelStatus) , rowData [ header [ 4 ] ]);
         NPCId = Convert.ToInt32 (rowData [ header [ 5 ] ]);
         Enemy1Id = Convert.ToInt32 (rowData [ header [ 6 ] ]);
         Enemy1Num = Convert.ToInt32 (rowData [ header [ 7 ] ]);

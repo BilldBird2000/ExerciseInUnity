@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using CardBased;
-using System.Reflection;
 
 public class CardInitial : MonoBehaviour//, ICardBase
 {
@@ -67,11 +66,11 @@ public class CardInitial : MonoBehaviour//, ICardBase
 
         Id = index;
         Name = rowDict [ header [ 1 ] ];
-        Cardtype = ( CardTpye ) ( Enum.Parse (typeof (CardTpye) , rowDict [ header [ 2 ] ]) );
-        Skilltype = ( SkillType ) ( Enum.Parse (typeof (SkillType) , rowDict [ header [ 3 ] ]) );
-        Cardrare = ( CardRare ) ( Enum.Parse (typeof (CardRare) , rowDict [ header [ 4 ] ]) );
-        Cardlevel = ( CardLevel ) ( Enum.Parse (typeof (CardLevel) , rowDict [ header [ 5 ] ]) );
-        Cardtarget = ( CardTarget ) ( Enum.Parse (typeof (CardTarget) , rowDict [ header [ 6 ] ]) );
+        Cardtype = ( CardTpye ) Enum.Parse (typeof (CardTpye) , rowDict [ header [ 2 ] ]);
+        Skilltype = ( SkillType ) Enum.Parse (typeof (SkillType) , rowDict [ header [ 3 ] ]);
+        Cardrare = ( CardRare ) Enum.Parse (typeof (CardRare) , rowDict [ header [ 4 ] ]);
+        Cardlevel = ( CardLevel ) Enum.Parse (typeof (CardLevel) , rowDict [ header [ 5 ] ]);
+        Cardtarget = ( CardTarget ) Enum.Parse (typeof (CardTarget) , rowDict [ header [ 6 ] ]);
         ManaCast = Convert.ToInt32 (rowDict [ header [ 7 ] ]);
         //MaxCounter = Convert.ToInt32 (rowDict [ header [ 7 ] ]);
         Attack = Convert.ToInt32 (rowDict [ header [ 8 ] ]);

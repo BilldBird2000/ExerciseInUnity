@@ -79,6 +79,7 @@
     <Compile Include="Assets\Scripts\Component\Buff.cs" />
     <Compile Include="Assets\Scripts\Component\CardInitial.cs" />
     <Compile Include="Assets\Scripts\Component\EnemyInitial.cs" />
+    <Compile Include="Assets\Scripts\Component\EnemySkill\IEnemySkillBase.cs" />
     <Compile Include="Assets\Scripts\Component\Game.cs" />
     <Compile Include="Assets\Scripts\Component\GamelvInitial.cs" />
     <Compile Include="Assets\Scripts\Component\Main.cs" />
